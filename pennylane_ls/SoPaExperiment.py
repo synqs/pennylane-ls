@@ -73,9 +73,9 @@ class SoPaExperiment(SoPaDevice):
         ## find the file
         import os
         #print(os.path.dirname(os.path.abspath(__file__)))
-        #version = input('Enter the .h5 file - does currently nothing: ')
-        print('Results in the file h5testfile.h5')
-        path = '..\\tests\h5testfile.h5'
+        h5name = input('Enter the .h5 file with the result. For test -> h5testfile. No ".h5" needed. ')
+        print('Results in the file ' + h5name)
+        path = '..\\tests\{}.h5'.format(h5name)
         r = Run(path, no_write=False)
 
         orientation = 'test';
