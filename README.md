@@ -17,7 +17,7 @@ Open and run the Jupyter/IPython notebook _test_plugin.py_ to test the most basi
 # Installation
 
 You should clone this repo to the folder from which you compile experimental sequence files with the labscript runmanager, ie. _labscript_suite\userlib\labscriptlib\ProjectName_. The plugin will produce new experiment files with each circuit evaluation and runmanager can readily be run from there.
-Modify the _path_ string in the _expval()_ function of SoPaExperiment to where you the directory where the shots are saved.
+Modify the _path_ string in the _expval()_ function of _SoPaExperiment.py_ to the directory where the shots are saved.
 
 # How-To add a new machine
 
