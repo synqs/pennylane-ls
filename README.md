@@ -25,3 +25,6 @@ Best read for general instructions is the [plugin developement](https://pennylan
 - Adapt the _apply()_ method to your needs. This method is called for every operation in the quantum circuit and you queue them in a way that is most suitable to you. The methods _pre_apply()_ or _post_apply()_ can be useful.
 - Adapt the _expval()_ method to your needs. This method is called when evaluating the expectation of an observable and should contain the execution of the circuit on your hardware with subsequent evaluation of the results. It is commonly the heart of the plugin and where most specification of your exact device is required.
 - There are more methods that can be adapted that are otherwise inherited by the [_Device_ class](https://pennylane.readthedocs.io/en/stable/code/api/pennylane.Device.html) in Pennylane. Quantum circuits are evaluated by running the [_execute()_](https://pennylane.readthedocs.io/en/stable/code/api/pennylane.Device.html#pennylane.Device.execute). Instead of overwriting this, consider implementing a suitable subset of the functions called inside _execute()_.
+- Add Operations and Observables that correspond to your machine
+
+Of course specify name, author, version, etc for your plugin and/or device.
