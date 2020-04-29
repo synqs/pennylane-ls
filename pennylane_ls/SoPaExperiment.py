@@ -16,9 +16,15 @@ class SoPaExperiment(SoPaDevice):
         "Id": 'idle'
     }
 
-    def __init(self, boson_wires=2, fermion_wires=0, shots=11, hardware_options=None):
-        super().__init__(wires=boson_wires + fermion_wires, shots=shots)
+    def __init__(self, boson_wires=2, fermion_wires=0, shots=11, remote_runmanager=False,dummy_output=False):
+        super().__init__(boson_wires=boson_wires, fermion_wires=fermion_wires, shots=shots)
         super().reset()
+        if dummy_output:
+            self.remote_runmanager = False
+        else:
+            self.remote_runmanager = remote_runmanager
+        self.dummy_output = dummy_output
+
 
     def reset(self):
         pass
@@ -63,27 +69,47 @@ class SoPaExperiment(SoPaDevice):
     def expval(self, observable, wires, par):
         """Retrieve the requested observable expectation value.
         """
-        inp = False
-        while inp != 'y':
-            inp = input('Has the experiment been run? Enter y, N or Exit: ')
-            if inp == 'N':
-                print('Please run the experiment!')
-            if inp == 'Exit':
-                return
-        ## find the file
-        import os
-        #print(os.path.dirname(os.path.abspath(__file__)))
-        h5name = input('Enter the .h5 file with the result. For test -> h5testfile. No ".h5" needed. ')
-        print('Results in the file ' + h5name)
-        path = '..\\tests\{}.h5'.format(h5name)
-        r = Run(path, no_write=False)
+        if self.remote_runmanager:
+            import runmanager.remote
+            remoteClient = runmanager.remote.Client()
+            remoteClient.set_labscript_file('labscript_suite\\userlib\labscriptlib\Project_name\Experiment_Pennylane.py')
+            remoteClient.set_run_shots = True
+            remoteClient.set_view_shots = True
+            remoteClient.engage()
+            if not remoteClient.is_output_folder_default():
+                remoteClient.reset_shot_output_folder()
+            h5name = remoteClient.get_shot_output_folder()
+        elif self.remote_runmanager==False and self.dummy_output:
+            pass
+        else:
+            inp = False
+            while inp != 'y':
+                inp = input('Has the experiment been run? Enter y, N or Exit: ')
+                if inp == 'N':
+                    print('Please run the experiment!')
+                if inp == 'Exit':
+                    return
 
-        orientation = 'test';
-        name = 'frame';
+        if self.dummy_output:
+            path = '..\\tests\h5testfile.h5'
+            r = Run(path, no_write=False)
 
-        Iat = r.get_image(orientation, 'gaussian', 'gaussian');
-        Iref = r.get_image(orientation, 'gaussian', 'reference');
-        Ibg = 0.0 * Iat
+            orientation = 'test'
+
+            Iat = r.get_image(orientation, 'gaussian', 'gaussian')
+            Iref = r.get_image(orientation, 'gaussian', 'reference')
+        else:
+            if self.remote_runmanager:
+                path = h5name + input('Name of h5 file: ')
+            if not self.remote_runmanager:
+                path = input('Full path to result h5 file:\n')
+            r = Run(path, no_write=False)
+
+            orientation = 'NaZyla'
+
+            Iat = r.get_image(orientation, 'fluorescence', 'NaAtoms')
+            Iref = r.get_image(orientation, 'fluorescence', 'NaReference')
+        #Ibg = 0.0 * Iat
 
         ## calculate everything
         Iat = 1.0 * Iat + Iref
