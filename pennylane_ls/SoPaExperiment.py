@@ -19,10 +19,7 @@ class SoPaExperiment(SoPaDevice):
     def __init__(self, boson_wires=2, fermion_wires=0, shots=11, remote_runmanager=False,dummy_output=False):
         super().__init__(boson_wires=boson_wires, fermion_wires=fermion_wires, shots=shots)
         super().reset()
-        if dummy_output:
-            self.remote_runmanager = False
-        else:
-            self.remote_runmanager = remote_runmanager
+        self.remote_runmanager = remote_runmanager
         self.dummy_output = dummy_output
 
 
@@ -70,17 +67,17 @@ class SoPaExperiment(SoPaDevice):
         """Retrieve the requested observable expectation value.
         """
         if self.remote_runmanager:
-            import runmanager.remote
+            import runmanager.remote                                                               ### can you tell me if this works for you? otherwise change path
             remoteClient = runmanager.remote.Client()
-            remoteClient.set_labscript_file('labscript_suite\\userlib\labscriptlib\Project_name\Experiment_Pennylane.py')
+            remoteClient.set_labscript_file('labscript_suite\\userlib\labscriptlib\Project_name\Experiment_Pennylane.py')  #### Set Project_name
             remoteClient.set_run_shots = True
             remoteClient.set_view_shots = True
-            remoteClient.engage()
             if not remoteClient.is_output_folder_default():
                 remoteClient.reset_shot_output_folder()
-            h5name = remoteClient.get_shot_output_folder()
+            h5folder = remoteClient.get_shot_output_folder()
+            remoteClient.engage()
         elif self.remote_runmanager==False and self.dummy_output:
-            pass
+            return 1
         else:
             inp = False
             while inp != 'y':
@@ -100,7 +97,7 @@ class SoPaExperiment(SoPaDevice):
             Iref = r.get_image(orientation, 'gaussian', 'reference')
         else:
             if self.remote_runmanager:
-                path = h5name + input('Name of h5 file: ')
+                path = h5folder + input('Name of h5 shot file: ')
             if not self.remote_runmanager:
                 path = input('Full path to result h5 file:\n')
             r = Run(path, no_write=False)
