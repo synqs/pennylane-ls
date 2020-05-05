@@ -21,6 +21,7 @@ class SoPaExperiment(SoPaDevice):
         super().reset()
         self.remote_runmanager = remote_runmanager
         self.dummy_output = dummy_output
+        self.file_name="Experiment_Pennylane.py"
 
 
     def reset(self):
@@ -28,7 +29,7 @@ class SoPaExperiment(SoPaDevice):
 
     def pre_apply(self):
         self.reset()
-        self.Expfile = open("Experiment_Pennylane.py", "w")
+        self.Expfile = open(self.file_name, "w")
         ## copy the header ##
         header = open("header.py", "r")
         for line in header:
@@ -39,8 +40,6 @@ class SoPaExperiment(SoPaDevice):
         self.Expfile.write('## Begin of Preparation ##\n')
         ## initial preparation ##
         self.Expfile.write('Experiment.prepare_initial()\n')
-        ## take background image ##
-        self.Expfile.write('Experiment.take_reference()\n')
         ##
         self.Expfile.write('## End of Preparation ##\n\n')
         self.Expfile.write('## Begin Sequence of Gates ##\n')
@@ -50,6 +49,8 @@ class SoPaExperiment(SoPaDevice):
         self.Expfile.write('## Finishing ##\n')
         ## measure ##
         self.Expfile.write('Experiment.meas()\n')
+        ## take background image ##
+        self.Expfile.write('Experiment.take_reference()\n')
         ## reset after measure ##
         self.Expfile.write('Experiment.reset_after()\n')
         ##
@@ -69,15 +70,14 @@ class SoPaExperiment(SoPaDevice):
         if self.remote_runmanager:
             import runmanager.remote                                                               ### can you tell me if this works for you? otherwise change path
             remoteClient = runmanager.remote.Client()
-            remoteClient.set_labscript_file('labscript_suite\\userlib\labscriptlib\Project_name\Experiment_Pennylane.py')  #### Set Project_name
+            remoteClient.set_labscript_file("C:\\labscript_suite\\userlib\\labscriptlib\\SoPa_Experiment\\"+self.file_name)  #### Set Project_name
             remoteClient.set_run_shots = True
-            remoteClient.set_view_shots = True
-            if not remoteClient.is_output_folder_default():
-                remoteClient.reset_shot_output_folder()
+            remoteClient.set_view_shots = False
+            remoteClient.reset_shot_output_folder()
             h5folder = remoteClient.get_shot_output_folder()
             remoteClient.engage()
-        elif self.remote_runmanager==False and self.dummy_output:
-            return 1
+            if self.remote_runmanager==True and self.dummy_output:
+                return 1
         else:
             inp = False
             while inp != 'y':
@@ -97,7 +97,8 @@ class SoPaExperiment(SoPaDevice):
             Iref = r.get_image(orientation, 'gaussian', 'reference')
         else:
             if self.remote_runmanager:
-                path = h5folder + input('Name of h5 shot file: ')
+                path = h5folder + '\\' + os.listdir(h5folder)[0]
+                #path = h5folder + '\\' + input('Name of h5 shot file: ')
             if not self.remote_runmanager:
                 path = input('Full path to result h5 file:\n')
             r = Run(path, no_write=False)
@@ -109,7 +110,7 @@ class SoPaExperiment(SoPaDevice):
         #Ibg = 0.0 * Iat
 
         ## calculate everything
-        Iat = 1.0 * Iat + Iref
+        Iat = 1.0 * Iat
         Iref = 1.0 * Iref
 
         od = Iat - Iref

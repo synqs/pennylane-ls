@@ -61,7 +61,7 @@ class SoPaDevice(Device):
     _capabilities = {'backend': list(["NO_Simulator", "SoPaExperiment"]),
                      'model': 'qubit'}  # it's not actually qubit but cv does not work with the new operations
     operations = {"LoadMOT", "Id"}
-    observables = {"NumberOperator", "PauliZ"}  # NumberOperator still needs to be defined
+    observables = {"NumberOperator"}  # NumberOperator still needs to be defined
 
     _operation_map = {}
 
