@@ -1,7 +1,7 @@
 # we always import NumPy directly
 import numpy as np
 
-from .SoPaDevice import SoPaDevice
+from .SynQSDevice import SynQSDevice
 
 from lyse import *
 from pylab import *
@@ -9,19 +9,20 @@ import h5py
 import os
 import glob
 
-class SoPaExperiment(SoPaDevice):
+class NaLiExperiment(SynQSDevice):
     ## Define operation map for the experiment
     _operation_map = {
         "LoadMOT": 'load_Mot',
         "Id": 'idle'
     }
+    observables = {"NumberOperator"}
 
-    def __init__(self, boson_wires=2, fermion_wires=0, shots=11, remote_runmanager=False,dummy_output=False):
-        super().__init__(boson_wires=boson_wires, fermion_wires=fermion_wires, shots=shots)
+    def __init__(self,wires=1, shots=11, remote_runmanager=False,dummy_output=False):
+        super().__init__(wires=wires, shots=shots)
         super().reset()
         self.remote_runmanager = remote_runmanager
         self.dummy_output = dummy_output
-        self.file_name="Experiment_Pennylane.py"
+        self.file_name="NaLiExperiment_Pennylane.py"
 
 
     def reset(self):
@@ -70,7 +71,7 @@ class SoPaExperiment(SoPaDevice):
         if self.remote_runmanager:
             import runmanager.remote                                                               ### can you tell me if this works for you? otherwise change path
             remoteClient = runmanager.remote.Client()
-            remoteClient.set_labscript_file("C:\\labscript_suite\\userlib\\labscriptlib\\SoPa_Experiment\\"+self.file_name)  #### Set Project_name
+            remoteClient.set_labscript_file('C:\\Users\\Manuel\Dropbox (CoQuMa)\LabNotes\IBMQ\PennyLane\synqs_pennylane_ls\pennylane_ls\\tests\\'+self.file_name)  #### Set Project_name
             remoteClient.set_run_shots = True
             remoteClient.set_view_shots = False
             remoteClient.reset_shot_output_folder()

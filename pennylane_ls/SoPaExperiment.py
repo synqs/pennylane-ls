@@ -1,7 +1,7 @@
 # we always import NumPy directly
 import numpy as np
 
-from .SoPaDevice import SoPaDevice
+from .SynQSDevice import SynQSDevice
 
 from lyse import *
 from pylab import *
@@ -9,15 +9,16 @@ import h5py
 import os
 import glob
 
-class SoPaExperiment(SoPaDevice):
+class SoPaExperiment(SynQSDevice):
     ## Define operation map for the experiment
     _operation_map = {
         "LoadMOT": 'load_Mot',
         "Id": 'idle'
     }
+    observables = {"NumberOperator"}
 
-    def __init__(self, boson_wires=2, fermion_wires=0, shots=11, remote_runmanager=False,dummy_output=False):
-        super().__init__(boson_wires=boson_wires, fermion_wires=fermion_wires, shots=shots)
+    def __init__(self, wires=1, shots=11, remote_runmanager=False,dummy_output=False):
+        super().__init__(wires=wires, shots=shots)
         super().reset()
         self.remote_runmanager = remote_runmanager
         self.dummy_output = dummy_output
