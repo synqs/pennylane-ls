@@ -61,9 +61,7 @@ class SoPaDevice(Device):
     _capabilities = {'backend': list(["NO_Simulator", "SoPaExperiment"]),
                      'model': 'qubit'}  # it's not actually qubit but cv does not work with the new operations
     operations = {"LoadMOT", "Id"}
-    observables = {"NumberOperator"}  # NumberOperator still needs to be defined
-
-    _operation_map = {}
+    observables = {"NumberOperator"}
 
     def __init__(self, boson_wires=2, fermion_wires=0, shots=11, hardware_options=None):
         super().__init__(wires=boson_wires + fermion_wires,
