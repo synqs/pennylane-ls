@@ -43,19 +43,7 @@ DigitalOut(name='AOM_Push', parent_device=NI_AO_card, connection='port0/line1')
 Mako_Camera('mako', NI_DIO_card, 'port0/line1', 536905351)
 
 ###--------------------------------------------------------------###
-from SoPaFunctions_Class import prepare_initial, take_reference, meas, reset_after
-from SoPaFunctions_Class import load_MOT, idle
-
-class myClass():
-    def __init__(self):
-        self.t = 0
-myClass.prepare_initial = prepare_initial
-myClass.take_reference = take_reference
-myClass.meas = meas
-myClass.reset_after = reset_after
-myClass.load_MOT = load_MOT
-myClass.idle = idle
-###
+from SoPaExpClass import ExperimentClass
 Experiment = myClass()
 ###
 
