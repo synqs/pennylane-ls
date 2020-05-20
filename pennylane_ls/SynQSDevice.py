@@ -39,7 +39,7 @@ from pennylane import QubitDevice, Device
 from ._version import __version__
 
 
-class SoPaDevice(Device):
+class SynQSDevice(Device):
     r"""Abstract Framework device for PennyLane.
 
     Args:
@@ -50,25 +50,22 @@ class SoPaDevice(Device):
         additional_option (float): as many additional arguments can be
             added as needed
     """
-    name = 'KIP SoPa Experiment Framework '
-    short_name = 'SoPaQC'
+    name = 'KIP SynQS Pennylane Framework '
+    short_name = 'SynQSQC'
     pennylane_requires = '0.8.1'
     version = __version__
     author = 'Fred Jendrzejewski, Manuel Rudolph'
     ##
     _operation_map = {}
     _observable_map = {}
-    _capabilities = {'backend': list(["NO_Simulator", "SoPaExperiment"]),
+    _capabilities = {'backend': list(["NaLiExperiment", "SoPaExperiment"]),
                      'model': 'qubit'}  # it's not actually qubit but cv does not work with the new operations
-    operations = {"LoadMOT", "Id"}
-    observables = {"NumberOperator"}
+    #operations = {"LoadMOT", "Id"}
+    #observables = {"NumberOperator"}  # NumberOperator still needs to be defined
 
-    def __init__(self, boson_wires=2, fermion_wires=0, shots=11, hardware_options=None):
-        super().__init__(wires=boson_wires + fermion_wires,
-                         shots=shots)  # TODO: implement the fermion boson split
-        self.boson_wires = boson_wires
-        self.fermion_wires = fermion_wires
-        self.n_wires = self.boson_wires + self.fermion_wires
+    def __init__(self,wires=1, shots=11, hardware_options=None):
+        super().__init__(wires=wires,shots=shots)
+        self.n_wires = wires
         self.reset()
 
     def reset(self):

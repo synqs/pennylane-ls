@@ -9,20 +9,20 @@ import h5py
 import os
 import glob
 
-class SoPaExperiment(SynQSDevice):
+class NaLiExperiment(SynQSDevice):
     ## Define operation map for the experiment
     _operation_map = {
-        "LoadMOT": 'load_Mot',
-        "Id": 'idle'
+        "X": "Rabi",
+        "H_mb": "H_mb"
     }
     observables = {"NumberOperator"}
 
-    def __init__(self, wires=1, shots=11, remote_runmanager=False,dummy_output=False):
+    def __init__(self,wires=1, shots=11, remote_runmanager=False,dummy_output=False):
         super().__init__(wires=wires, shots=shots)
         super().reset()
         self.remote_runmanager = remote_runmanager
         self.dummy_output = dummy_output
-        self.file_name="Experiment_Pennylane.py"
+        self.file_name="NaLiExperiment_Sequence.py"
 
 
     def reset(self):
@@ -32,7 +32,7 @@ class SoPaExperiment(SynQSDevice):
         self.reset()
         self.Expfile = open(self.file_name, "w")
         ## copy the header ##
-        header = open("header.py", "r")
+        header = open("NaLiHeader.py", "r")
         for line in header:
             self.Expfile.write(line)
         header.close()
@@ -48,22 +48,19 @@ class SoPaExperiment(SynQSDevice):
     def post_apply(self):
         self.Expfile.write('## End Sequence of Gates ##\n\n')
         self.Expfile.write('## Finishing ##\n')
-        ## measure ##
-        self.Expfile.write('Experiment.meas()\n')
-        ## take background image ##
-        self.Expfile.write('Experiment.take_reference()\n')
-        ## reset after measure ##
-        self.Expfile.write('Experiment.reset_after()\n')
-        ##
-        self.Expfile.write("stop(Experiment.t+2)")
+        ## measure and finish##
+        self.Expfile.write('Experiment.finishing()\n')
+        self.Expfile.write("stop(Experiment.t+1)")
+        ## close file
         self.Expfile.close()
 
     def apply(self, operation, wires, par):
         # check with different operations ##
-        if operation is 'LoadMOT':
-            self.Expfile.write('Experiment.load_MOT({}) \n'.format(par[0]))
-        if operation is 'Id':
-            self.Expfile.write('Experiment.idle({}) \n'.format(par[0]))
+        if len(par) == 1:
+            self.Expfile.write("Experiment." + self._operation_map[operation] + "({})".format(par[0])+"\n")
+        else:
+            self.Expfile.write("Experiment." + self._operation_map[operation] + str(tuple(p for p in par))+"\n")
+
 
     def expval(self, observable, wires, par):
         """Retrieve the requested observable expectation value.
@@ -71,7 +68,7 @@ class SoPaExperiment(SynQSDevice):
         if self.remote_runmanager:
             import runmanager.remote                                                               ### can you tell me if this works for you? otherwise change path
             remoteClient = runmanager.remote.Client()
-            remoteClient.set_labscript_file("C:\\labscript_suite\\userlib\\labscriptlib\\SoPa_Experiment\\"+self.file_name)  #### Set Project_name
+            remoteClient.set_labscript_file('C:\\Users\\Manuel\Dropbox (CoQuMa)\LabNotes\IBMQ\PennyLane\synqs_pennylane_ls\pennylane_ls\\tests\\'+self.file_name)  #### Set Project_name
             remoteClient.set_run_shots = True
             remoteClient.set_view_shots = False
             remoteClient.reset_shot_output_folder()
