@@ -1,7 +1,11 @@
 # PennyLane Labscript Plugin
-Our pennylane plugin for labscript. Our attempt to connect the [labscript suite](https://github.com/labscript-suite/) to some circuit diagrams. We choose [Pennylane](https://pennylane.ai/).
+Our pennylane plugin for labscript. Our attempt to connect the [Labscript Suite](https://github.com/labscript-suite/) to some circuit diagrams. We choose [Pennylane](https://pennylane.ai/).
 
 This repo is based on [the plugin template](https://github.com/XanaduAI/pennylane-plugin-template) provided by pennylane. An example Pennylane plugin is of [ProjectQ](https://github.com/XanaduAI/pennylane-pq). It is well-designed and written by C. Gogolin. 
+
+## Features
+- Proposes an interface to the low-level experimental control of the Labscript Suite by generating experimental sequence files on the fly through a higher-level framework.
+- Includes two devices for the SynQS group at the Kirchhoff-Institute for Physics of Prof. Fred Jendrzejewski.
 
 ## Installation
 
@@ -20,7 +24,7 @@ The core files in the plugin folder _pennylane_ls_ are:
 The directory _/tests_ contains  a Jupyter/IPython notebook _test_plugin.ipynb_ to test the most basic features of the plugin. If _dummy_output_ is True for the device you instantiate, the observable output at the end will be generic and not circuit-dependent. The handle _remote_runmanager_ requires the Runmanager and Blacs of the Labscript suite to be open and the experiment to be ready to run.
 _/tests_ also contains the headers for the to-be-generated experimental sequences. To clean up the Experiment.py, the Experiment class for the experiment functions is also outsourced here.
 
-# How-To add a new machine
+## How-To add a new machine
 
 Best read for general instructions is the [plugin developement](https://pennylane.readthedocs.io/en/stable/development/plugins.html) site of Pennylane. For general purposes, the following changes need to be made to adapt a plugin to new hardware:
 
@@ -30,3 +34,14 @@ Best read for general instructions is the [plugin developement](https://pennylan
 - Add Operations and Observables that correspond to your machine
 
 Of course specify name, author, version, etc for your plugin and/or device.
+
+
+## ToDo / Future steps
+- Develop a pennylane_ls template for other groups in the community to use this general approach.
+  - In that, move _pre_apply()_ and _post_apply()_ to the framework device such that _prepare_initial()_ and _finishing()_ (to be renamed) are always printed and only the specific operations of the experiment need to be specified in the device.
+
+- Give operations parameter ranges that don’t break the lab
+- Triggering of hardware, i.e. cameras, that are not coordinated by Labscript. (Set Zyla to acquire in SoPa)
+- Potentially implement useful applications for the plugin in the lab, e.g. scanning paramters, plotting images/histograms, …
+- Find higher-level operations for SoPa
+- Calibrate NaLi Rabi/X rotation angle relative to time
