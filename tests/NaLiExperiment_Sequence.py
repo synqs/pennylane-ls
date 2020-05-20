@@ -155,10 +155,11 @@ Experiment.prepare_initial()
 ## End of Preparation ##
 
 ## Begin Sequence of Gates ##
-Experiment.Rabi(1e-05)
+Experiment.X(1e-05)
 Experiment.H_mb(1)
 ## End Sequence of Gates ##
 
 ## Finishing ##
 Experiment.finishing()
+
 stop(Experiment.t+1)
