@@ -1,23 +1,24 @@
-# pennylane_ls
+# PennyLane Labscript Plugin
 Our pennylane plugin for labscript. Our attempt to connect the [labscript suite](https://github.com/labscript-suite/) to some circuit diagrams. We choose [Pennylane](https://pennylane.ai/).
 
 This repo is based on [the plugin template](https://github.com/XanaduAI/pennylane-plugin-template) provided by pennylane. An example Pennylane plugin is of [ProjectQ](https://github.com/XanaduAI/pennylane-pq). It is well-designed and written by C. Gogolin. 
 
-### The plugin
+## Installation
+
+Clone or download the repository wherever you like. The _pennylane_ls_ module in the _pythonlib_ of your Labscript suite installation folder structure ie. _labscript_suite\userlib\pythonlib_. This is the directory to put all of your own modules or functions to use with Labscript. The files in the _tests/_ directory should all live in _labscript_suite\userlib\labscriptlib\ProjectName_ where all experimental sequence files are saved and run from. In priciple, they could live in another directory but the paths in the plugin folder need to be modified.
+
+### pennylane_ls files
 The core files in the plugin folder _pennylane_ls_ are:
 
-- _SoPaDevice.py_ -- Defines the SoPa device framework class which can be inherited to define a specific device
-- _SoPaExperiment.py_ -- Specific SoPa device that generates experimental sequence files to be run with labscript 
-- _SoPaOps.py_ -- Operations that are accepted in the SoPa device framework and experiment. 
-- _SoPaFunctions.py_  -- Low-level decomposition of the functions that are run in the experiment. This should live in the pythonlib of your labscript installation.
+- _SynQSDevice.py_ -- Defines the SynQS device framework class which can be inherited to define a specific device
+- _NaLiExperiment.py_ -- Specific NaLi device that generates experimental sequence files to be run with labscript 
+- _SoPaExperiment.py_ -- Specific SoPa device that generates experimental sequence files to be run with labscript
+- _NaLiOps.py_ -- Operations and Observables of the _SoPaExperiment_ device. 
+- _SoPaOps.py_ -- Operations and Observables of the _NaLiExperiment_ device. 
 
-### tests
-Open and run the Jupyter/IPython notebook _test_plugin.py_ to test the most basic features of the plugin. The observable output at the end is currently generic and not circuit-dependent!
-
-# Installation
-
-You should clone this repo to the folder from which you compile experimental sequence files with the labscript runmanager, ie. _labscript_suite\userlib\labscriptlib\ProjectName_. The plugin will produce new experiment files with each circuit evaluation and runmanager can readily be run from there.
-Modify the _path_ string in the _expval()_ function of _SoPaExperiment.py_ to the directory where the shots are saved.
+### Testing the plugin
+The directory _/tests_ contains  a Jupyter/IPython notebook _test_plugin.ipynb_ to test the most basic features of the plugin. If _dummy_output_ is True for the device you instantiate, the observable output at the end will be generic and not circuit-dependent. The handle _remote_runmanager_ requires the Runmanager and Blacs of the Labscript suite to be open and the experiment to be ready to run.
+_/tests_ also contains the headers for the to-be-generated experimental sequences. To clean up the Experiment.py, the Experiment class for the experiment functions is also outsourced here.
 
 # How-To add a new machine
 
