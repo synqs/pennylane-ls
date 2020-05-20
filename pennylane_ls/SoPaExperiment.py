@@ -32,7 +32,7 @@ class SoPaExperiment(SynQSDevice):
         self.reset()
         self.Expfile = open(self.file_name, "w")
         ## copy the header ##
-        header = open("header.py", "r")
+        header = open("SoPaHeader.py", "r")
         for line in header:
             self.Expfile.write(line)
         header.close()
