@@ -46,7 +46,8 @@ Of course specify name, author, version, etc for your plugin and/or device.
   - In that, move _pre_apply()_ and _post_apply()_ to the framework device such that _prepare_initial()_ and _finishing()_ (to be renamed) are always printed and only the specific operations of the experiment need to be specified in the device.
 
 - Give operations parameter ranges that don’t break the lab
+- Implement full result post-processing that is currently used in the lab.
 - Triggering of hardware, i.e. cameras, that are not coordinated by Labscript. (Set Zyla to acquire in SoPa)
 - Potentially implement useful applications for the plugin in the lab, e.g. scanning paramters, plotting images/histograms, …
 - Find higher-level operations for SoPa
-- Calibrate NaLi Rabi/X rotation angle relative to time
+- Calibrate NaLi Rabi/X rotation angle in NaLi relative to time (Is likely required for communication with theorists)
