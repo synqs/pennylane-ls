@@ -81,6 +81,13 @@ class SynQSDevice(Device):
         """
         return set(self._operation_map.keys())
 
+    def apply(self, operation, wires, par):
+        # check with different operations ##
+        if len(par) == 1:
+            self.Expfile.write("Experiment." + self._operation_map[operation] + "({})".format(par[0])+"\n")
+        else:
+            self.Expfile.write("Experiment." + self._operation_map[operation] + str(tuple(p for p in par))+"\n")
+
     def pre_apply(self):
         self.reset()
         self.Expfile = open(self.file_name, "w")

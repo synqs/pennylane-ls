@@ -25,13 +25,6 @@ class NaLiExperiment(SynQSDevice):
         self.file_name = "NaLiExperiment_Sequence.py"
         self.header_name = "NaLiHeader.py"
 
-    def apply(self, operation, wires, par):
-        # check with different operations ##
-        if len(par) == 1:
-            self.Expfile.write("Experiment." + self._operation_map[operation] + "({})".format(par[0])+"\n")
-        else:
-            self.Expfile.write("Experiment." + self._operation_map[operation] + str(tuple(p for p in par))+"\n")
-
 
     def expval(self, observable, wires, par):
         """Retrieve the requested observable expectation value.

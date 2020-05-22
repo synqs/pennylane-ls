@@ -25,12 +25,6 @@ class SoPaExperiment(SynQSDevice):
         self.file_name = "SoPaExperiment_Sequence.py"
         self.header_name = "SoPaHeader.py"
 
-    def apply(self, operation, wires, par):
-        # check with different operations ##
-        if operation is 'LoadMOT':
-            self.Expfile.write('Experiment.load_MOT({}) \n'.format(par[0]))
-        if operation is 'Id':
-            self.Expfile.write('Experiment.idle({}) \n'.format(par[0]))
 
     def expval(self, observable, wires, par):
         """Retrieve the requested observable expectation value.
