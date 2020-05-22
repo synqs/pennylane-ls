@@ -22,7 +22,7 @@ class SoPaExperiment(SynQSDevice):
         super().reset()
         self.remote_runmanager = remote_runmanager
         self.dummy_output = dummy_output
-        self.file_name="Experiment_Pennylane.py"
+        self.file_name="SoPaExperiment_Sequence.py"
 
 
     def reset(self):
