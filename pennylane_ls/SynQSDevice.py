@@ -80,3 +80,29 @@ class SynQSDevice(Device):
             set[str]: the set of PennyLane operation names the device supports
         """
         return set(self._operation_map.keys())
+
+    def pre_apply(self):
+        self.reset()
+        self.Expfile = open(self.file_name, "w")
+        ## copy the header ##
+        header = open(self.header_name, "r")
+        for line in header:
+            self.Expfile.write(line)
+        header.close()
+        ## start command ##
+        self.Expfile.write("start()\n\n")
+        self.Expfile.write('## Begin of Preparation ##\n')
+        ## initial preparation ##
+        self.Expfile.write('Experiment.prepare_initial()\n')
+        ##
+        self.Expfile.write('## End of Preparation ##\n\n')
+        self.Expfile.write('## Begin Sequence of Gates ##\n')
+
+    def post_apply(self):
+        self.Expfile.write('## End Sequence of Gates ##\n\n')
+        self.Expfile.write('## Finishing ##\n')
+        ## measure and finish##
+        self.Expfile.write('Experiment.finishing()\n\n')
+        self.Expfile.write("stop(Experiment.t+1)")
+        ## close file
+        self.Expfile.close()

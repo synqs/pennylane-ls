@@ -22,41 +22,8 @@ class SoPaExperiment(SynQSDevice):
         super().reset()
         self.remote_runmanager = remote_runmanager
         self.dummy_output = dummy_output
-        self.file_name="SoPaExperiment_Sequence.py"
-
-
-    def reset(self):
-        pass
-
-    def pre_apply(self):
-        self.reset()
-        self.Expfile = open(self.file_name, "w")
-        ## copy the header ##
-        header = open("SoPaHeader.py", "r")
-        for line in header:
-            self.Expfile.write(line)
-        header.close()
-        ## start command ##
-        self.Expfile.write("start()\n\n")
-        self.Expfile.write('## Begin of Preparation ##\n')
-        ## initial preparation ##
-        self.Expfile.write('Experiment.prepare_initial()\n')
-        ##
-        self.Expfile.write('## End of Preparation ##\n\n')
-        self.Expfile.write('## Begin Sequence of Gates ##\n')
-
-    def post_apply(self):
-        self.Expfile.write('## End Sequence of Gates ##\n\n')
-        self.Expfile.write('## Finishing ##\n')
-        ## measure ##
-        self.Expfile.write('Experiment.meas()\n')
-        ## take background image ##
-        self.Expfile.write('Experiment.take_reference()\n')
-        ## reset after measure ##
-        self.Expfile.write('Experiment.reset_after()\n')
-        ##
-        self.Expfile.write("stop(Experiment.t+2)")
-        self.Expfile.close()
+        self.file_name = "SoPaExperiment_Sequence.py"
+        self.header_name = "SoPaHeader.py"
 
     def apply(self, operation, wires, par):
         # check with different operations ##
