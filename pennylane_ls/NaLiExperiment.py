@@ -32,7 +32,7 @@ class NaLiExperiment(SynQSDevice):
         if self.remote_runmanager:
             import runmanager.remote                                                               ### can you tell me if this works for you? otherwise change path
             remoteClient = runmanager.remote.Client()
-            remoteClient.set_labscript_file('C:\\Users\\Manuel\Dropbox (CoQuMa)\LabNotes\IBMQ\PennyLane\synqs_pennylane_ls\pennylane_ls\\tests\\'+self.file_name)  #### Set Project_name
+            remoteClient.set_labscript_file("C:\\labscript_suite\\userlib\\labscriptlib\\SoPa_Experiment\\"+self.file_name)  #### Set Project_name
             remoteClient.set_run_shots = True
             remoteClient.set_view_shots = False
             remoteClient.reset_shot_output_folder()
