@@ -1,7 +1,17 @@
 # PennyLane Labscript Plugin
-The pennylane_ls plugin allows to run experiments that are controlled by the [Labscript Suite](https://github.com/labscript-suite/) through the interface and the with the features that [Pennylane](https://pennylane.ai/) offers. Our general approach is to generate _Experiment.py_ scripts with the Labscript syntax on the fly depending on the circuit provided through PennyLane. This experimental sequence is sent remotely to Labscripts Runmanager and the results are evaluated inside the pennylane_ls plugin.
+The pennylane_ls plugin allows to run experiments that are controlled by the [Labscript Suite](https://github.com/labscript-suite/) through the interface and the with the features that [Pennylane](https://pennylane.ai/) offers.
 
-This repo is based on [the plugin template](https://github.com/XanaduAI/pennylane-plugin-template) provided by pennylane. An example Pennylane plugin is of [ProjectQ](https://github.com/XanaduAI/pennylane-pq). It is well-designed and written by C. Gogolin. 
+This is basically the technical implementation for the connection of cold atoms and quantum circuits, which we described in [this blog post](https://www.synqs.org/post/2020-atomic-quantum-circuits/). We also provide a few examples, where we describe published experiments with quantum circuits:
+
+- A circuit description for tunneling of single bosons is examplified [here](https://github.com/synqs/pennylane-ls/blob/master/examples/Example_Hopping_Bosons.ipynb).
+- A circuit description for squeezing in spinor Bose-Einstein condensate, which forms a long collective spin is presented [here](https://github.com/synqs/pennylane-ls/blob/master/examples/Fisher_information.ipynb).
+
+
+## Quickstart for connection pennylane to labscript
+
+ Our general approach is to generate _Experiment.py_ scripts with the Labscript syntax on the fly depending on the circuit provided through PennyLane. This experimental sequence is sent remotely to Labscripts Runmanager and the results are evaluated inside the pennylane_ls plugin.
+
+This repo is based on [the plugin template](https://github.com/XanaduAI/pennylane-plugin-template) provided by pennylane. An example Pennylane plugin is of [ProjectQ](https://github.com/XanaduAI/pennylane-pq). It is well-designed and written by C. Gogolin.
 
 ## Features
 - Proposes a higher-level control of experiment that are run controlled by the Labscript Suite through PennyLane.
@@ -18,8 +28,8 @@ The core files in the plugin folder _pennylane_ls_ are:
 - _SynQSDevice.py_ -- Defines the SynQS device framework class for connecting with Labscript through the Pennylane interface.
 - _NaLiExperiment.py_ -- Specific NaLi device that generates experimental sequence files to be run with labscript.
 - _SoPaExperiment.py_ -- Specific SoPa device that generates experimental sequence files to be run with labscript.
-- _NaLiOps.py_ -- Operations and Observables of the _SoPaExperiment_ device. 
-- _SoPaOps.py_ -- Operations and Observables of the _NaLiExperiment_ device. 
+- _NaLiOps.py_ -- Operations and Observables of the _SoPaExperiment_ device.
+- _SoPaOps.py_ -- Operations and Observables of the _NaLiExperiment_ device.
 
 **Notes for the _SynQSDevice.py_ framework device:**
 This is the framework device, as mandated by the PennyLane template. It is the framework for writing an Experiment.py file that can be executed in the Runmanager of the Labscript Suite. The _apply()_ as well as the _pre_apply()_ and _post_apply()_ methods are defined here which can be used out of the box. _pre_apply()_ writes function 'Experiment.prepare_initial()' into the file and _post_apply()_ the function 'Experiment.finishing()'. Those need to be defined in the pythonlib of the Labscript suite.  
@@ -49,7 +59,7 @@ Also required for the curret approach is the _ExperimentClass()_ that keeps trac
 
 ## ToDo / Future Steps
 Towards a full Pennylane_ls plugin:
-- Give _wires_ a meaning 
+- Give _wires_ a meaning
   - Operations need to be restricted to certain wires, especially when different atomic species are involved
 - Implement true remote control of the lab through the pennylane_ls module
 - Perhaps include a simulator device
