@@ -62,7 +62,7 @@ pyparsing==2.4.7
 pyrsistent @ file:///Users/runner/miniforge3/conda-bld/pyrsistent_1602259983752/work
 PySocks @ file:///Users/runner/miniforge3/conda-bld/pysocks_1602326916036/work
 python-dateutil==2.8.1
-PyYAML==5.3.1
+PyYAML==5.4
 pyzmq==19.0.2
 quantum-blackbird==0.2.4
 repoze.lru==0.7
