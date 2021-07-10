@@ -3,7 +3,6 @@ import numpy as np
 import scipy
 
 from pennylane import Device
-from pennylane import QubitDevice
 from pennylane.operation import Observable
 from .MultiQuditOps import Lz, rLx, rLz, rLz2, XY, ZZ
 
@@ -20,10 +19,7 @@ class MultiQuditDevice(Device):
     version = '0.0.1'
     author = "Fred Jendrzejewski"
 
-    short_name = "synqs.sqs"
-
-    observables = {"Lz"}
-    operations  = {"rLz", "rLx", "RX", "CNOT", "ZZ", "XY"}
+    short_name = "synqs.mqs"
 
     _observable_map = {
         "Lz": Lz
@@ -62,7 +58,7 @@ class MultiQuditDevice(Device):
             model="qudit",
             supports_finite_shots=True,
             supports_tensor_observables=True,
-            #returns_probs=True,
+            returns_probs=False,
         )
         
         return capabilities
