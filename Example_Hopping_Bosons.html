@@ -1,0 +1,819 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bosons in optical tweezers &#8212; Quantum circuits in cold atoms</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Squeezing in atomic qudits" href="Fisher_information.html" />
+    <link rel="prev" title="Welcome to our examples on quantum circuits and cold atoms" href="intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Quantum circuits in cold atoms</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Welcome to our examples on  quantum circuits and cold atoms
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Bosons in optical tweezers
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Fisher_information.html">
+   Squeezing in atomic qudits
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/Example_Hopping_Bosons.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/synqs/pennylane-ls/"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/synqs/pennylane-ls//issues/new?title=Issue%20on%20page%20%2FExample_Hopping_Bosons.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/synqs/pennylane-ls/master?urlpath=tree/examples/Example_Hopping_Bosons.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Bosons in optical tweezers
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#single-boson">
+   Single Boson
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#variances">
+     Variances
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#two-bosons">
+     Two Bosons
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="bosons-in-optical-tweezers">
+<h1>Bosons in optical tweezers<a class="headerlink" href="#bosons-in-optical-tweezers" title="Permalink to this headline">¶</a></h1>
+<p>This Notebook is based on a <a class="reference external" href="https://science.sciencemag.org/content/345/6194/306.abstract">paper</a> from the Regal group. In this paper, the tunneling of bosons between neighboring sites was observed. With the help of two optical tweezers, at first one and later two bosons were trapped. By bringing the tweezers closer to eachother and by lowering the total trap intensity the boson(s) is(are) able to tunnel from one tweezer to the other. The result of the expirment is observed by distancing the tweezers and measuring the occupation number of the tweezer.</p>
+<p>In the first part of the paper only one atom was trapped in an optical tweezer and the other tweezer was empty.  In the second parts each tweezer was loaded with a boson. We can now measure the probability such that after the tunnneling the bosons are in different tweezers.</p>
+<p>In this notebook we will model the experiments within pennlyane.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pennylane</span> <span class="k">as</span> <span class="nn">qml</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">import</span> <span class="nn">strawberryfields</span> <span class="k">as</span> <span class="nn">sf</span>
+<span class="kn">from</span> <span class="nn">strawberryfields</span> <span class="kn">import</span> <span class="n">ops</span>
+
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format=&#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="single-boson">
+<h1>Single Boson<a class="headerlink" href="#single-boson" title="Permalink to this headline">¶</a></h1>
+<p>Let us start out with their observations concerning a single Boson, which was initially loaded into the right site. After a given time <span class="math notranslate nohighlight">\(t\)</span> they observe the oscillation of the Boson into the left site as seen below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_kaufman</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Data/KaufmanData.csv&#39;</span><span class="p">,</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;PL&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">96</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_kaufman</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">data_kaufman</span><span class="o">.</span><span class="n">PL</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;time $t$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;probability $P_L$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;probability $P_L$&#39;)
+</pre></div>
+</div>
+<img alt="_images/Example_Hopping_Bosons_5_1.png" src="_images/Example_Hopping_Bosons_5_1.png" />
+</div>
+</div>
+<div class="math notranslate nohighlight">
+\[\newcommand{\braket}[3]{\left\langle{#1}\middle|{#2}|{#3}\right\rangle}\]</div>
+<p>We will now model these observations through tunnel coupling. The tunnel coupling is given by <span class="math notranslate nohighlight">\(J = -\braket{R}{H_{sp}}{L}/\hbar\)</span> where <span class="math notranslate nohighlight">\(|L\rangle\)</span> and <span class="math notranslate nohighlight">\(|R\rangle\)</span> are the lowest energy states in the left or right well and <span class="math notranslate nohighlight">\(H_{sp}\)</span> the Hamiltonian for a single particle. They extracted an experimental tunnel coupling of <span class="math notranslate nohighlight">\(J = 2\pi \cdot 262\)</span>Hz.</p>
+<p>The Tunneling-Hamiltonian for a single boson in a well is given by:
+<span class="math notranslate nohighlight">\(\\\)</span>
+<span class="math notranslate nohighlight">\(H_t=\)</span>
+<span class="math notranslate nohighlight">\(\left(\begin{array}{rr} 
+0 &amp; J \\ 
+J &amp; 0  \\ 
+\end{array}\right)\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">Ham_sq</span><span class="p">(</span><span class="n">J</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    The Hamiltonian matrix of the tunneling for a single boson</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="n">J</span><span class="p">],</span> <span class="p">[</span><span class="n">J</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">Ham_sq</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 1]
+ [1 0]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We now want to create a quantum circuit with Pennylane, that simulates the tunneling of a boson from one well to another. We first need to initialize the quantum circuit by raising the number operator of the left well by one (boson 1 is in the left well corresponds to <span class="math notranslate nohighlight">\(|L\rangle=1\)</span>, <span class="math notranslate nohighlight">\(|R\rangle=0\)</span>).</p>
+<p>We now have a boson in the left well. After that we use a beamsplitter to represent the tunneling. In the experiment of Cindy Regal the tunneling depended on the time <span class="math notranslate nohighlight">\(t\)</span> the wells were swept together. We can simulate the time by tuning the transmittivity of the beamsplitter. This is done by tuning <span class="math notranslate nohighlight">\(\theta\)</span> (From the pennylane documentation: “The transmission amplitude of the beamsplitter is <span class="math notranslate nohighlight">\(t=cos(\theta)\)</span>. The value <span class="math notranslate nohighlight">\(\theta=\frac{\pi}{4}\)</span> gives the 50-50 beamsplitter.”), and get a curve for the probabilities of the boson (see Plot. 1) being in the right or left well.</p>
+<p><img alt="circuit" src="_images/Single_Boson_Left.svg" /></p>
+<p>We initiate a single boson in the left well and then perform a beamsplitter gate on the system. We can then measure the occupation number <span class="math notranslate nohighlight">\(|n\rangle_L\)</span> and <span class="math notranslate nohighlight">\(|n\rangle_R\)</span> which is dependent on <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
+<p>There are two ways to initiate the boson in the left well:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pennylane.readthedocs.io/en/stable/code/api/pennylane.Displacement.html">Displacement gate</a></p></li>
+<li><p><a class="reference external" href="https://pennylane.readthedocs.io/en/stable/code/api/pennylane.FockState.html">Fock state Gate</a></p></li>
+</ul>
+<p>While using the displacement gate and fock state gate does not differ when only having a single boson in the well, its evaluation differs when considering a two boson system. We will later see why this is the case and how to overcome this issue.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dev_boson</span> <span class="o">=</span> <span class="n">qml</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;strawberryfields.fock&#39;</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cutoff_dim</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="nd">@qml</span><span class="o">.</span><span class="n">qnode</span><span class="p">(</span><span class="n">dev_boson</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">single_boson</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Single Boson well tunneling circuit using the displacement gate</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">qml</span><span class="o">.</span><span class="n">Displacement</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">qml</span><span class="o">.</span><span class="n">Beamsplitter</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">var</span><span class="p">:</span>  
+        <span class="k">return</span> <span class="p">[</span><span class="n">qml</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">qml</span><span class="o">.</span><span class="n">NumberOperator</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="n">qml</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">qml</span><span class="o">.</span><span class="n">NumberOperator</span><span class="p">(</span><span class="mi">1</span><span class="p">))]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">qml</span><span class="o">.</span><span class="n">expval</span><span class="p">(</span><span class="n">qml</span><span class="o">.</span><span class="n">NumberOperator</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="n">qml</span><span class="o">.</span><span class="n">expval</span><span class="p">(</span><span class="n">qml</span><span class="o">.</span><span class="n">NumberOperator</span><span class="p">(</span><span class="mi">1</span><span class="p">))]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">single_boson</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">single_boson</span><span class="o">.</span><span class="n">draw</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 0: ──D(1.0, 0)──╭BS(0.785, 0)──┤ ⟨n⟩ 
+ 1: ─────────────╰BS(0.785, 0)──┤ ⟨n⟩ 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dev_boson</span> <span class="o">=</span> <span class="n">qml</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;strawberryfields.fock&#39;</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cutoff_dim</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="nd">@qml</span><span class="o">.</span><span class="n">qnode</span><span class="p">(</span><span class="n">dev_boson</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">single_boson_fock</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Single Boson well tunneling circuit using the fock state gate</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">qml</span><span class="o">.</span><span class="n">FockState</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">qml</span><span class="o">.</span><span class="n">Beamsplitter</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">var</span><span class="p">:</span>  
+        <span class="k">return</span> <span class="p">[</span><span class="n">qml</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">qml</span><span class="o">.</span><span class="n">NumberOperator</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="n">qml</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">qml</span><span class="o">.</span><span class="n">NumberOperator</span><span class="p">(</span><span class="mi">1</span><span class="p">))]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">qml</span><span class="o">.</span><span class="n">expval</span><span class="p">(</span><span class="n">qml</span><span class="o">.</span><span class="n">NumberOperator</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="n">qml</span><span class="o">.</span><span class="n">expval</span><span class="p">(</span><span class="n">qml</span><span class="o">.</span><span class="n">NumberOperator</span><span class="p">(</span><span class="mi">1</span><span class="p">))]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">single_boson_fock</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">single_boson_fock</span><span class="o">.</span><span class="n">draw</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 0: ──|1⟩──╭BS(0.785, 0)──┤ ⟨n⟩ 
+ 1: ───────╰BS(0.785, 0)──┤ ⟨n⟩ 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">res_dis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">single_boson</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span> <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="n">thetas</span><span class="p">])</span>
+<span class="n">res_fock</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">single_boson_fock</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="n">thetas</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And we print out the resulting evolution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Jexp</span> <span class="o">=</span> <span class="mi">262</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">;</span>
+<span class="n">thetaExp</span> <span class="o">=</span> <span class="n">data_kaufman</span><span class="o">.</span><span class="n">t</span><span class="o">*</span><span class="mf">1e-3</span><span class="o">*</span><span class="n">Jexp</span><span class="p">;</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetaExp</span><span class="p">,</span> <span class="n">data_kaufman</span><span class="o">.</span><span class="n">PL</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">);</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetas</span><span class="p">,</span> <span class="n">res_dis</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Prob. of Boson in left well, displacement&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetas</span><span class="p">,</span> <span class="n">res_dis</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Prob. of Boson in right well, displacement&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetas</span><span class="p">,</span> <span class="n">res_fock</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Prob. of Boson in left well, fock state&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetas</span><span class="p">,</span> <span class="n">res_fock</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Prob. of Boson in right well, fock state&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;purple&quot;</span><span class="p">)</span>
+
+
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$t_b$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Probability of finding Boson in left or right well&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">theta$/time&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Probability&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Probability&#39;)
+</pre></div>
+</div>
+<img alt="_images/Example_Hopping_Bosons_18_1.png" src="_images/Example_Hopping_Bosons_18_1.png" />
+</div>
+</div>
+<p>We can clearly see, that the results are identical and model the results from the paper quite well.</p>
+<div class="section" id="variances">
+<h2>Variances<a class="headerlink" href="#variances" title="Permalink to this headline">¶</a></h2>
+<p>We can now investigate the differences between the intial preparation with a displacement or a Fock state. For this we will look at the variance of the measured expectation values. As we will see, only the Fock state explains the epxerimentally observed fluctuations properly, which fairly even for all times.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">var_displacement</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">single_boson</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="n">thetas</span><span class="p">])</span>
+<span class="n">var_fock</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">single_boson_fock</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="n">thetas</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">96</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetas</span><span class="p">,</span> <span class="n">var_displacement</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Variance of left well&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetas</span><span class="p">,</span> <span class="n">var_displacement</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Variance of right well&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetas</span><span class="p">,</span><span class="n">var_fock</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Variance of left well, fock State&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetas</span><span class="p">,</span><span class="n">var_fock</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">1</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Variance of right well, fock State&quot;</span><span class="p">)</span>
+
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$t_b$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Variance of Number Operator for different initialisation&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">theta$/time&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Variance&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Example_Hopping_Bosons_22_0.png" src="_images/Example_Hopping_Bosons_22_0.png" />
+</div>
+</div>
+<p>We can clearly see, that the variance has a maximum for the displacement, when the boson is either in the left or the right well. This can be explained by the nature of the displacement gate. It produces a state in which sometimes 0, 1, 2 or more(?) bosons are in the (in our case left) well, but on average 1 boson is present. The beamsplitter shifts the variance as well as the expectation value from one well to the other.</p>
+<p>The fock State on the other hand has a variance of 0 when being initiated. In the case of the beamsplitter being exactly reflective or exactly transmissive, the variance is 0. When the beamsplitter is symmetric (<span class="math notranslate nohighlight">\(\theta = \frac{\pi}{4}\)</span>,<span class="math notranslate nohighlight">\(\frac{3\pi}{4}\)</span>) the variance has a peak. The variances of both wells are exactly equal.</p>
+</div>
+<div class="section" id="two-bosons">
+<h2>Two Bosons<a class="headerlink" href="#two-bosons" title="Permalink to this headline">¶</a></h2>
+<p>We can now initiate the Circuit with a boson in each well. The difference between the two possibilities of initiating the wells become clearer now.</p>
+<p><img alt="circuit" src="_images/Two_Bosons.svg" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dev_boson</span> <span class="o">=</span> <span class="n">qml</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;strawberryfields.fock&#39;</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cutoff_dim</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="nd">@qml</span><span class="o">.</span><span class="n">qnode</span><span class="p">(</span><span class="n">dev_boson</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">two_bosons</span><span class="p">(</span><span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">qml</span><span class="o">.</span><span class="n">Displacement</span><span class="p">(</span><span class="n">x_1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">qml</span><span class="o">.</span><span class="n">Displacement</span><span class="p">(</span><span class="n">x_2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">qml</span><span class="o">.</span><span class="n">Beamsplitter</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">var</span><span class="p">:</span>       
+        <span class="k">return</span> <span class="p">[</span><span class="n">qml</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">qml</span><span class="o">.</span><span class="n">NumberOperator</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="n">qml</span><span class="o">.</span><span class="n">expval</span><span class="p">(</span><span class="n">qml</span><span class="o">.</span><span class="n">NumberOperator</span><span class="p">(</span><span class="mi">1</span><span class="p">))]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">qml</span><span class="o">.</span><span class="n">expval</span><span class="p">(</span><span class="n">qml</span><span class="o">.</span><span class="n">NumberOperator</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="n">qml</span><span class="o">.</span><span class="n">expval</span><span class="p">(</span><span class="n">qml</span><span class="o">.</span><span class="n">NumberOperator</span><span class="p">(</span><span class="mi">1</span><span class="p">))]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dev_boson</span> <span class="o">=</span> <span class="n">qml</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;strawberryfields.fock&#39;</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cutoff_dim</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="nd">@qml</span><span class="o">.</span><span class="n">qnode</span><span class="p">(</span><span class="n">dev_boson</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">two_bosons_fock</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
+    <span class="n">qml</span><span class="o">.</span><span class="n">FockState</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">qml</span><span class="o">.</span><span class="n">FockState</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">qml</span><span class="o">.</span><span class="n">Beamsplitter</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">qml</span><span class="o">.</span><span class="n">expval</span><span class="p">(</span><span class="n">qml</span><span class="o">.</span><span class="n">NumberOperator</span><span class="p">(</span><span class="mi">0</span><span class="p">)),</span><span class="n">qml</span><span class="o">.</span><span class="n">expval</span><span class="p">(</span><span class="n">qml</span><span class="o">.</span><span class="n">NumberOperator</span><span class="p">(</span><span class="mi">1</span><span class="p">))]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">two_bosons</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span> <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="n">thetas</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">96</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetas</span><span class="p">,</span> <span class="n">res</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">res</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Prob. of Boson in left and Boson in right well ($|S\rangle$)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.01</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$t_b$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Probability of two Bosons using displacement&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\theta$/time&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Probability&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Example_Hopping_Bosons_27_0.png" src="_images/Example_Hopping_Bosons_27_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">two_bosons_fock</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="n">thetas</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">96</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetas</span><span class="p">,</span> <span class="n">res</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">res</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Prob. of Boson in left and Boson in right well $|S\rangle$&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$t_b$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Probability of two Bosons using fock States&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\theta$/time&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Probability&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Example_Hopping_Bosons_28_0.png" src="_images/Example_Hopping_Bosons_28_0.png" />
+</div>
+</div>
+<p>Since there is a boson in each well on average, and we extract the expectation value of the number operator pennylane returns <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">1]</span></code> for each <span class="math notranslate nohighlight">\(\theta\)</span>. We want to understand this behavior more thoroughly. To do this we use the strawberry fields package without having pennylane as the “middleman”. In the following the same circuit is created with the strawberryfields syntax.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">circuit</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
+    <span class="n">prog</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">Program</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">prog</span><span class="o">.</span><span class="n">context</span> <span class="k">as</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">ops</span><span class="o">.</span><span class="n">Fock</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ops</span><span class="o">.</span><span class="n">Fock</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">ops</span><span class="o">.</span><span class="n">BSgate</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">ops</span><span class="o">.</span><span class="n">MeasureFock</span><span class="p">()</span><span class="o">|</span> <span class="n">q</span>
+    <span class="n">eng</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">Engine</span><span class="p">(</span><span class="s2">&quot;fock&quot;</span><span class="p">,</span> <span class="n">backend_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;cutoff_dim&quot;</span> <span class="p">:</span>  <span class="mi">10</span><span class="p">})</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">eng</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">prog</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now run the circuit multiple times and extract the final values for the number operator of the left and right well.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta_samples</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">shots</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">theta_samples</span><span class="p">,</span> <span class="n">shots</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">theta_samples</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">theta</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">thetas</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calculating theta=</span><span class="si">{</span><span class="n">theta</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">shots</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">circuit</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        
+        <span class="n">res</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">res</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+
+<span class="s2">Each row represents one shot, while the grouped shots represent the results for a specific value of theta</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Mean value of each value of theta</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Calculating theta=3.14
+
+Each row represents one shot, while the grouped shots represent the results for a specific value of theta
+
+[[[1. 1.]
+  [1. 1.]
+  [1. 1.]
+  [1. 1.]
+  [1. 1.]]
+
+ [[2. 0.]
+  [2. 0.]
+  [0. 2.]
+  [2. 0.]
+  [2. 0.]]
+
+ [[1. 1.]
+  [1. 1.]
+  [0. 2.]
+  [2. 0.]
+  [1. 1.]]
+
+ [[2. 0.]
+  [1. 1.]
+  [1. 1.]
+  [0. 2.]
+  [2. 0.]]
+
+ [[2. 0.]
+  [0. 2.]
+  [0. 2.]
+  [2. 0.]
+  [2. 0.]]
+
+ [[1. 1.]
+  [1. 1.]
+  [1. 1.]
+  [1. 1.]
+  [1. 1.]]]
+
+Mean value of each value of theta
+ [[1.  1. ]
+ [1.6 0.4]
+ [1.  1. ]
+ [1.2 0.8]
+ [1.2 0.8]
+ [1.  1. ]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>At first sight it seems as if there is some fluctuation in the simulated data. However if we run the circuit 1000 times for each value of <span class="math notranslate nohighlight">\(\theta\)</span> the average of each <span class="math notranslate nohighlight">\(\theta\)</span> of each well approaches <span class="math notranslate nohighlight">\(1\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta_samples</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">shots</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">theta_samples</span><span class="p">,</span> <span class="n">shots</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">theta_samples</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">theta</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">thetas</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calculating theta=</span><span class="si">{</span><span class="n">theta</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">shots</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">circuit</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        
+        <span class="n">res</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">res</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+<span class="n">res</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Calculating theta=3.14
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.   , 1.   ],
+       [0.985, 1.015],
+       [1.002, 0.998],
+       [0.948, 1.052],
+       [0.962, 1.038],
+       [0.968, 1.032],
+       [0.98 , 1.02 ],
+       [1.   , 1.   ],
+       [0.995, 1.005],
+       [0.994, 1.006],
+       [1.015, 0.985],
+       [1.049, 0.951],
+       [1.032, 0.968],
+       [0.987, 1.013],
+       [1.   , 1.   ]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since we are not interested in the average number operator of each well, but in the distribution of the bosons in the wells (<span class="math notranslate nohighlight">\(|L\rangle=2\)</span>, <span class="math notranslate nohighlight">\(|R\rangle=2\)</span> vs <span class="math notranslate nohighlight">\(|L\rangle=1\)</span>, <span class="math notranslate nohighlight">\(|R\rangle=1\)</span>) we need to extract this information from the generated data. This is done by counting all instances where both bosons are either in the left(<span class="math notranslate nohighlight">\(|L\rangle=2\)</span>) or the right well (<span class="math notranslate nohighlight">\(|R\rangle=2\)</span>) and calculating the ratio. The error is <span class="math notranslate nohighlight">\(\frac{1}{\sqrt{N}}\)</span> with N being the number of shots per value of <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta_samples</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">shots</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="n">res_fock</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">theta_samples</span><span class="p">,</span> <span class="n">shots</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">theta_samples</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">theta</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">thetas</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calculating theta=</span><span class="si">{</span><span class="n">theta</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">shots</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">circuit</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        
+        <span class="n">res_fock</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">res_fock</span><span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Calculating theta=3.14
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">one_in_each</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">res_fock</span><span class="o">==</span><span class="p">[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="n">res_fock</span><span class="o">==</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">])</span>
+<span class="n">prob</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="p">(</span><span class="n">one_in_each</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="p">:</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">shots</span><span class="p">)</span>
+<span class="n">prob_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">theta_samples</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">shots</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">thetas_fit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">thetas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">theta_samples</span><span class="p">)</span>
+
+
+<span class="n">res_fit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">two_bosons</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span> <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="n">thetas_fit</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">96</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">thetas</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">prob_err</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">elinewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">capthick</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">ecolor</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;Prob. of Boson in left and Boson in right well ($|S\rangle$)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetas_fit</span><span class="p">,</span> <span class="n">res_fit</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">res_fit</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Result from displacement&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$t_b$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Probability of Bosons being in different wells&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\theta$/time&quot;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Probability&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Example_Hopping_Bosons_38_0.png" src="_images/Example_Hopping_Bosons_38_0.png" />
+</div>
+</div>
+<p>We can see that this matches the result of the displacement gate quite well.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Welcome to our examples on  quantum circuits and cold atoms</a>
+    <a class='right-next' id="next-link" href="Fisher_information.html" title="next page">Squeezing in atomic qudits</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Noah Wach, Fred Jendrzejewski, Manuel Rudolph, Valentin Kasper, Rohit Bhatt, Yannick Deller<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
