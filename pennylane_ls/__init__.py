@@ -1,6 +1,5 @@
-from .SingleQuditDevice import SingleQuditDevice, LocalSingleQuditDevice
-from .LocalSingleQuditOps import RotX, rLz, rLz2, Lz
-from .SingleQuditOps import load, rLx
+from .SingleQuditDevice import SingleQuditDevice
+from .SingleQuditOps import load, rLx, Lz
 
 from .MultiQuditDevice import MultiQuditDevice
 from .MultiQuditOps import XY

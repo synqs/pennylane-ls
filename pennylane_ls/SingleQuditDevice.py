@@ -10,7 +10,6 @@ from .SingleQuditOps import Lz as remoteLz
 from .SingleQuditOps import rLx
 
 # operations for local devices
-from .LocalSingleQuditOps import RotX, LocalQuditObservable, LocalQuditOperation, Lz
 import requests
 import json
 
@@ -132,75 +131,3 @@ class SingleQuditDevice(Device):
 
     def reset(self):
         pass
-
-class LocalSingleQuditDevice(Device):
-    ## Define operation map for the experiment
-    _operation_map = {
-        "RotX": RotX,
-        "rLz": 'rLz',
-        "rLz2": 'rLz2'
-    }
-
-    name = "Single Qudit Quantum Simulator Simulator plugin that runs locally"
-    pennylane_requires = ">=0.16.0"
-    version = '0.0.1'
-    author = "Fred Jendrzejewski"
-
-    short_name = "synqs.sqs"
-
-    _observable_map = {
-        'Lz': Lz
-    }
-
-    def __init__(self,shots=None):
-        """
-        The initial part.
-        """
-        self.l = 3; # spin length
-        super().__init__(wires=1,shots=shots)
-        self.psi = 1j*np.zeros(int(self.l*2+1))
-        self.psi[0] = 1+0j
-
-    def pre_apply(self):
-        self.reset()
-
-    def apply(self, operation, wires, par):
-        """
-        The initial part.
-        """
-        # check with different operations ##
-        operation_class = self._operation_map[operation]
-        if issubclass(operation_class, LocalQuditOperation):
-            generator = operation_class.qudit_generator(wires)
-            if operation_class.num_params == 1:
-                Uop = scipy.linalg.expm(-1j*par[0]*generator)
-                self.psi = np.dot(Uop,self.psi)
-            else:
-                raise NotImplementedError("Operation {} with more than one parameter not implemented.".format(operation))
-        else:
-            raise NotImplementedError("Operation {} not implemented.".format(operation))
-
-
-    def expval(self, observable, wires, par):
-        """
-        Retrieve the requested observable expectation value.
-        """
-
-        observable_class = self._observable_map[observable]
-        if issubclass(observable_class, LocalQuditObservable):
-            operator = observable_class.qudit_operator(wires)
-            Oexp = np.dot(self.psi.T.conj(),np.dot(operator,self.psi))
-            return Oexp
-        raise NotImplementedError()
-
-    @property
-    def operations(self):
-        return set(self._operation_map.keys())
-
-    @property
-    def observables(self):
-        return set(self._observable_map.keys())
-
-    def reset(self):
-        self.psi = 1j*np.zeros(int(self.l*2+1))
-        self.psi[0] = 1+0j
