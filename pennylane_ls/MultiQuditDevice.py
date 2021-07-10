@@ -6,6 +6,7 @@ from pennylane import Device
 from pennylane import QubitDevice
 from pennylane.operation import Observable
 
+
 # operations for remote devices
 
 import requests
@@ -23,6 +24,14 @@ class MultiQuditDevice(Device):
 
     observables = {"Lz"}
     operations  = {"rLz", "rLx", "RX", "CNOT", "ZZ", "XY"}
+
+    _operation_map = {
+        "rLx": MultiQuditOps.rLx,
+        "rLz": MultiQuditOps.rLz,
+        "rLz2": MultiQuditOps.rLz2,
+        "XY": XY,
+        "ZZ": MultiQuditOps.ZZ,
+    }
 
     def __init__(self, wires=1,shots=1, username = None, password = None):
         """
@@ -73,6 +82,7 @@ class MultiQuditDevice(Device):
         """
 
         observable_class = self._observable_map[observable]
+        print(observable)
         if issubclass(observable_class, Observable):
 
             # submit the job
