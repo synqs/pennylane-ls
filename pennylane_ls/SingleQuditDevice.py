@@ -69,29 +69,22 @@ class SingleQuditDevice(Device):
         Retrieve the requested observable expectation value.
         """
 
-        observable_class = self._observable_map[observable]
-        if issubclass(observable_class, Observable):
-
-            # submit the job
-            m_obj = ('measure', [0], [])
-            url= self.url_prefix + "post_job/"
-            self.job_payload['experiment_0']['instructions'].append(m_obj)
-            job_response = requests.post(url, data={'json':json.dumps(self.job_payload),
-                                                         'username': self.username,'password':self.password})
-
-            job_id = (job_response.json())['job_id']
-
-            # obtain the job result
-            result_payload = {'job_id': job_id}
-            url= self.url_prefix + "get_job_result/"
-
-            result_response = requests.get(url, params={'json':json.dumps(result_payload),
-                                                        'username': self.username,'password':self.password})
-            results_dict = json.loads(result_response.text)
-            shots = results_dict["results"][0]['data']['memory']
-            shots = np.array([int(shot) for shot in shots])
+        try:
+            shots = self.sample(observable, wires, par)
             return shots.mean()
-        raise NotImplementedError()
+        except:
+            raise NotImplementedError()
+
+    def var(self, observable, wires, par):
+        """
+        Retrieve the requested observable variance.
+        """
+
+        try:
+            shots = self.sample(observable, wires, par)
+            return shots.var()
+        except:
+            raise NotImplementedError()
 
     def sample(self, observable, wires, par):
         """
@@ -118,6 +111,7 @@ class SingleQuditDevice(Device):
                                                         'username': self.username,'password':self.password})
             results_dict = json.loads(result_response.text)
             shots = results_dict["results"][0]['data']['memory']
+            shots = np.array([int(shot) for shot in shots])
             return shots
         raise NotImplementedError()
 
