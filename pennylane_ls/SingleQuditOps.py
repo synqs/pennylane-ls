@@ -7,7 +7,7 @@ class load(Operation):
     """The load operation"""
     num_params = 1
     num_wires = 1
-    par_domain = 'R'
+    par_domain = 'N'
 
     grad_method = None
     grad_recipe = None
