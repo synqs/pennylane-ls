@@ -3,23 +3,16 @@ import numpy as np
 import scipy
 
 from pennylane import Device
+from pennylane import QubitDevice
 from pennylane.operation import Observable
 
 # operations for remote devices
-from .SingleQuditOps import Lz
 
 import requests
 import json
 
 class MultiQuditDevice(Device):
     ## Define operation map for the experiment
-    _operation_map = {
-        "rLx": 'rLx',
-        "rLz": 'rLz',
-        "rLz2": 'rLz2',
-        "XY": 'XY',
-        "ZZ": 'ZZ',
-    }
 
     name = "Multi Qudit Quantum Simulator plugin"
     pennylane_requires = ">=0.16.0"
@@ -28,9 +21,8 @@ class MultiQuditDevice(Device):
 
     short_name = "synqs.sqs"
 
-    _observable_map = {
-        'Lz': Lz
-    }
+    observables = {"Lz"}
+    operations  = {"rLz", "rLx", "RX", "CNOT", "ZZ", "XY"}
 
     def __init__(self, wires=1,shots=1, username = None, password = None):
         """
@@ -131,14 +123,6 @@ class MultiQuditDevice(Device):
             shots = results_dict["results"][0]['data']['memory']
             return shots
         raise NotImplementedError()
-
-    @property
-    def operations(self):
-        return set(self._operation_map.keys())
-
-    @property
-    def observables(self):
-        return set(self._observable_map.keys())
 
     def reset(self):
         pass
