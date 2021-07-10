@@ -1,5 +1,7 @@
-from .SoPaExperiment import SoPaExperiment
-from .NaLiExperiment import NaLiExperiment
-from .SoPaOps import LoadMOT, Id, NumberOperator
-from .NaLiOps import X, H_mb
+from .SingleQuditDevice import SingleQuditDevice
+from .SingleQuditOps import load, rLx, Lz
+
+from .MultiQuditDevice import MultiQuditDevice
+from .MultiQuditOps import XY
+
 from ._version import __version__
