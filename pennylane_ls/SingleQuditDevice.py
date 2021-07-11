@@ -70,6 +70,9 @@ class SingleQuditDevice(Device):
         operation_class = self._operation_map[operation]
         if issubclass(operation_class, SingleQuditOperation):
             l_obj, qdim = operation_class.qudit_operator(par)
+            
+            # qdim is only non zero if the load gate is implied.
+            # so only in this case we will change it.
             if qdim:
                 self.qdim = qdim
             self.job_payload['experiment_0']['instructions'].append(l_obj)
