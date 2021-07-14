@@ -58,6 +58,7 @@ class MultiQuditDevice(Device):
         super().__init__(wires=wires,shots=shots)
         self.username = username
         self.password = password
+        #self.url_prefix = "http://qsimsim.synqs.org/multiqudit/"
         self.url_prefix = url 
 
     @classmethod
@@ -85,20 +86,15 @@ class MultiQuditDevice(Device):
 
     def apply(self, operation, wires, par):
         """
-        Apply the gates.
+        The initial part.
         """
-        # check with different operations
-        operation_class = self._operation_map[operation]
-        if issubclass(operation_class, MultiQuditOperation):
-            l_obj, qdim = operation_class.qudit_operator(par, wires)
-            
-            # qdim is only non zero if the load gate is implied.
-            # so only in this case we will change it.
-            if qdim:
-                self.qdim = qdim
+        # check with different operations ##
+        if par:
+            l_obj = (operation, wires.labels, par)
             self.job_payload['experiment_0']['instructions'].append(l_obj)
         else:
-            raise NotImplementedError()
+            l_obj = (operation, wires.labels, [])
+            self.job_payload['experiment_0']['instructions'].append(l_obj)
 
     def expval(self, observable, wires, par):
         """
@@ -131,6 +127,7 @@ class MultiQuditDevice(Device):
 
 
         job_id = (job_response.json())['job_id']
+        print(job_id)
         # obtain the job result
         result_payload = {'job_id': job_id}
         url= self.url_prefix + "get_job_result/"
