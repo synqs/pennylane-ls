@@ -4,7 +4,12 @@ import scipy
 
 from pennylane import Device
 from pennylane.operation import Observable
-from .MultiQuditOps import Lz, rLx, rLz, rLz2, XY, ZZ
+
+# operations
+from .MultiQuditOps import rLx, rLz, rLz2, LxLy, LzLz, load
+
+# observables
+from .MultiQuditOps import Z, Lz
 
 # operations for remote devices
 
@@ -22,15 +27,17 @@ class MultiQuditDevice(Device):
     short_name = "synqs.mqs"
 
     _observable_map = {
-        "Lz": Lz
+        "Lz": Lz,
+        'Z': Z
     }
 
     _operation_map = {
         "rLx": rLx,
         "rLz": rLz,
         "rLz2": rLz2,
-        "XY": XY,
-        "ZZ": ZZ,
+        "LxLy": LxLy,
+        "LzLz": LxLy,
+        "load": load
     }
 
     @property
@@ -60,7 +67,7 @@ class MultiQuditDevice(Device):
             supports_tensor_observables=True,
             returns_probs=False,
         )
-        
+
         return capabilities
 
     def pre_apply(self):
@@ -110,11 +117,13 @@ class MultiQuditDevice(Device):
             self.job_payload['experiment_0']['instructions'].append(m_obj)
 
         url= self.url_prefix + "post_job/"
+        print(self.job_payload)
         job_response = requests.post(url, data={'json':json.dumps(self.job_payload),
                                                         'username': self.username,'password':self.password})
 
-        job_id = (job_response.json())['job_id']
 
+        job_id = (job_response.json())['job_id']
+        print(job_id)
         # obtain the job result
         result_payload = {'job_id': job_id}
         url= self.url_prefix + "get_job_result/"
@@ -122,6 +131,7 @@ class MultiQuditDevice(Device):
         result_response = requests.get(url, params={'json':json.dumps(result_payload),
                                                     'username': self.username,'password':self.password})
         results_dict = json.loads(result_response.text)
+        print(results_dict)
         results = results_dict["results"][0]['data']['memory']
 
         num_obs = len(wires)
