@@ -103,7 +103,6 @@ class Id(MultiQuditOperation):
 
     @classmethod
     def qudit_operator(cls, par, wires):
-        print(par)
         pass
 
 ## Two qudit gates
@@ -116,8 +115,6 @@ class LxLy(MultiQuditOperation):
 
     @classmethod
     def qudit_operator(cls, par, wires):
-        print(par)
-        print(wires)
         theta = par[0]
         l_obj = ('LxLy', [wires[0],wires[1]], [theta%(2*np.pi)])
         return l_obj, False
@@ -130,8 +127,6 @@ class LzLz(MultiQuditOperation):
 
     @classmethod
     def qudit_operator(cls, par, wires):
-        print(par)
-        print(wires)
         theta = par[0]
         l_obj = ('LzLz', [wires[0],wires[1]], [theta%(2*np.pi)])
         return l_obj, False
@@ -157,4 +152,3 @@ class Lz(MultiQuditObservable):
     @classmethod
     def qudit_operator(cls,samples, qdim):
         return samples - qdim/2
-

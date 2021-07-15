@@ -58,7 +58,10 @@ class MultiQuditDevice(Device):
         super().__init__(wires=wires,shots=shots)
         self.username = username
         self.password = password
-        self.url_prefix = url 
+        if url:
+            self.url_prefix = url
+        else:
+            self.url_prefix = "http://qsimsim.synqs.org/multiqudit/"
 
     @classmethod
     def capabilities(cls):
@@ -91,7 +94,7 @@ class MultiQuditDevice(Device):
         operation_class = self._operation_map[operation]
         if issubclass(operation_class, MultiQuditOperation):
             l_obj, qdim = operation_class.qudit_operator(par, wires)
-            
+
             # qdim is only non zero if the load gate is implied.
             # so only in this case we will change it.
             if qdim:
@@ -125,7 +128,6 @@ class MultiQuditDevice(Device):
             self.job_payload['experiment_0']['instructions'].append(m_obj)
 
         url= self.url_prefix + "post_job/"
-        print(self.job_payload)
         job_response = requests.post(url, data={'json':json.dumps(self.job_payload),
                                                         'username': self.username,'password':self.password})
 
@@ -138,7 +140,6 @@ class MultiQuditDevice(Device):
         result_response = requests.get(url, params={'json':json.dumps(result_payload),
                                                     'username': self.username,'password':self.password})
         results_dict = json.loads(result_response.text)
-        print(results_dict)
         results = results_dict["results"][0]['data']['memory']
 
         num_obs = len(wires)
