@@ -53,6 +53,7 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Implementing local gauge invariance with atomic mixtures." href="Gauge_Theory.html" />
     <link rel="prev" title="Bosons in optical tweezers" href="Example_Hopping_Bosons.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -99,6 +100,11 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Squeezing in atomic qudits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Gauge_Theory.html">
+   Implementing local gauge invariance with atomic mixtures.
   </a>
  </li>
 </ul>
@@ -308,20 +314,20 @@
 <span class="sd">    apla ... angle of rotation</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="c1"># load atoms</span>
-    <span class="n">load</span><span class="p">(</span><span class="n">Nat</span><span class="p">,</span><span class="n">wires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">SingleQuditOps</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">Nat</span><span class="p">,</span><span class="n">wires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     
     <span class="c1"># rotate onto x</span>
-    <span class="n">rLx</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">wires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">rLz</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">wires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">SingleQuditOps</span><span class="o">.</span><span class="n">rLx</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">wires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">SingleQuditOps</span><span class="o">.</span><span class="n">rLz</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">wires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     
     <span class="c1"># evolution under the Hamiltonian</span>
     <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Ntrott</span><span class="p">):</span>
-        <span class="n">rLx</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="n">Ntrott</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">rLz2</span><span class="p">(</span><span class="n">kappa</span><span class="o">/</span><span class="n">Ntrott</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">SingleQuditOps</span><span class="o">.</span><span class="n">rLx</span><span class="p">(</span><span class="n">theta</span><span class="o">/</span><span class="n">Ntrott</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">SingleQuditOps</span><span class="o">.</span><span class="n">rLz2</span><span class="p">(</span><span class="n">kappa</span><span class="o">/</span><span class="n">Ntrott</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="c1"># and the final rotation to test the variance</span>
-    <span class="n">rLx</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">qml</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">Lz</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">SingleQuditOps</span><span class="o">.</span><span class="n">rLx</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">qml</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">SingleQuditOps</span><span class="o">.</span><span class="n">Z</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -336,9 +342,9 @@
 <span class="n">t2</span> <span class="o">=</span> <span class="mf">25e-3</span><span class="p">;</span>
 <span class="n">Lambda</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">;</span><span class="c1">#1.5</span>
 
-<span class="n">chi</span> <span class="o">=</span> <span class="n">Lambda</span><span class="o">*</span><span class="n">omegax</span><span class="o">/</span><span class="n">Nat</span><span class="p">;</span>
+<span class="n">chi</span> <span class="o">=</span> <span class="n">Lambda</span><span class="o">*</span><span class="nb">abs</span><span class="p">(</span><span class="n">omegax</span><span class="p">)</span><span class="o">/</span><span class="n">Nat</span><span class="p">;</span>
 
-<span class="n">Ntrott</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+<span class="n">Ntrott</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
@@ -351,7 +357,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(407.727436, requires_grad=True)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(485.4259, requires_grad=True)
 </pre></div>
 </div>
 </div>
@@ -363,7 +369,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 0: ──load(200)──rLx(1.57)──rLz(1.57)──rLx(0.157)──rLz2(0.00118)──rLx(0.157)──rLz2(0.00118)──rLx(0.157)──rLz2(0.00118)──rLx(0.157)──rLz2(0.00118)──rLx(0.157)──rLz2(0.00118)──rLx(0.157)──rLz2(0.00118)──rLx(0.157)──rLz2(0.00118)──rLx(0.157)──rLz2(0.00118)──rLx(0.157)──rLz2(0.00118)──rLx(0.157)──rLz2(0.00118)──rLx(0.157)──rLz2(0.00118)──rLx(0.157)──rLz2(0.00118)──rLx(0)──┤ Var[Lz] 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 0: ──load(200)──rLx(1.57)──rLz(1.57)──rLx(0.126)──rLz2(0.000942)──rLx(0.126)──rLz2(0.000942)──rLx(0.126)──rLz2(0.000942)──rLx(0.126)──rLz2(0.000942)──rLx(0.126)──rLz2(0.000942)──rLx(0.126)──rLz2(0.000942)──rLx(0.126)──rLz2(0.000942)──rLx(0.126)──rLz2(0.000942)──rLx(0.126)──rLz2(0.000942)──rLx(0.126)──rLz2(0.000942)──rLx(0.126)──rLz2(0.000942)──rLx(0.126)──rLz2(0.000942)──rLx(0.126)──rLz2(0.000942)──rLx(0.126)──rLz2(0.000942)──rLx(0.126)──rLz2(0.000942)──rLx(0)──┤ Var[Z] 
 </pre></div>
 </div>
 </div>
@@ -398,9 +404,9 @@ step 10
 
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Number Squeezing&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">180</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="n">alphas</span><span class="p">),</span> <span class="n">number_squeezing_factor_to_db</span><span class="p">(</span><span class="n">l</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">variances_1</span><span class="p">),</span><span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">lw</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;simulated  15ms&quot;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="n">alphas</span><span class="p">),</span> <span class="n">number_squeezing_factor_to_db</span><span class="p">(</span><span class="n">l</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">variances_1</span><span class="p">),</span><span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">lw</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;simulated  15ms&quot;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_strobel_15</span><span class="o">.</span><span class="n">dB</span><span class="p">,</span> <span class="n">data_strobel_15</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;experiment 15ms&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">180</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="n">alphas</span><span class="p">),</span> <span class="n">number_squeezing_factor_to_db</span><span class="p">(</span><span class="n">l</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">variances_2</span><span class="p">),</span><span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">lw</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;simulated  25ms&quot;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">rad2deg</span><span class="p">(</span><span class="n">alphas</span><span class="p">),</span> <span class="n">number_squeezing_factor_to_db</span><span class="p">(</span><span class="n">l</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">variances_2</span><span class="p">),</span><span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">lw</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;simulated  25ms&quot;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_strobel_25</span><span class="o">.</span><span class="n">dB</span><span class="p">,</span> <span class="n">data_strobel_25</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span> <span class="s1">&#39;bo&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;experiment 25ms&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Number Squeezing in $dB$&#39;</span><span class="p">)</span>
@@ -410,7 +416,7 @@ step 10
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fbb78030fa0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fcc6c0baf40&gt;
 </pre></div>
 </div>
 <img alt="_images/Fisher_information_20_1.png" src="_images/Fisher_information_20_1.png" />
@@ -444,6 +450,7 @@ step 10
         <div class='prev-next-bottom'>
             
     <a class='left-prev' id="prev-link" href="Example_Hopping_Bosons.html" title="previous page">Bosons in optical tweezers</a>
+    <a class='right-next' id="next-link" href="Gauge_Theory.html" title="next page">Implementing local gauge invariance with atomic mixtures.</a>
 
         </div>
         
