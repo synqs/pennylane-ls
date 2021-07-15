@@ -4,7 +4,15 @@ import scipy
 
 from pennylane import Device
 from pennylane.operation import Observable
-from .MultiQuditOps import Lz, rLx, rLz, rLz2, XY, ZZ
+
+# observables
+from .MultiQuditOps import Lz, Z
+
+# operations
+from .MultiQuditOps import rLx, rLz, rLz2, LxLy, LzLz, load
+
+# classes
+from .MultiQuditOps import MultiQuditObservable, MultiQuditOperation
 
 # operations for remote devices
 
@@ -22,15 +30,17 @@ class MultiQuditDevice(Device):
     short_name = "synqs.mqs"
 
     _observable_map = {
-        "Lz": Lz
+        "Lz": Lz,
+        'Z': Z
     }
 
     _operation_map = {
         "rLx": rLx,
         "rLz": rLz,
         "rLz2": rLz2,
-        "XY": XY,
-        "ZZ": ZZ,
+        "LxLy": LxLy,
+        "LzLz": LzLz,
+        "load": load
     }
 
     @property
@@ -41,14 +51,17 @@ class MultiQuditDevice(Device):
     def observables(self):
         return set(self._observable_map.keys())
 
-    def __init__(self, wires=1,shots=1, username = None, password = None):
+    def __init__(self, wires=1,shots=1, url = None, username = None, password = None):
         """
         The initial part.
         """
         super().__init__(wires=wires,shots=shots)
         self.username = username
         self.password = password
-        self.url_prefix = "http://qsimsim.synqs.org/multiqudit/"
+        if url:
+            self.url_prefix = url
+        else:
+            self.url_prefix = "http://qsimsim.synqs.org/multiqudit/"
 
     @classmethod
     def capabilities(cls):
@@ -60,7 +73,7 @@ class MultiQuditDevice(Device):
             supports_tensor_observables=True,
             returns_probs=False,
         )
-        
+
         return capabilities
 
     def pre_apply(self):
@@ -75,15 +88,20 @@ class MultiQuditDevice(Device):
 
     def apply(self, operation, wires, par):
         """
-        The initial part.
+        Apply the gates.
         """
-        # check with different operations ##
-        if par:
-            l_obj = (operation, wires.labels, par)
+        # check with different operations
+        operation_class = self._operation_map[operation]
+        if issubclass(operation_class, MultiQuditOperation):
+            l_obj, qdim = operation_class.qudit_operator(par, wires)
+
+            # qdim is only non zero if the load gate is implied.
+            # so only in this case we will change it.
+            if qdim:
+                self.qdim = qdim
             self.job_payload['experiment_0']['instructions'].append(l_obj)
         else:
-            l_obj = (operation, wires.labels, [])
-            self.job_payload['experiment_0']['instructions'].append(l_obj)
+            raise NotImplementedError()
 
     def expval(self, observable, wires, par):
         """
@@ -113,8 +131,8 @@ class MultiQuditDevice(Device):
         job_response = requests.post(url, data={'json':json.dumps(self.job_payload),
                                                         'username': self.username,'password':self.password})
 
-        job_id = (job_response.json())['job_id']
 
+        job_id = (job_response.json())['job_id']
         # obtain the job result
         result_payload = {'job_id': job_id}
         url= self.url_prefix + "get_job_result/"
