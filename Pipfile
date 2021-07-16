@@ -9,6 +9,8 @@ pennylane = "*"
 matplotlib = "*"
 strawberryfields = "*"
 pandas = "*"
+wheel = "*"
+twine = "*"
 
 [dev-packages]
 
