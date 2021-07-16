@@ -89,7 +89,8 @@ class rLz2(MultiQuditOperation):
 
     @classmethod
     def qudit_operator(cls, par, wires):
-        l_obj = ('rLz2', [wires[0]], par)
+        theta = par[0]
+        l_obj = ('rLz2', [wires[0]], [theta%(2*np.pi)])
         return l_obj, False
 
 class Id(MultiQuditOperation):
