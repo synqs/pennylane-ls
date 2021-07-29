@@ -5,11 +5,13 @@ import scipy
 from pennylane import Device, DeviceError
 from pennylane.operation import Observable
 
+from collections import OrderedDict
+
 # observables
 from .FermionOps import ParticleNumber
 
 # operations
-from .FermionOps import Load, HartreeFock, Hop, Inter, Phase, PauliZ
+from .FermionOps import Load, HartreeFock, Hop, Inter, Phase, PauliZ, Identity
 
 # classes
 from .FermionOps import FermionObservable, FermionOperation
@@ -41,6 +43,7 @@ class FermionDevice(Device):
     _observable_map = {
         'ParticleNumber': ParticleNumber,
         'PauliZ': PauliZ,
+        'Identity':Identity,
     }
 
     def __init__(self, wires=8, shots=1, username=None, password=None):
@@ -84,6 +87,9 @@ class FermionDevice(Device):
         """
         Retrieve the requested observable expectation value.
         """
+        if self._observable_map[observable] == Identity:
+            return 1.0
+
         shots = self.sample(observable, wires, par)
         if self._observable_map[observable] == PauliZ:
             shots = np.ones(shots.shape) - 2*shots
@@ -94,6 +100,9 @@ class FermionDevice(Device):
         """
         Retrieve the requested observable variance.
         """
+        if self._observable_map[observable] == Identity:
+            return 0.0
+
         shots = self.sample(observable, wires, par)
         if self._observable_map[observable] == PauliZ:
             shots = np.ones(shots.shape) - 2*shots
@@ -108,6 +117,20 @@ class FermionDevice(Device):
         if issubclass(observable_class, FermionObservable):
             return self._samples
         raise NotImplementedError()
+
+    def probability(self, wires=None):
+        shots = self._samples
+        if wires is not None:
+            shots = shots[:,wires.tolist()]
+
+        #np.sort(np.unique(shots, axis=0, return_counts=True, dtype=[('pattern', ), ('probability', )]), order='pattern')
+
+        patterns, probabilities = np.unique(shots, axis=0, return_counts=True)
+        sort_labels = np.argsort(patterns, axis=0)
+        patterns = patterns[sort_labels]
+        probabilities = probabilities[sort_labels]
+
+        return OrderedDict(zip(map(tuple, patterns), probabilities))
 
     def pre_measure(self):
         # submit the job

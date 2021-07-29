@@ -130,3 +130,16 @@ class PauliZ(FermionObservable):
     @classmethod
     def fermion_operator(cls, samples):
         return samples
+
+class Identity(FermionObservable):
+    """PauliZ observable
+
+    This should return 1-2*ParticleNumber
+    """
+    num_params = 0
+    num_wires = AnyWires
+    par_domain = None
+
+    @classmethod
+    def fermion_operator(cls, samples):
+        return samples
