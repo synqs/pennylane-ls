@@ -126,9 +126,15 @@ class FermionDevice(Device):
         #np.sort(np.unique(shots, axis=0, return_counts=True, dtype=[('pattern', ), ('probability', )]), order='pattern')
 
         patterns, probabilities = np.unique(shots, axis=0, return_counts=True)
-        sort_labels = np.argsort(patterns, axis=0)
+
+        patterns_decimal_repr=np.packbits(patterns.astype('int32'), axis=1)
+        patterns_decimal_repr=patterns_decimal_repr.ravel()
+        sort_labels = np.argsort(patterns_decimal_repr, axis=0)
+
         patterns = patterns[sort_labels]
         probabilities = probabilities[sort_labels]
+
+        probabilities = probabilities/probabilities.sum()
 
         return OrderedDict(zip(map(tuple, patterns), probabilities))
 
@@ -139,6 +145,7 @@ class FermionDevice(Device):
             m_obj = ('measure', [wire], [])
             self.job_payload['experiment_0']['instructions'].append(m_obj)
         url= self.url_prefix + "post_job/"
+        print(self.job_payload)
         job_response = requests.post(url, data={'json':json.dumps(self.job_payload),
                                                      'username': self.username,'password':self.password})
 
