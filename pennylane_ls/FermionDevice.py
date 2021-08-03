@@ -38,7 +38,7 @@ class FermionDevice(Device):
     version = '0.2.0'
     author = "Vladimir and Donald"
 
-    short_name = "synqs.ls"
+    short_name = "synqs.fs"
 
     _observable_map = {
         'ParticleNumber': ParticleNumber,

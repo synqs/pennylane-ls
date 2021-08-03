@@ -3,7 +3,7 @@ from setuptools import setup
 pennylane_devices_list = [
     'synqs.sqs = pennylane_ls:SingleQuditDevice',
     'synqs.mqs = pennylane_ls:MultiQuditDevice',
-    'synqs.ls = pennylane_ls:FermionDevice',
+    'synqs.fs = pennylane_ls:FermionDevice',
 ]
 
 setup(
