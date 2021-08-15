@@ -1,13 +1,14 @@
 from setuptools import setup
 
-pennylane_devices_list=[
+pennylane_devices_list = [
     'synqs.sqs = pennylane_ls:SingleQuditDevice',
-    'synqs.mqs = pennylane_ls:MultiQuditDevice'
+    'synqs.mqs = pennylane_ls:MultiQuditDevice',
+    'synqs.fs = pennylane_ls:FermionDevice',
 ]
 
 setup(
     name='pennylane-ls',
-    version='0.1.0',
+    version='0.2.0',
     description='A Pennylane plugin for cold atom quantum simulators',
     url='https://www.github.com/synqs/pennylane-ls',
     author='Fred Jendrzejewski',

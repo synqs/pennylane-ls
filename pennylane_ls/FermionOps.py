@@ -1,5 +1,6 @@
 import abc
 
+from pennylane.wires import Wires
 from pennylane.operation import Operation, AnyWires, AllWires
 from pennylane.operation import Observable
 import numpy as np
@@ -30,8 +31,8 @@ class FermionObservable(Observable):
         '''
         raise NotImplementedError()
 
-class load(FermionOperation):
-    """The load operation"""
+class Load(FermionOperation):
+    """The load preparation"""
     num_params = 0
     num_wires = 1
     par_domain = None
@@ -40,11 +41,28 @@ class load(FermionOperation):
     grad_recipe = None
 
     @classmethod
-    def fermion_operator(cls, wires,par):
+    def fermion_operator(cls, wires, par):
         l_obj = ('load', wires.tolist(), [])
         return l_obj
 
-class hop(FermionOperation):
+class HartreeFock(FermionOperation):
+    """The Hartree Fock preparation"""
+    num_params = 2
+    num_wires = AllWires
+    par_domain = 'I'
+
+    @classmethod
+    def fermion_operator(cls, wires, par):
+        nalpha, nbeta = par
+        l_obj = list()
+        for idx, wire in enumerate(wires):
+            if idx % 2 == 0 and idx//2 < nalpha:
+                l_obj.append(Load.fermion_operator(Wires(wire), None))
+            elif (idx-1) % 2 == 0 and (idx-1)//2 < nbeta:
+                l_obj.append(Load.fermion_operator(Wires(wire), None))
+        return l_obj
+
+class Hop(FermionOperation):
     """The hop operation"""
     num_params = 1
     num_wires = 4
@@ -56,10 +74,10 @@ class hop(FermionOperation):
     @classmethod
     def fermion_operator(cls, wires,par):
         theta = par[0];
-        l_obj = ('hop', wires.tolist(), [theta%(2*np.pi)])
+        l_obj = ('hop', wires.tolist(), [theta/2%(2*np.pi)])
         return l_obj
 
-class inter(FermionOperation):
+class Inter(FermionOperation):
     """The onsite-interaction operation"""
     num_params = 1
     num_wires = AllWires#AnyWires
@@ -74,7 +92,7 @@ class inter(FermionOperation):
         l_obj = ('int', wires.tolist(), [theta%(2*np.pi)])
         return l_obj
 
-class phase(FermionOperation):
+class Phase(FermionOperation):
     """The phase operation"""
     num_params = 1
     num_wires = 2
@@ -96,7 +114,32 @@ class ParticleNumber(FermionObservable):
     num_wires = AnyWires
     par_domain = None
 
+    @classmethod
+    def fermion_operator(cls, samples):
+        return samples
+
+class PauliZ(FermionObservable):
+    """PauliZ observable
+
+    This should return 1-2*ParticleNumber
+    """
+    num_params = 0
+    num_wires = 1
+    par_domain = None
 
     @classmethod
-    def fermion_operator(cls,samples):
+    def fermion_operator(cls, samples):
+        return samples
+
+class Identity(FermionObservable):
+    """PauliZ observable
+
+    This should return 1-2*ParticleNumber
+    """
+    num_params = 0
+    num_wires = AnyWires
+    par_domain = None
+
+    @classmethod
+    def fermion_operator(cls, samples):
         return samples
