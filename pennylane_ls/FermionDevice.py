@@ -46,7 +46,7 @@ class FermionDevice(Device):
         'Identity':Identity,
     }
 
-    def __init__(self, wires=8, shots=1, username=None, password=None):
+    def __init__(self, wires=8, shots=1, username=None, password=None, url=None):
         """
         The initial part.
         """
@@ -55,8 +55,12 @@ class FermionDevice(Device):
         super().__init__(wires=wires,shots=shots)
         self.username = username
         self.password = password
-        self.url_prefix = "http://qsimsim.synqs.org/fermions/"
         self._samples = None
+
+        if url:
+            self.url_prefix = url
+        else:
+            self.url_prefix = "http://qsimsim.synqs.org/fermions/"
 
     def pre_apply(self):
         self.reset()
