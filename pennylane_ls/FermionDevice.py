@@ -149,7 +149,6 @@ class FermionDevice(Device):
             m_obj = ('measure', [wire], [])
             self.job_payload['experiment_0']['instructions'].append(m_obj)
         url= self.url_prefix + "post_job/"
-        print(self.job_payload)
         job_response = requests.post(url, data={'json':json.dumps(self.job_payload),
                                                      'username': self.username,'password':self.password})
 
