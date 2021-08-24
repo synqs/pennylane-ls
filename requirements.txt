@@ -30,7 +30,7 @@ json5 @ file:///home/conda/feedstock_root/build_artifacts/json5_1600692310011/wo
 jsonschema @ file:///home/conda/feedstock_root/build_artifacts/jsonschema_1602551949684/work
 jupyter-client @ file:///home/conda/feedstock_root/build_artifacts/jupyter_client_1598486169312/work
 jupyter-core @ file:///Users/runner/miniforge3/conda-bld/jupyter_core_1602537297490/work
-jupyterlab==2.2.8
+jupyterlab==2.2.10
 jupyterlab-pygments @ file:///home/conda/feedstock_root/build_artifacts/jupyterlab_pygments_1601375948261/work
 jupyterlab-server @ file:///home/conda/feedstock_root/build_artifacts/jupyterlab_server_1593951277307/work
 llvmlite==0.34.0
