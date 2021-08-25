@@ -111,7 +111,7 @@ class Hop(FermionOperation):
     @qml.qnode(FermionicDevice)
     def quantum_circuit(alpha=0):
         Load(wires = 0)
-        Load(wires = 3)
+        Hop.
         return qml.sample(ParticleNumber(wires=FermionicDevice.wires))
 
     """
@@ -150,14 +150,14 @@ class Inter(FermionOperation):
     """
 
     num_params = 1
-    num_wires = AnyWires #AllWires#AnyWires
+    num_wires = AllWires #AllWires#AnyWires
     par_domain = 'R'
 
     grad_method = None
     grad_recipe = None
 
     @classmethod
-    def fermion_operator(cls, wires,par):
+    def fermion_operator(cls, wires, par ):
         theta = par[0]
         l_obj = ('int', wires.tolist(), [theta%(2*np.pi)])
         return l_obj
@@ -199,7 +199,7 @@ class Phase(FermionOperation):
 class ParticleNumber(FermionObservable):
     """ParticleNumber observable
 
-    expectation value of particle number operator on specific wire
+    expectation value of particle number operator of all wires
 
     Args:
         arg1 (int): number of the wire

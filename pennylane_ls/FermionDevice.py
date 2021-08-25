@@ -111,7 +111,7 @@ class FermionDevice(Device):
         if self._observable_map[observable] == PauliZ:
             shots = np.ones(shots.shape) - 2*shots
         mean = np.mean(shots, axis=0)
-        return sum(mean[wires.tolist()])
+        return (mean[wires.tolist()])
 
     def var(self, observable=None, wires=None, par=None):
         """
@@ -124,7 +124,7 @@ class FermionDevice(Device):
         if self._observable_map[observable] == PauliZ:
             shots = np.ones(shots.shape) - 2*shots
         var = np.var(shots, axis=0)
-        return sum(var[wires.tolist()])
+        return (var[wires.tolist()])
 
     def sample(self, observable, wires, par):
         """
