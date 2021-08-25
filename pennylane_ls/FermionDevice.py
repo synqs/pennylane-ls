@@ -61,6 +61,19 @@ class FermionDevice(Device):
             self.url_prefix = url
         else:
             self.url_prefix = "http://qsimsim.synqs.org/fermions/"
+    
+    @classmethod
+    def capabilities(cls):
+
+        capabilities = super().capabilities().copy()
+        capabilities.update(
+            model="fermions",
+            supports_finite_shots=True,
+            supports_tensor_observables=True,
+            returns_probs=False,
+        )
+
+        return capabilities
 
     def pre_apply(self):
         self.reset()

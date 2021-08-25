@@ -32,7 +32,24 @@ class FermionObservable(Observable):
         raise NotImplementedError()
 
 class Load(FermionOperation):
-    """The load preparation"""
+    """The load preparation
+
+    Loads one fermionic particle into a wire.
+
+    Args:
+        arg1 (int): number of the wire
+
+    **Example**
+
+    FermionicDevice = FermionDevice(shots = 5, username = username, password = password)
+
+    @qml.qnode(FermionicDevice)
+    def quantum_circuit(alpha=0):
+        Load(wires = 0)
+        Load(wires = 3)
+        return qml.sample(ParticleNumber(wires=FermionicDevice.wires))
+
+    """
     num_params = 0
     num_wires = 1
     par_domain = None
@@ -46,7 +63,24 @@ class Load(FermionOperation):
         return l_obj
 
 class HartreeFock(FermionOperation):
-    """The Hartree Fock preparation"""
+    """The Hartree Fock preparation
+
+        Loads one fermionic particle into a wire.
+
+    Args:
+        arg1 (int): number of the wire
+
+    **Example**
+
+    FermionicDevice = FermionDevice(shots = 5, username = username, password = password)
+
+    @qml.qnode(FermionicDevice)
+    def quantum_circuit(alpha=0):
+        Load(wires = 0)
+        Load(wires = 3)
+        return qml.sample(ParticleNumber(wires=FermionicDevice.wires))
+
+    """
     num_params = 2
     num_wires = AllWires
     par_domain = 'I'
@@ -63,7 +97,25 @@ class HartreeFock(FermionOperation):
         return l_obj
 
 class Hop(FermionOperation):
-    """The hop operation"""
+    """The hop operation
+    
+        One fermionic particle moves from one wire to another wire.
+
+    Args:
+        arg1 (int): number of the wire
+
+    **Example**
+
+    FermionicDevice = FermionDevice(shots = 5, username = username, password = password)
+
+    @qml.qnode(FermionicDevice)
+    def quantum_circuit(alpha=0):
+        Load(wires = 0)
+        Load(wires = 3)
+        return qml.sample(ParticleNumber(wires=FermionicDevice.wires))
+
+    """
+
     num_params = 1
     num_wires = 4
     par_domain = 'R'
@@ -73,14 +125,32 @@ class Hop(FermionOperation):
 
     @classmethod
     def fermion_operator(cls, wires,par):
-        theta = par[0];
+        theta = par[0]
         l_obj = ('hop', wires.tolist(), [theta/2%(2*np.pi)])
         return l_obj
 
 class Inter(FermionOperation):
-    """The onsite-interaction operation"""
+    """The interaction of fermionic modes
+ 
+        fermionic particle interact with each other
+
+    Args:
+        arg1 (int): number of the wire
+
+    **Example**
+
+    FermionicDevice = FermionDevice(shots = 5, username = username, password = password)
+
+    @qml.qnode(FermionicDevice)
+    def quantum_circuit(alpha=0):
+        Load(wires = 0)
+        Load(wires = 3)
+        return qml.sample(ParticleNumber(wires=FermionicDevice.wires))
+
+    """
+
     num_params = 1
-    num_wires = AllWires#AnyWires
+    num_wires = AnyWires #AllWires#AnyWires
     par_domain = 'R'
 
     grad_method = None
@@ -88,12 +158,30 @@ class Inter(FermionOperation):
 
     @classmethod
     def fermion_operator(cls, wires,par):
-        theta = par[0];
+        theta = par[0]
         l_obj = ('int', wires.tolist(), [theta%(2*np.pi)])
         return l_obj
 
 class Phase(FermionOperation):
-    """The phase operation"""
+    """The phase operation
+ 
+        fermionic particle interact with each other
+
+    Args:
+        arg1 (int): number of the wire
+
+    **Example**
+
+    FermionicDevice = FermionDevice(shots = 5, username = username, password = password)
+
+    @qml.qnode(FermionicDevice)
+    def quantum_circuit(alpha=0):
+        Load(wires = 0)
+        Load(wires = 3)
+        return qml.sample(ParticleNumber(wires=FermionicDevice.wires))
+
+    """
+
     num_params = 1
     num_wires = 2
     par_domain = 'R'
@@ -103,13 +191,31 @@ class Phase(FermionOperation):
 
     @classmethod
     def fermion_operator(cls, wires,par):
-        theta = par[0];
+        theta = par[0]
         l_obj = ('phase', wires.tolist(), [theta%(2*np.pi)])
         return l_obj
 
 
 class ParticleNumber(FermionObservable):
-    """ParticleNumber observable"""
+    """ParticleNumber observable
+
+    expectation value of particle number operator on specific wire
+
+    Args:
+        arg1 (int): number of the wire
+
+    **Example**
+
+    FermionicDevice = FermionDevice(shots = 5, username = username, password = password)
+
+    @qml.qnode(FermionicDevice)
+    def quantum_circuit(alpha=0):
+        Load(wires = 0)
+        Load(wires = 3)
+        return qml.sample(ParticleNumber(wires=FermionicDevice.wires))
+
+    """
+
     num_params = 0
     num_wires = AnyWires
     par_domain = None
@@ -121,7 +227,7 @@ class ParticleNumber(FermionObservable):
 class PauliZ(FermionObservable):
     """PauliZ observable
 
-    This should return 1-2*ParticleNumber
+    expectation value of 1-2*ParticleNumber on a specific wire.
     """
     num_params = 0
     num_wires = 1
@@ -132,9 +238,9 @@ class PauliZ(FermionObservable):
         return samples
 
 class Identity(FermionObservable):
-    """PauliZ observable
+    """Identity observable
 
-    This should return 1-2*ParticleNumber
+    expectation value of the identity operator
     """
     num_params = 0
     num_wires = AnyWires
