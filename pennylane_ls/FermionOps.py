@@ -63,23 +63,7 @@ class Load(FermionOperation):
         return l_obj
 
 class HartreeFock(FermionOperation):
-    """The Hartree Fock preparation
-
-        Loads one fermionic particle into a wire.
-
-    Args:
-        arg1 (int): number of the wire
-
-    **Example**
-
-    FermionicDevice = FermionDevice(shots = 5, username = username, password = password)
-
-    @qml.qnode(FermionicDevice)
-    def quantum_circuit(alpha=0):
-        Load(wires = 0)
-        Load(wires = 3)
-        return qml.sample(ParticleNumber(wires=FermionicDevice.wires))
-
+    """The Hartree Fock preparation.
     """
     num_params = 2
     num_wires = AllWires
@@ -98,11 +82,15 @@ class HartreeFock(FermionOperation):
 
 class Hop(FermionOperation):
     """The hop operation
-    
-        One fermionic particle moves from one wire to another wire.
+
+    One fermionic particle moves from one wire to another wire. The gate implements the transformation:
+
+    .. math::
+        G^{\mathrm{hop}}_{j,k}(\theta) = \exp(-i \theta/2 \sum_{\sigma}(c_{j,\sigma}^\dagger c_{k,\sigma} + \text{h.c}))
 
     Args:
-        arg1 (int): number of the wire
+        wires (int): the four indices of the wires that are coupled.
+        par (float): the angle of the gate.
 
     **Example**
 
@@ -111,9 +99,8 @@ class Hop(FermionOperation):
     @qml.qnode(FermionicDevice)
     def quantum_circuit(alpha=0):
         Load(wires = 0)
-        Hop.
+        Hop(alpha, wires=[0,1,2,3])
         return qml.sample(ParticleNumber(wires=FermionicDevice.wires))
-
     """
 
     num_params = 1
@@ -131,11 +118,15 @@ class Hop(FermionOperation):
 
 class Inter(FermionOperation):
     """The interaction of fermionic modes
- 
-        fermionic particle interact with each other
+
+    Fermionic particle interact with each other on each site. The gate implements the transformation:
+
+     .. math::
+         G^{\mathrm{int}}(\theta) = \exp(-i theta \sum_{j=0}^{n-1} n_{j,\uparrow} n_{j,\downarrow})
 
     Args:
-        arg1 (int): number of the wire
+        wires (int): the indices of the wires that are coupled.
+        par (float): the angle of the gate.
 
     **Example**
 
@@ -144,9 +135,9 @@ class Inter(FermionOperation):
     @qml.qnode(FermionicDevice)
     def quantum_circuit(alpha=0):
         Load(wires = 0)
-        Load(wires = 3)
+        Load(wires = 1)
+        Inter(alpha, wires=[0,1,2,3,4,5,6,7])
         return qml.sample(ParticleNumber(wires=FermionicDevice.wires))
-
     """
 
     num_params = 1
@@ -163,12 +154,16 @@ class Inter(FermionOperation):
         return l_obj
 
 class Phase(FermionOperation):
-    """The phase operation
- 
-        fermionic particle interact with each other
+    """The phase operation.
+
+    Application of a local chemical potential. The gate implements the transformation:
+
+     .. math::
+         G^{\mathrm{int}}_j(\theta) = \exp(-i theta (n_{j,\uparrow} + n_{j,\downarrow}))
 
     Args:
-        arg1 (int): number of the wire
+        wires (int): the four indices of the wires that are coupled.
+        par (float): the angle of the gate.
 
     **Example**
 
@@ -177,7 +172,8 @@ class Phase(FermionOperation):
     @qml.qnode(FermionicDevice)
     def quantum_circuit(alpha=0):
         Load(wires = 0)
-        Load(wires = 3)
+        Load(wires = 1)
+        Phase(alpha, wires = [0,1])
         return qml.sample(ParticleNumber(wires=FermionicDevice.wires))
 
     """
