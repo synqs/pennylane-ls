@@ -11,13 +11,26 @@ We also provide a few examples, where we describe published experiments with qua
 
 Internally, it allows us to run experiments that are controlled by the [Labscript Suite](https://github.com/labscript-suite/) through the interface and the with the features that [Pennylane](https://pennylane.ai/) offers. It will connect to a control server which exposes the atoms through a json interface. The development for that server is happening in [labscript-qc](https://github.com/synqs/labscript-qc).
 
-# Get started
+# Get started with the examples
 
-The released versions are installed with a simple:
+We are internally working with a [quantum hardware simulator](http://qsimsim.synqs.org/) to which everyone can register.  Then you can simply start hacking on one of the provided [examples](https://github.com/synqs/pennylane-ls/tree/master/examples). The necessary steps are:
+
+1.) Install pennylane-ls with pip:
 
 `pip install pennylane-ls`
 
-Then you can simply start hacking on one of the provided [examples](https://github.com/synqs/pennylane-ls/tree/master/examples). Make sure that you got your credentials right. 
+2.) Create a user account on our quantum hardware simulator [qsimsim](https://qsimsim.synqs.org).
 
-- We are internally working with a [quantum hardware simulator](http://qsimsim.synqs.org/) to which everyone can register. 
-- For connecting real hardware you can check out [our labscript-qc](https://github.com/synqs/labscript-qc) repo.
+3.) Download one of the example notebooks.
+4.) Create the `credentials.py` in the same directory as the. Its file content should be:
+
+```
+username = 'YOUR-USER-NAME' #Put here your username
+password = 'YOUR-PASSWORD' #and the pwd
+```
+5.) Open the jupyter notebook and have fun.
+
+6.) If something went wrong contact us, open an issue or contribute.
+
+
+For connecting real hardware you can check out [our labscript-qc](https://github.com/synqs/labscript-qc) repo.
