@@ -4,7 +4,7 @@
 format: jb-book
 root: intro
 chapters:
-- file: Example_Hopping_Bosons
 - file: Fermions_in_double_well
 - file: Fisher_information
+- file: Example_Hopping_Bosons
 - file: Gauge_Theory
