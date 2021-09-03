@@ -51,7 +51,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Bosons in optical tweezers" href="Example_Hopping_Bosons.html" />
+    <link rel="next" title="Example Notebook for the tunneling Fermions" href="Fermions_in_double_well.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -90,11 +90,6 @@
 </ul>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="Example_Hopping_Bosons.html">
-   Bosons in optical tweezers
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="Fermions_in_double_well.html">
    Example Notebook for the tunneling Fermions
   </a>
@@ -102,6 +97,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="Fisher_information.html">
    Squeezing in atomic qudits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Example_Hopping_Bosons.html">
+   Bosons in optical tweezers
   </a>
  </li>
  <li class="toctree-l1">
@@ -191,6 +191,19 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#get-started-with-the-examples">
+   Get started with the examples
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -202,6 +215,21 @@
   <div class="section" id="welcome-to-our-examples-on-quantum-circuits-and-cold-atoms">
 <h1>Welcome to our examples on  quantum circuits and cold atoms<a class="headerlink" href="#welcome-to-our-examples-on-quantum-circuits-and-cold-atoms" title="Permalink to this headline">¶</a></h1>
 <p>In this book we collect examples of how we can describe experiments in cold atoms with atomic circuits. We will extend this step-by-step and all contributions are welcome.</p>
+<div class="section" id="get-started-with-the-examples">
+<h2>Get started with the examples<a class="headerlink" href="#get-started-with-the-examples" title="Permalink to this headline">¶</a></h2>
+<p>Here, are the steps to get started with a simple jupyter notebook example:</p>
+<p>1.) Install pennylane-ls with pip:</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pennylane-ls</span></code></p>
+<p>2.) Create a user account on our quantum hardware simulator <a class="reference external" href="https://qsimsim.synqs.org">qsimsim</a>.</p>
+<p>3.) Download one of the example notebooks.
+4.) Create the <code class="docutils literal notranslate"><span class="pre">credentials.py</span></code> in the same directory as the. Its file content should be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">username</span> <span class="o">=</span> <span class="s1">&#39;YOUR-USER-NAME&#39;</span> <span class="c1">#Put here your username</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s1">&#39;YOUR-PASSWORD&#39;</span> <span class="c1">#and the pwd</span>
+</pre></div>
+</div>
+<p>5.) Open the jupyter notebook and have fun.
+6.) If something went wrong contact us, open an issue or contribute.</p>
+</div>
 <div class="toctree-wrapper compound">
 </div>
 </div>
@@ -236,10 +264,10 @@
 <div class='prev-next-bottom'>
     
      <div id="next">
-        <a class="right-next" href="Example_Hopping_Bosons.html" title="next page">
+        <a class="right-next" href="Fermions_in_double_well.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Bosons in optical tweezers</p>
+                <p class="prevnext-title">Example Notebook for the tunneling Fermions</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>

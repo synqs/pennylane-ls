@@ -51,7 +51,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Squeezing in atomic qudits" href="Fisher_information.html" />
+    <link rel="prev" title="Bosons in optical tweezers" href="Example_Hopping_Bosons.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -90,11 +90,6 @@
 </ul>
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="Example_Hopping_Bosons.html">
-   Bosons in optical tweezers
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="Fermions_in_double_well.html">
    Example Notebook for the tunneling Fermions
   </a>
@@ -102,6 +97,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="Fisher_information.html">
    Squeezing in atomic qudits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Example_Hopping_Bosons.html">
+   Bosons in optical tweezers
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -256,10 +256,30 @@
 </div>
 </div>
 </div>
+<p>Make sure that you followed the necessary steps for obtaining the credentials as desribed in the <a class="reference external" href="https://synqs.github.io/pennylane-ls/intro.html">introduction</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pennylane_ls</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">heroku_credentials</span> <span class="kn">import</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span>
+<span class="kn">from</span> <span class="nn">credentials</span> <span class="kn">import</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+
+  <span class="n">File</span> <span class="s2">&quot;/Users/fnj/opt/miniconda3/envs/pennylaneEnv/lib/python3.9/site-packages/IPython/core/interactiveshell.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">3441</span><span class="p">,</span> <span class="ow">in</span> <span class="n">run_code</span>
+    <span class="n">exec</span><span class="p">(</span><span class="n">code_obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_global_ns</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_ns</span><span class="p">)</span>
+
+  <span class="n">File</span> <span class="s2">&quot;/var/folders/24/01049y555lj8yjg0sfy8dp540000gn/T/ipykernel_30192/3157838097.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="kn">from</span> <span class="nn">pennylane_ls</span> <span class="kn">import</span> <span class="o">*</span>
+
+  <span class="n">File</span> <span class="s2">&quot;/Users/fnj/opt/miniconda3/envs/pennylaneEnv/lib/python3.9/site-packages/pennylane_ls/__init__.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">6</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="kn">from</span> <span class="nn">.FermionOps</span> <span class="kn">import</span> <span class="n">Load</span><span class="p">,</span> <span class="n">Hop</span><span class="p">,</span> <span class="n">Inter</span><span class="p">,</span> <span class="n">Phase</span><span class="p">,</span> <span class="n">ParticleNumber</span><span class="p">,</span> <span class="n">PauliZ</span><span class="p">,</span> <span class="n">HartreeFock</span>
+
+<span class="gt">  File</span><span class="nn"> &quot;/Users/fnj/opt/miniconda3/envs/pennylaneEnv/lib/python3.9/site-packages/pennylane_ls/FermionOps.py&quot;</span><span class="gt">, line </span><span class="mi">141</span>
+    <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">       ^</span>
+<span class="ne">SyntaxError</span>: (unicode error) &#39;unicodeescape&#39; codec can&#39;t decode bytes in position 226-227: truncated \uXXXX escape
 </pre></div>
 </div>
 </div>
@@ -338,7 +358,7 @@ step 10
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f92b2e29df0&gt;
 </pre></div>
 </div>
-<img alt="_images/Gauge_Theory_10_1.png" src="_images/Gauge_Theory_10_1.png" />
+<img alt="_images/Gauge_Theory_11_1.png" src="_images/Gauge_Theory_11_1.png" />
 </div>
 </div>
 <div class="section" id="time-evolution">
@@ -442,7 +462,7 @@ step 10
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f92b2f9d640&gt;
 </pre></div>
 </div>
-<img alt="_images/Gauge_Theory_19_1.png" src="_images/Gauge_Theory_19_1.png" />
+<img alt="_images/Gauge_Theory_20_1.png" src="_images/Gauge_Theory_20_1.png" />
 </div>
 </div>
 </div>
@@ -478,11 +498,11 @@ step 10
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="Fisher_information.html" title="previous page">
+        <a class="left-prev" href="Example_Hopping_Bosons.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Squeezing in atomic qudits</p>
+                <p class="prevnext-title">Bosons in optical tweezers</p>
             </div>
         </a>
     </div>

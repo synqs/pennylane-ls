@@ -54,7 +54,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Squeezing in atomic qudits" href="Fisher_information.html" />
-    <link rel="prev" title="Bosons in optical tweezers" href="Example_Hopping_Bosons.html" />
+    <link rel="prev" title="Welcome to our examples on quantum circuits and cold atoms" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -92,11 +92,6 @@
  </li>
 </ul>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="Example_Hopping_Bosons.html">
-   Bosons in optical tweezers
-  </a>
- </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Example Notebook for the tunneling Fermions
@@ -105,6 +100,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="Fisher_information.html">
    Squeezing in atomic qudits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Example_Hopping_Bosons.html">
+   Bosons in optical tweezers
   </a>
  </li>
  <li class="toctree-l1">
@@ -295,15 +295,16 @@
 <div class="section" id="analytical-prediction">
 <h2>Analytical prediction<a class="headerlink" href="#analytical-prediction" title="Permalink to this headline">¶</a></h2>
 <p>For the two atoms the Hamiltonian can be written down in the basis <span class="math notranslate nohighlight">\(\{LL, LR, RL, RR\}\)</span> as:</p>
-<p>\begin{align}
+<div class="math notranslate nohighlight">
+\[\begin{split}
 H = \left(\begin{array}{cccc}
-U &amp; -J &amp; -J &amp; 0\
--J &amp; 0 &amp; 0 &amp;-J\
--J &amp; 0 &amp; 0 &amp;-J\
+U &amp; -J &amp; -J &amp; 0\\
+-J &amp; 0 &amp; 0 &amp;-J\\
+-J &amp; 0 &amp; 0 &amp;-J\\
 0 &amp; -J &amp; -J &amp; U
-\end{array}
-\right)
-\end{align}</p>
+            \end{array}
+            \right)
+\end{split}\]</div>
 <p>And we start out in the basis state <span class="math notranslate nohighlight">\(|LL\rangle\)</span>. So we can write</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -398,11 +399,11 @@ U &amp; -J &amp; -J &amp; 0\
 </div>
 <div class="section" id="pennylane">
 <h2>Pennylane<a class="headerlink" href="#pennylane" title="Permalink to this headline">¶</a></h2>
-<p>And now we also compare to the pennylane simulation</p>
+<p>And now we also compare to the pennylane simulation. Make sure that you followed the necessary steps for obtaining the credentials as desribed in the <a class="reference external" href="https://synqs.github.io/pennylane-ls/intro.html">introduction</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pennylane_ls</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">heroku_credentials</span> <span class="kn">import</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span>
+<span class="kn">from</span> <span class="nn">credentials</span> <span class="kn">import</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span>
 </pre></div>
 </div>
 </div>
@@ -643,11 +644,11 @@ step 10
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="Example_Hopping_Bosons.html" title="previous page">
+        <a class="left-prev" href="intro.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Bosons in optical tweezers</p>
+                <p class="prevnext-title">Welcome to our examples on  quantum circuits and cold atoms</p>
             </div>
         </a>
     </div>
