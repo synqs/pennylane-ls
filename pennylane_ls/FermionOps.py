@@ -32,7 +32,7 @@ class FermionObservable(Observable):
         raise NotImplementedError()
 
 class Load(FermionOperation):
-    """The load preparation
+    r"""The load preparation
 
     Loads one fermionic particle into a wire.
 
@@ -81,7 +81,7 @@ class HartreeFock(FermionOperation):
         return l_obj
 
 class Hop(FermionOperation):
-    """The hop operation
+    r"""The hop operation
 
     One fermionic particle moves from one wire to another wire. The gate implements the transformation:
 
@@ -117,7 +117,7 @@ class Hop(FermionOperation):
         return l_obj
 
 class Inter(FermionOperation):
-    """The interaction of fermionic modes
+    r"""The interaction of fermionic modes
 
     Fermionic particle interact with each other on each site. The gate implements the transformation:
 
@@ -154,7 +154,7 @@ class Inter(FermionOperation):
         return l_obj
 
 class Phase(FermionOperation):
-    """The phase operation.
+    r"""The phase operation.
 
     Application of a local chemical potential. The gate implements the transformation:
 
@@ -193,7 +193,7 @@ class Phase(FermionOperation):
 
 
 class ParticleNumber(FermionObservable):
-    """ParticleNumber observable
+    r"""ParticleNumber observable
 
     expectation value of particle number operator of all wires
 
