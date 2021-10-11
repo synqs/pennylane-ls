@@ -33,18 +33,22 @@ class SingleQuditDevice(Device):
 
     _observable_map = {"Lz": Lz, "Z": Z, "Lz2": Lz2}
 
-    def __init__(self, shots=1, username=None, password=None, job_id=None, blocking=False):
+    def __init__(self, shots=1, username=None, url=None, password=None, job_id=None, blocking=False):
         """
         The initial part.
         """
         super().__init__(wires=1, shots=shots)
         self.username = username
         self.password = password
-        self.url_prefix = "http://qsim-atomic-drop.herokuapp.com/singlequdit/"#"http://qsimsim.synqs.org/shots/"#
         self.blocking=blocking
         self.job_id=None
         # dimension of the qudit
         self.qdim = 2
+        if url:
+            self.url_prefix = url
+        else:
+            self.url_prefix = "http://qsimsim.synqs.org/singlequdit/"
+
 
     def pre_apply(self):
         self.reset()
