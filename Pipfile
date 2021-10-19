@@ -4,13 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-jupyter-book = "*"
-pennylane = "*"
-matplotlib = "*"
-strawberryfields = "*"
-pandas = "*"
-wheel = "*"
-twine = "*"
+antlr4-python3-runtime = "==4.7.2"
+appdirs = "==1.4.4"
 
 [dev-packages]
 

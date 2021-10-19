@@ -34,3 +34,9 @@ password = 'YOUR-PASSWORD' #and the pwd
 
 
 For connecting real hardware you can check out [our labscript-qc](https://github.com/synqs/labscript-qc) repo.
+
+# Getting started with development
+
+1.) Download this repo
+2.) Go into the repo folder and install the dependencies with `pipenv install`
+3.) Run simple unittests through `python -m unittest tests.test_multi_qudit`
