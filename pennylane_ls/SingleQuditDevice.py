@@ -40,7 +40,7 @@ class SingleQuditDevice(Device):
         url=None,
         password=None,
         job_id=None,
-        blocking=False,
+        blocking=True,
     ):
         """
         The initial part.
@@ -159,7 +159,6 @@ class SingleQuditDevice(Device):
                     },
                 )
 
-                print(job_response.content)
                 self.job_id = (job_response.json())["job_id"]
                 if self.blocking == True:
                     self.wait_till_done(self.job_id)
