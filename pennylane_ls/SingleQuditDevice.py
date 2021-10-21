@@ -109,7 +109,6 @@ class SingleQuditDevice(Device):
         status_payload = {"job_id": self.job_id}
         url = self.url_prefix + "get_job_status/"
         status_response = requests.get(url, params={'json':json.dumps(status_payload),'username': self.username,'password': self.password})
-        print(status_response.content)
         job_status = (status_response.json())["status"]
         return job_status
 
@@ -120,7 +119,8 @@ class SingleQuditDevice(Device):
             if job_status == "DONE":
                 break
             else:
-                print(job_status)
+                pass
+                # print(job_status)
         return
 
     def sample(self, observable, wires, par):
