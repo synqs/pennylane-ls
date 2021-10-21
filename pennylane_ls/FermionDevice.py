@@ -21,6 +21,7 @@ import requests
 import json
 import time
 
+
 class FermionDevice(Device):
     ## Define operation map for the experiment
     _operation_map = {

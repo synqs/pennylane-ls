@@ -78,4 +78,4 @@ class TestFermionDevice(unittest.TestCase):
             return qml.expval(obs)
 
         res = simple_loading()
-        self.assertListEqual(list(res), [1., 1., 0., 0.])
+        self.assertListEqual(list(res), [1.0, 1.0, 0.0, 0.0])
