@@ -33,22 +33,29 @@ class SingleQuditDevice(Device):
 
     _observable_map = {"Lz": Lz, "Z": Z, "Lz2": Lz2}
 
-    def __init__(self, shots=1, username=None, url=None, password=None, job_id=None, blocking=False):
+    def __init__(
+        self,
+        shots=1,
+        username=None,
+        url=None,
+        password=None,
+        job_id=None,
+        blocking=False,
+    ):
         """
         The initial part.
         """
         super().__init__(wires=1, shots=shots)
         self.username = username
         self.password = password
-        self.blocking=blocking
-        self.job_id=None
+        self.blocking = blocking
+        self.job_id = None
         # dimension of the qudit
         self.qdim = 2
         if url:
             self.url_prefix = url
         else:
             self.url_prefix = "http://qsimsim.synqs.org/singlequdit/"
-
 
     def pre_apply(self):
         self.reset()
@@ -82,7 +89,7 @@ class SingleQuditDevice(Device):
             if self.job_id == None:
                 self.sample(observable, wires, par)
             if self.check_job_status(self.job_id) != "DONE":
-                return 'Job_not_done'
+                return "Job_not_done"
             else:
                 shots = self.sample(observable, wires, par)
                 return shots.mean()
@@ -98,7 +105,7 @@ class SingleQuditDevice(Device):
             if self.job_id == None:
                 self.sample(observable, wires, par)
             if self.check_job_status(self.job_id) != "DONE":
-                return 'Job_not_done'
+                return "Job_not_done"
             else:
                 shots = self.sample(observable, wires, par)
                 return shots.var()
@@ -108,8 +115,14 @@ class SingleQuditDevice(Device):
     def check_job_status(self, job_id):
         status_payload = {"job_id": self.job_id}
         url = self.url_prefix + "get_job_status/"
-        status_response = requests.get(url, params={'json':json.dumps(status_payload),'username': self.username,'password': self.password})
-        print(status_response.content)
+        status_response = requests.get(
+            url,
+            params={
+                "json": json.dumps(status_payload),
+                "username": self.username,
+                "password": self.password,
+            },
+        )
         job_status = (status_response.json())["status"]
         return job_status
 
@@ -120,7 +133,8 @@ class SingleQuditDevice(Device):
             if job_status == "DONE":
                 break
             else:
-                print(job_status)
+                pass
+                # print(job_status)
         return
 
     def sample(self, observable, wires, par):
@@ -146,13 +160,13 @@ class SingleQuditDevice(Device):
                 )
 
                 print(job_response.content)
-                self.job_id =(job_response.json())["job_id"]
-                if self.blocking==True:
+                self.job_id = (job_response.json())["job_id"]
+                if self.blocking == True:
                     self.wait_till_done(self.job_id)
                 else:
                     return self.job_id
 
-            if self.blocking==True:
+            if self.blocking == True:
                 self.wait_till_done(self.job_id)
             elif self.check_job_status(self.job_id) != "DONE":
                 return self.job_id
