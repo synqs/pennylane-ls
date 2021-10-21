@@ -1,6 +1,8 @@
 import unittest
 
 import pennylane as qml
+from pennylane_ls import *
+import numpy as np
 
 
 class TestMultiQuditDevice(unittest.TestCase):
@@ -20,3 +22,17 @@ class TestMultiQuditDevice(unittest.TestCase):
         self.assertEqual(
             testDevice.operations, {"LxLy", "LzLz", "load", "rLx", "rLz", "rLz2"}
         )
+
+    def test_rX_gate(self):
+        """
+        Test the rX gate
+        """
+
+        @qml.qnode(self.testDevice)
+        def quantum_circuit():
+            load(50, wires=0)
+            rLx(np.pi, wires=0)
+            return qml.expval(SingleQuditOps.Z(0))
+
+        res = quantum_circuit()
+        self.assertEqual(int(res), 50)
