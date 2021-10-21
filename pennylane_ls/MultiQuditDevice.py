@@ -20,6 +20,7 @@ import requests
 import json
 import time
 
+
 class MultiQuditDevice(Device):
     ## Define operation map for the experiment
 
