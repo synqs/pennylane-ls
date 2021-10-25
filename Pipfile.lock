@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "6bac60ab7f9053204029e09625c84989d48b218c1da7564349ca1c53ac0af1fb"
+            "sha256": "b0a3267d42e5a8dd775b99caa578407dec8f77d011c5ca8b8110bb6cd9016724"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -622,6 +622,10 @@
                 "sha256:fd8e4298c322c6bc47467d078f4150944320721563841b5a721a9243b169abf7"
             ],
             "version": "==0.18.0"
+        },
+        "pennylane-ls": {
+            "editable": true,
+            "path": "."
         },
         "pexpect": {
             "hashes": [

@@ -19,6 +19,7 @@ from .FermionOps import FermionObservable, FermionOperation
 # operations for local devices
 import requests
 import json
+import time
 
 
 class FermionDevice(Device):
@@ -37,7 +38,7 @@ class FermionDevice(Device):
     name = "Fermion Quantum Simulator Simulator plugin"
     pennylane_requires = ">=0.16.0"
     version = "0.2.0"
-    author = "Vladimir and Donald"
+    author = "Rohit P. Bhatt, Christian Gogolin, Fred Jendrzejewski, Valentin Kasper"
 
     short_name = "synqs.fs"
 
@@ -47,7 +48,16 @@ class FermionDevice(Device):
         "Identity": Identity,
     }
 
-    def __init__(self, wires=8, shots=1, username=None, password=None, url=None):
+    def __init__(
+        self,
+        wires=8,
+        shots=1,
+        username=None,
+        password=None,
+        url=None,
+        job_id=None,
+        blocking=False,
+    ):
         """
         The initial part.
         """
@@ -57,6 +67,8 @@ class FermionDevice(Device):
         self.username = username
         self.password = password
         self._samples = None
+        self.blocking = blocking
+        self.job_id = None
 
         if url:
             self.url_prefix = url
@@ -123,6 +135,31 @@ class FermionDevice(Device):
         var = np.var(shots, axis=0)
         return var[wires.tolist()]
 
+    def check_job_status(self, job_id):
+        status_payload = {"job_id": self.job_id}
+        url = self.url_prefix + "get_job_status/"
+        status_response = requests.get(
+            url,
+            params={
+                "json": json.dumps(status_payload),
+                "username": self.username,
+                "password": self.password,
+            },
+        )
+        job_status = (status_response.json())["status"]
+        return job_status
+
+    def wait_till_done(self, job_id):
+        while True:
+            time.sleep(2)
+            job_status = self.check_job_status(job_id)
+            if job_status == "DONE":
+                break
+            else:
+                pass
+                # print(job_status)
+        return
+
     def sample(self, observable, wires, par):
         """
         Retrieve the requested observable expectation value.
@@ -168,10 +205,15 @@ class FermionDevice(Device):
             },
         )
 
-        job_id = (job_response.json())["job_id"]
+        # job_id = (job_response.json())["job_id"]
+        self.job_id = (job_response.json())["job_id"]
+        if self.blocking == True:
+            self.wait_till_done(self.job_id)
+        else:
+            return self.job_id
 
         # obtain the job result
-        result_payload = {"job_id": job_id}
+        result_payload = {"job_id": self.job_id}
         url = self.url_prefix + "get_job_result/"
 
         result_response = requests.get(
