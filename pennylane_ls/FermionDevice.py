@@ -56,7 +56,7 @@ class FermionDevice(Device):
         password=None,
         url=None,
         job_id=None,
-        blocking=False,
+        blocking=True,
     ):
         """
         The initial part.
@@ -247,3 +247,4 @@ class FermionDevice(Device):
 
     def reset(self):
         self._samples = None
+        self.job_id = None
