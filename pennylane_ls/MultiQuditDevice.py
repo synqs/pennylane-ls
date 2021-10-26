@@ -138,16 +138,32 @@ class MultiQuditDevice(Device):
         else:
             raise NotImplementedError()
 
+    # def expval(self, observable, wires, par):
+    #     """
+    #     Retrieve the requested observable expectation value.
+    #     """
+    #     try:
+    #         shots = self.sample(observable, wires, par)
+    #         return np.mean(shots, axis=0)
+    #     except:
+    #         raise NotImplementedError()
+
     def expval(self, observable, wires, par):
         """
         Retrieve the requested observable expectation value.
         """
+
         try:
-            shots = self.sample(observable, wires, par)
-            return np.mean(shots, axis=0)
+            if self.job_id == None:
+                self.sample(observable, wires, par)
+            if self.check_job_status(self.job_id) != "DONE":
+                return "Job_not_done"
+            else:
+                shots = self.sample(observable, wires, par)
+                return np.mean(shots, axis=0)
         except:
             raise NotImplementedError()
-        # raise NotImplementedError()
+
 
     def sample(self, observable, wires, par):
         """
