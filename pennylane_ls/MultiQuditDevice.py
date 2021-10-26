@@ -208,4 +208,5 @@ class MultiQuditDevice(Device):
         return out
 
     def reset(self):
+        self.job_id = None
         pass
