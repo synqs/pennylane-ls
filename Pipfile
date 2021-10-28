@@ -11,6 +11,8 @@ jupyterlab = "*"
 pennylane = "*"
 black = {extras = ["jupyter"], version = "*"}
 pennylane-ls = {editable = true, path = "."}
+matplotlib = "*"
+pandas = "*"
 
 [dev-packages]
 
