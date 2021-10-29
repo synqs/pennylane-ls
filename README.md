@@ -22,6 +22,7 @@ We are internally working with a [quantum hardware simulator](http://qsimsim.syn
 2.) Create a user account on our quantum hardware simulator [qsimsim](https://qsimsim.synqs.org).
 
 3.) Download one of the example notebooks.
+
 4.) Create the `credentials.py` in the same directory as the. Its file content should be:
 
 ```
@@ -38,5 +39,7 @@ For connecting real hardware you can check out [our labscript-qc](https://github
 # Getting started with development
 
 1.) Download this repo
+
 2.) Go into the repo folder and install the dependencies with `pipenv install`
-3.) Run simple unittests through `python -m unittest tests.test_multi_qudit`
+
+3.) Run simple unittests through `pytest`
