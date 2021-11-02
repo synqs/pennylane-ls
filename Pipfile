@@ -13,6 +13,7 @@ black = {extras = ["jupyter"], version = "*"}
 pennylane-ls = {editable = true, path = "."}
 matplotlib = "*"
 pandas = "*"
+jupyter-book = "*"
 
 [dev-packages]
 

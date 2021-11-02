@@ -8,3 +8,4 @@ chapters:
 - file: Fisher_information
 - file: Example_Hopping_Bosons
 - file: Gauge_Theory
+- file: Non_blocking_single_qudit
