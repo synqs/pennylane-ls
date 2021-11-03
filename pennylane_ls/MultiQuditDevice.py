@@ -164,7 +164,6 @@ class MultiQuditDevice(Device):
         except:
             raise NotImplementedError()
 
-
     def sample(self, observable, wires, par):
         """
         Retrieve the requested observable expectation value.

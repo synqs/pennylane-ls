@@ -15,6 +15,7 @@ matplotlib = "*"
 pandas = "*"
 jupyter-book = "*"
 ghp-import = "*"
+twine = "*"
 
 [dev-packages]
 
