@@ -22,8 +22,8 @@
       
 
     
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.e8f53015daec13862f6db5e763c41738.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -33,17 +33,17 @@
     
   <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
 
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script >
+    <script>
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
@@ -51,6 +51,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Non-blocking workflow for the single qudit simulator" href="Non_blocking_single_qudit.html" />
     <link rel="prev" title="Bosons in optical tweezers" href="Example_Hopping_Bosons.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -70,6 +71,10 @@
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
       <img src="_static/logo.png" class="logo" alt="logo">
       
       
@@ -78,7 +83,7 @@
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Dieses Buch durchsuchen ..." aria-label="Dieses Buch durchsuchen ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
@@ -109,6 +114,11 @@
    Implementing local gauge invariance with atomic mixtures.
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Non_blocking_single_qudit.html">
+   Non-blocking workflow for the single qudit simulator
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -134,8 +144,8 @@
             
             <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
                 data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                aria-expanded="true" aria-label="Navigation umschalten" aria-controls="site-navigation"
+                title="Navigation umschalten" data-toggle="tooltip" data-placement="left">
                 <i class="fas fa-bars"></i>
                 <i class="fas fa-arrow-left"></i>
                 <i class="fas fa-arrow-up"></i>
@@ -143,7 +153,7 @@
             
             
 <div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Laden Sie diese Seite herunter"><i
             class="fas fa-download"></i></button>
 
     <div class="dropdown-buttons">
@@ -151,10 +161,10 @@
         
         <!-- Download raw file -->
         <a class="dropdown-buttons" href="_sources/Gauge_Theory.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                class="btn btn-secondary topbarbtn" title="Quelldatei herunterladen" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="In PDF drucken"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
@@ -167,12 +177,12 @@
     <div class="dropdown-buttons sourcebuttons">
         <a class="repository-button"
             href="https://github.com/synqs/pennylane-ls/"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
+                data-toggle="tooltip" data-placement="left" title="Quell-Repository"><i
+                    class="fab fa-github"></i>Repository</button></a>
         <a class="issues-button"
             href="https://github.com/synqs/pennylane-ls//issues/new?title=Issue%20on%20page%20%2FGauge_Theory.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+                title="Öffnen Sie ein Problem"><i class="fas fa-lightbulb"></i>offenes Thema</button></a>
         
     </div>
 </div>
@@ -180,8 +190,8 @@
             <!-- Full screen (wrap in <a> to have style consistency -->
 
 <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Vollbildmodus"
+        title="Vollbildmodus"><i
             class="fas fa-expand"></i></button></a>
 
             <!-- Launch buttons -->
@@ -192,7 +202,7 @@
     <div class="dropdown-buttons">
         
         <a class="binder-button" href="https://mybinder.org/v2/gh/synqs/pennylane-ls/master?urlpath=tree/examples/Gauge_Theory.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                class="btn btn-secondary topbarbtn" title="Starten Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
                     alt="Interact on binder">Binder</button></a>
@@ -209,7 +219,7 @@
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
             <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+                <i class="fas fa-list"></i> Inhalt
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
@@ -260,37 +270,20 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pennylane_ls</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">credentials</span> <span class="kn">import</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
-
-  <span class="n">File</span> <span class="s2">&quot;/Users/fnj/opt/miniconda3/envs/pennylaneEnv/lib/python3.9/site-packages/IPython/core/interactiveshell.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">3441</span><span class="p">,</span> <span class="ow">in</span> <span class="n">run_code</span>
-    <span class="n">exec</span><span class="p">(</span><span class="n">code_obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_global_ns</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_ns</span><span class="p">)</span>
-
-  <span class="n">File</span> <span class="s2">&quot;/var/folders/24/01049y555lj8yjg0sfy8dp540000gn/T/ipykernel_30192/3157838097.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-    <span class="kn">from</span> <span class="nn">pennylane_ls</span> <span class="kn">import</span> <span class="o">*</span>
-
-  <span class="n">File</span> <span class="s2">&quot;/Users/fnj/opt/miniconda3/envs/pennylaneEnv/lib/python3.9/site-packages/pennylane_ls/__init__.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">6</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-    <span class="kn">from</span> <span class="nn">.FermionOps</span> <span class="kn">import</span> <span class="n">Load</span><span class="p">,</span> <span class="n">Hop</span><span class="p">,</span> <span class="n">Inter</span><span class="p">,</span> <span class="n">Phase</span><span class="p">,</span> <span class="n">ParticleNumber</span><span class="p">,</span> <span class="n">PauliZ</span><span class="p">,</span> <span class="n">HartreeFock</span>
-
-<span class="gt">  File</span><span class="nn"> &quot;/Users/fnj/opt/miniconda3/envs/pennylaneEnv/lib/python3.9/site-packages/pennylane_ls/FermionOps.py&quot;</span><span class="gt">, line </span><span class="mi">141</span>
-    <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">       ^</span>
-<span class="ne">SyntaxError</span>: (unicode error) &#39;unicodeescape&#39; codec can&#39;t decode bytes in position 226-227: truncated \uXXXX escape
+<span class="kn">from</span> <span class="nn">heroku_credentials</span> <span class="kn">import</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="section" id="rotating-the-matter-field">
+<div class="tex2jax_ignore mathjax_ignore section" id="rotating-the-matter-field">
 <h1>Rotating the matter field<a class="headerlink" href="#rotating-the-matter-field" title="Permalink to this headline">¶</a></h1>
 <p>we have to rotate the matter field to initialize the dynamics in the system first</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NaLiDevice</span> <span class="o">=</span> <span class="n">qml</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;synqs.mqs&quot;</span><span class="p">,</span><span class="n">wires</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">shots</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">username</span> <span class="o">=</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span> <span class="o">=</span> <span class="n">password</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NaLiDevice</span> <span class="o">=</span> <span class="n">qml</span><span class="o">.</span><span class="n">device</span><span class="p">(</span>
+    <span class="s2">&quot;synqs.mqs&quot;</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">shots</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -299,9 +292,9 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@qml</span><span class="o">.</span><span class="n">qnode</span><span class="p">(</span><span class="n">NaLiDevice</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">matterpreparation</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">rLx</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span><span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">rLx</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">obs</span> <span class="o">=</span> <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">Lz</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">@</span> <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">Lz</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">qml</span><span class="o">.</span><span class="n">expval</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
 </pre></div>
@@ -311,14 +304,37 @@
 <p>visualize the circuit</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matterpreparation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">matterpreparation</span><span class="o">.</span><span class="n">draw</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">matterpreparation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([0.  , 9.97], requires_grad=True)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">matterpreparation</span><span class="o">.</span><span class="n">draw</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 0: ──load(2)──────────────╭┤ ⟨Lz ⊗ Lz⟩ 
- 1: ──load(20)──rLx(3.14)──╰┤ ⟨Lz ⊗ Lz⟩ 
+ 1: ──load(20)──rLx(1.57)──╰┤ ⟨Lz ⊗ Lz⟩ 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NaLiDevice</span><span class="o">.</span><span class="n">job_id</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;20211026_053958-multiqudit-synqs_test-d3e70&#39;
 </pre></div>
 </div>
 </div>
@@ -327,12 +343,12 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
-<span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">alphas</span><span class="p">),</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">alphas</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alphas</span><span class="p">)):</span>
-    <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="k">10</span>==0:
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;step&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
     <span class="c1"># Calculate the resulting states after each rotation</span>
-    <span class="n">means</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">matterpreparation</span><span class="p">(</span><span class="n">alphas</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">means</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">matterpreparation</span><span class="p">(</span><span class="n">alphas</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -346,19 +362,19 @@ step 10
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">means</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;gauge field&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">means</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;matter field&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\eta$&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\varphi$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">means</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;gauge field&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">means</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;matter field&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\eta$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\varphi$&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f92b2e29df0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1f416fe1af0&gt;
 </pre></div>
 </div>
-<img alt="_images/Gauge_Theory_11_1.png" src="_images/Gauge_Theory_11_1.png" />
+<img alt="_images/Gauge_Theory_13_1.png" src="_images/Gauge_Theory_13_1.png" />
 </div>
 </div>
 <div class="section" id="time-evolution">
@@ -367,24 +383,24 @@ step 10
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@qml</span><span class="o">.</span><span class="n">qnode</span><span class="p">(</span><span class="n">NaLiDevice</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">t_evolv</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">NLi</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">NNa</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">Ntrott</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Circuit that describes the time evolution.</span>
-<span class="sd">    </span>
+<span class="k">def</span> <span class="nf">t_evolv</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">NLi</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">NNa</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">Ntrott</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Circuit that describes the time evolution.</span>
+
 <span class="sd">    alpha ... Initial angle of rotation of the matter field</span>
 <span class="sd">    beta ... Angle of rotation for the matter field</span>
 <span class="sd">    gamma ... Angle of rotation on the squeezing term.</span>
 <span class="sd">    delta ... Angle of rotation of the flip flop term.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># preparation step</span>
-    <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">NLi</span><span class="p">,</span><span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">NNa</span><span class="p">,</span><span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">rLx</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span><span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    
+    <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">NLi</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">NNa</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">rLx</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
     <span class="c1"># time evolution</span>
     <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Ntrott</span><span class="p">):</span>
-        <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">LxLy</span><span class="p">(</span><span class="n">delta</span><span class="o">/</span><span class="n">Ntrott</span><span class="p">,</span><span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">rLz</span><span class="p">(</span><span class="n">beta</span><span class="o">/</span><span class="n">Ntrott</span><span class="p">,</span><span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">rLz2</span><span class="p">(</span><span class="n">gamma</span><span class="o">/</span><span class="n">Ntrott</span><span class="p">,</span><span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">LxLy</span><span class="p">(</span><span class="n">delta</span> <span class="o">/</span> <span class="n">Ntrott</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">rLz</span><span class="p">(</span><span class="n">beta</span> <span class="o">/</span> <span class="n">Ntrott</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">rLz2</span><span class="p">(</span><span class="n">gamma</span> <span class="o">/</span> <span class="n">Ntrott</span><span class="p">,</span> <span class="n">wires</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">obs</span> <span class="o">=</span> <span class="n">MultiQuditOps</span><span class="o">.</span><span class="n">Lz</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">qml</span><span class="o">.</span><span class="n">expval</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
 </pre></div>
@@ -393,7 +409,7 @@ step 10
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_evolv</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_evolv</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -419,31 +435,33 @@ step 10
 <p>parameters of the experiment</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Delta</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">500</span><span class="p">;</span>
-<span class="n">chiT</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mf">0.01</span><span class="o">*</span><span class="mf">300e3</span><span class="p">;</span>
-<span class="n">lamT</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mf">2e-4</span><span class="o">*</span><span class="mf">300e3</span><span class="p">;</span><span class="c1">#lamT = 2.*np.pi*2e-5*300e3;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Delta</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">500</span>
+<span class="n">chiT</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="mf">300e3</span>
+<span class="n">lamT</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mf">2e-4</span> <span class="o">*</span> <span class="mf">300e3</span><span class="p">;</span>  <span class="c1"># lamT = 2.*np.pi*2e-5*300e3;</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Ntrott</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
-<span class="n">NLi</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
-<span class="n">NNa</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
-<span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
-<span class="n">chi</span> <span class="o">=</span> <span class="n">chiT</span><span class="o">/</span><span class="n">NNa</span><span class="p">;</span>
-<span class="n">lam</span> <span class="o">=</span> <span class="n">lamT</span><span class="o">/</span><span class="n">NNa</span><span class="p">;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Ntrott</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">NLi</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">NNa</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">chi</span> <span class="o">=</span> <span class="n">chiT</span> <span class="o">/</span> <span class="n">NNa</span>
+<span class="n">lam</span> <span class="o">=</span> <span class="n">lamT</span> <span class="o">/</span> <span class="n">NNa</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="o">*</span><span class="mf">1e-3</span><span class="p">;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-3</span>
 <span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)):</span>
-    <span class="n">means</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">t_evolv</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">Delta</span><span class="o">*</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">chi</span><span class="o">*</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">lam</span><span class="o">*</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">NLi</span><span class="p">,</span> <span class="n">NNa</span><span class="p">,</span> <span class="n">Ntrott</span> <span class="o">=</span> <span class="n">Ntrott</span><span class="p">)</span>
+    <span class="n">means</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">t_evolv</span><span class="p">(</span>
+        <span class="n">alpha</span><span class="p">,</span> <span class="n">Delta</span> <span class="o">*</span> <span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">chi</span> <span class="o">*</span> <span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">lam</span> <span class="o">*</span> <span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">NLi</span><span class="p">,</span> <span class="n">NNa</span><span class="p">,</span> <span class="n">Ntrott</span><span class="o">=</span><span class="n">Ntrott</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -451,18 +469,18 @@ step 10
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="o">*</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">means</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;matter field&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\eta$&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;time (ms)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">,</span> <span class="n">means</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;matter field&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\eta$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;time (ms)&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f92b2f9d640&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1f4177f29d0&gt;
 </pre></div>
 </div>
-<img alt="_images/Gauge_Theory_20_1.png" src="_images/Gauge_Theory_20_1.png" />
+<img alt="_images/Gauge_Theory_22_1.png" src="_images/Gauge_Theory_22_1.png" />
 </div>
 </div>
 </div>
@@ -506,18 +524,27 @@ step 10
             </div>
         </a>
     </div>
+     <div id="next">
+        <a class="right-next" href="Non_blocking_single_qudit.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Non-blocking workflow for the single qudit simulator</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
 
 </div>
         
         </div>
     </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         
-          By Noah Wach, Fred Jendrzejewski, Manuel Rudolph, Valentin Kasper, Rohit Bhatt, Yannick Deller<br/>
+          Durch Noah Wach, Fred Jendrzejewski, Manuel Rudolph, Valentin Kasper, Rohit Bhatt, Yannick Deller<br/>
         
-            &copy; Copyright 2021.<br/>
+            &copy; Urheberrechte © 2021.<br/>
       </p>
     </div>
   </footer>
