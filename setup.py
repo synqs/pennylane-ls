@@ -8,7 +8,7 @@ pennylane_devices_list = [
 
 setup(
     name="pennylane-ls",
-    version="0.2.0",
+    version="0.3.0",
     description="A Pennylane plugin for cold atom quantum simulators",
     url="https://www.github.com/synqs/pennylane-ls",
     author="Fred Jendrzejewski",
