@@ -19,6 +19,7 @@ from .MultiQuditOps import rLx, rLz, rLz2, LxLy, LzLz, load
 # classes
 from .MultiQuditOps import MultiQuditOperation
 
+
 class MultiQuditDevice(DjangoDevice):
     ## Define operation map for the experiment
 
@@ -62,6 +63,7 @@ class MultiQuditDevice(DjangoDevice):
             blocking=blocking,
             job_id=job_id,
         )
+        self.qdim = 2
 
     @classmethod
     def capabilities(cls):
