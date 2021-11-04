@@ -32,7 +32,7 @@ class SingleQuditDevice(DjangoDevice):
     pennylane_requires = ">=0.16.0"
     version = "0.0.1"
     author = "Fred Jendrzejewski"
-    
+
     short_name = "synqs.sqs"
 
     _observable_map = {"Lz": Lz, "Z": Z, "Lz2": Lz2}
@@ -50,7 +50,7 @@ class SingleQuditDevice(DjangoDevice):
         The initial part.
         """
         super().__init__(
-            url="http://qsimsim.synqs.org/singlequdit/",
+            url=url,
             wires=1,
             shots=shots,
             username=username,

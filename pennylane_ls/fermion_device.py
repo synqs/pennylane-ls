@@ -8,7 +8,7 @@ from collections import OrderedDict
 import numpy as np
 import requests
 
-from pennylane import  DeviceError
+from pennylane import DeviceError
 
 
 from .django_device import DjangoDevice
@@ -65,7 +65,7 @@ class FermionDevice(DjangoDevice):
         if wires > 8:
             raise ValueError()
         super().__init__(
-            url="http://qsimsim.synqs.org/fermions/",
+            url=url,
             wires=wires,
             shots=shots,
             username=username,
@@ -202,14 +202,6 @@ class FermionDevice(DjangoDevice):
             for i2 in np.arange(num_obs):
                 out[i1, i2] = int(temp[i2])
         self._samples = out
-
-    @property
-    def operations(self):
-        return set(self._operation_map.keys())
-
-    @property
-    def observables(self):
-        return set(self._observable_map.keys())
 
     def reset(self):
         self._samples = None

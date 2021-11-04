@@ -63,9 +63,9 @@ class DjangoDevice(Device):
                 break
 
     def pre_apply(self):
-        '''
+        """
         Set up the necessary dictonaries that will be later send to the server.
-        '''
+        """
         self.reset()
         self.job_payload = {
             "experiment_0": {"instructions": [], "num_wires": 1, "shots": self.shots},
