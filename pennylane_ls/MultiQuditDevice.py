@@ -1,6 +1,11 @@
-# we always import NumPy directly
+"""
+A device that allows us to implement operation on multiple qudits.
+The backend is a remote simulator.
+"""
 import numpy as np
 import scipy
+
+from .django_device import DjangoDevice
 
 from pennylane import Device
 from pennylane.operation import Observable
@@ -21,7 +26,7 @@ import json
 import time
 
 
-class MultiQuditDevice(Device):
+class MultiQuditDevice(DjangoDevice):
     ## Define operation map for the experiment
 
     name = "Multi Qudit Quantum Simulator plugin"

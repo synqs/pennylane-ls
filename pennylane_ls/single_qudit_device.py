@@ -3,7 +3,6 @@ A device that allows us to implement operation on a single qudit. The backend is
 """
 
 import json
-import time
 import requests
 import numpy as np
 
@@ -33,7 +32,7 @@ class SingleQuditDevice(DjangoDevice):
     pennylane_requires = ">=0.16.0"
     version = "0.0.1"
     author = "Fred Jendrzejewski"
-
+    
     short_name = "synqs.sqs"
 
     _observable_map = {"Lz": Lz, "Z": Z, "Lz2": Lz2}
@@ -60,12 +59,6 @@ class SingleQuditDevice(DjangoDevice):
             job_id=job_id,
         )
         self.qdim = 2
-
-    def pre_apply(self):
-        self.reset()
-        self.job_payload = {
-            "experiment_0": {"instructions": [], "num_wires": 1, "shots": self.shots},
-        }
 
     def apply(self, operation, wires, par):
         """
@@ -113,33 +106,6 @@ class SingleQuditDevice(DjangoDevice):
             return shots.var()
         except:
             raise NotImplementedError()
-
-    def check_job_status(self) -> str:
-        """
-        Check remotely if the job was done already.
-        """
-        status_payload = {"job_id": self.job_id}
-        url = self.url_prefix + "get_job_status/"
-        status_response = requests.get(
-            url,
-            params={
-                "json": json.dumps(status_payload),
-                "username": self.username,
-                "password": self.password,
-            },
-        )
-        job_status = (status_response.json())["status"]
-        return job_status
-
-    def wait_till_done(self):
-        """
-        The waiting function that blocks the program
-        """
-        while True:
-            time.sleep(2)
-            job_status = self.check_job_status()
-            if job_status == "DONE":
-                break
 
     def sample(self, observable, wires, par):
         """
@@ -193,14 +159,6 @@ class SingleQuditDevice(DjangoDevice):
             shots = observable_class.qudit_operator(shots, self.qdim)
             return shots
         raise NotImplementedError()
-
-    @property
-    def operations(self):
-        return set(self._operation_map.keys())
-
-    @property
-    def observables(self):
-        return set(self._observable_map.keys())
 
     def reset(self):
         self.qdim = 2

@@ -1,11 +1,17 @@
-# we always import NumPy directly
-import numpy as np
-import scipy
-
-from pennylane import Device, DeviceError
-from pennylane.operation import Observable
-
+"""
+A device that allows us to implement operation ons a fermion tweezer experiments.
+The backend is a remote simulator.
+"""
+import json
 from collections import OrderedDict
+
+import numpy as np
+import requests
+
+from pennylane import  DeviceError
+
+
+from .django_device import DjangoDevice
 
 # observables
 from .FermionOps import ParticleNumber
@@ -16,13 +22,8 @@ from .FermionOps import Load, HartreeFock, Hop, Inter, Phase, PauliZ, Identity
 # classes
 from .FermionOps import FermionObservable, FermionOperation
 
-# operations for local devices
-import requests
-import json
-import time
 
-
-class FermionDevice(Device):
+class FermionDevice(DjangoDevice):
     ## Define operation map for the experiment
     _operation_map = {
         "Load": Load,
@@ -52,28 +53,27 @@ class FermionDevice(Device):
         self,
         wires=8,
         shots=1,
+        url="http://qsimsim.synqs.org/fermions/",
         username=None,
         password=None,
-        url=None,
         job_id=None,
         blocking=True,
     ):
         """
         The initial part.
         """
-        if not wires <= 8:
+        if wires > 8:
             raise ValueError()
-        super().__init__(wires=wires, shots=shots)
-        self.username = username
-        self.password = password
+        super().__init__(
+            url="http://qsimsim.synqs.org/fermions/",
+            wires=wires,
+            shots=shots,
+            username=username,
+            password=password,
+            blocking=blocking,
+            job_id=job_id,
+        )
         self._samples = None
-        self.blocking = blocking
-        self.job_id = None
-
-        if url:
-            self.url_prefix = url
-        else:
-            self.url_prefix = "http://qsimsim.synqs.org/fermions/"
 
     @classmethod
     def capabilities(cls):
@@ -87,12 +87,6 @@ class FermionDevice(Device):
         )
 
         return capabilities
-
-    def pre_apply(self):
-        self.reset()
-        self.job_payload = {
-            "experiment_0": {"instructions": [], "num_wires": 1, "shots": self.shots},
-        }
 
     def apply(self, operation, wires, par):
         """
@@ -135,31 +129,6 @@ class FermionDevice(Device):
         var = np.var(shots, axis=0)
         return var[wires.tolist()]
 
-    def check_job_status(self, job_id):
-        status_payload = {"job_id": self.job_id}
-        url = self.url_prefix + "get_job_status/"
-        status_response = requests.get(
-            url,
-            params={
-                "json": json.dumps(status_payload),
-                "username": self.username,
-                "password": self.password,
-            },
-        )
-        job_status = (status_response.json())["status"]
-        return job_status
-
-    def wait_till_done(self, job_id):
-        while True:
-            time.sleep(2)
-            job_status = self.check_job_status(job_id)
-            if job_status == "DONE":
-                break
-            else:
-                pass
-                # print(job_status)
-        return
-
     def sample(self, observable, wires, par):
         """
         Retrieve the requested observable expectation value.
@@ -173,8 +142,6 @@ class FermionDevice(Device):
         shots = self._samples
         if wires is not None:
             shots = shots[:, wires.tolist()]
-
-        # np.sort(np.unique(shots, axis=0, return_counts=True, dtype=[('pattern', ), ('probability', )]), order='pattern')
 
         patterns, probabilities = np.unique(shots, axis=0, return_counts=True)
 
@@ -205,10 +172,9 @@ class FermionDevice(Device):
             },
         )
 
-        # job_id = (job_response.json())["job_id"]
         self.job_id = (job_response.json())["job_id"]
-        if self.blocking == True:
-            self.wait_till_done(self.job_id)
+        if self.blocking is True:
+            self.wait_till_done()
         else:
             return self.job_id
 
