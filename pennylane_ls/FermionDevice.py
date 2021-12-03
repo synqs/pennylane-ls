@@ -48,11 +48,12 @@ class FermionDevice(Device):
 
     def __init__(self, wires=8, shots=1, username=None, password=None):
         """
-        The initial part.
+        The initial partes.
         """
-        if not wires <= 8:
-            raise ValueError()
-        super().__init__(wires=wires,shots=shots)
+        super().__init__(wires=wires, shots=shots)
+        if not self.num_wires <= 8:
+            raise ValueError("Number of wires may be at most 8")
+
         self.username = username
         self.password = password
         self.url_prefix = "http://qsimsim.synqs.org/fermions/"
