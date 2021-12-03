@@ -4,15 +4,23 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-jupyter-book = "*"
+antlr4-python3-runtime = "==4.7.2"
+appdirs = "==1.4.4"
+pytest = "*"
+jupyterlab = "*"
 pennylane = "*"
+black = {extras = ["jupyter"], version = "*"}
+pennylane-ls = {editable = true, path = "."}
 matplotlib = "*"
-strawberryfields = "*"
 pandas = "*"
-wheel = "*"
+jupyter-book = "*"
+ghp-import = "*"
 twine = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.9"
+
+[pipenv]
+allow_prereleases = true

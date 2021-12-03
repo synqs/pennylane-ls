@@ -18,21 +18,20 @@ from .MultiQuditOps import MultiQuditObservable, MultiQuditOperation
 
 import requests
 import json
+import time
+
 
 class MultiQuditDevice(Device):
     ## Define operation map for the experiment
 
     name = "Multi Qudit Quantum Simulator plugin"
     pennylane_requires = ">=0.16.0"
-    version = '0.0.1'
+    version = "0.0.1"
     author = "Fred Jendrzejewski"
 
     short_name = "synqs.mqs"
 
-    _observable_map = {
-        "Lz": Lz,
-        'Z': Z
-    }
+    _observable_map = {"Lz": Lz, "Z": Z}
 
     _operation_map = {
         "rLx": rLx,
@@ -40,7 +39,7 @@ class MultiQuditDevice(Device):
         "rLz2": rLz2,
         "LxLy": LxLy,
         "LzLz": LzLz,
-        "load": load
+        "load": load,
     }
 
     @property
@@ -51,13 +50,24 @@ class MultiQuditDevice(Device):
     def observables(self):
         return set(self._observable_map.keys())
 
-    def __init__(self, wires=1,shots=1, url = None, username = None, password = None):
+    def __init__(
+        self,
+        wires=1,
+        shots=1,
+        url=None,
+        username=None,
+        password=None,
+        job_id=None,
+        blocking=True,
+    ):
         """
         The initial part.
         """
-        super().__init__(wires=wires,shots=shots)
+        super().__init__(wires=wires, shots=shots)
         self.username = username
         self.password = password
+        self.blocking = blocking
+        self.job_id = None
         if url:
             self.url_prefix = url
         else:
@@ -79,12 +89,37 @@ class MultiQuditDevice(Device):
     def pre_apply(self):
         self.reset()
         self.job_payload = {
-        'experiment_0': {
-            'instructions': [],
-            'num_wires': len(self.wires),
-            'shots': self.shots
+            "experiment_0": {
+                "instructions": [],
+                "num_wires": len(self.wires),
+                "shots": self.shots,
             },
         }
+
+    def check_job_status(self, job_id):
+        status_payload = {"job_id": self.job_id}
+        url = self.url_prefix + "get_job_status/"
+        status_response = requests.get(
+            url,
+            params={
+                "json": json.dumps(status_payload),
+                "username": self.username,
+                "password": self.password,
+            },
+        )
+        job_status = (status_response.json())["status"]
+        return job_status
+
+    def wait_till_done(self, job_id):
+        while True:
+            time.sleep(2)
+            job_status = self.check_job_status(job_id)
+            if job_status == "DONE":
+                break
+            else:
+                pass
+                # print(job_status)
+        return
 
     def apply(self, operation, wires, par):
         """
@@ -99,20 +134,35 @@ class MultiQuditDevice(Device):
             # so only in this case we will change it.
             if qdim:
                 self.qdim = qdim
-            self.job_payload['experiment_0']['instructions'].append(l_obj)
+            self.job_payload["experiment_0"]["instructions"].append(l_obj)
         else:
             raise NotImplementedError()
+
+    # def expval(self, observable, wires, par):
+    #     """
+    #     Retrieve the requested observable expectation value.
+    #     """
+    #     try:
+    #         shots = self.sample(observable, wires, par)
+    #         return np.mean(shots, axis=0)
+    #     except:
+    #         raise NotImplementedError()
 
     def expval(self, observable, wires, par):
         """
         Retrieve the requested observable expectation value.
         """
+
         try:
-            shots = self.sample(observable, wires, par)
-            return np.mean(shots, axis=0)
+            if self.job_id == None:
+                self.sample(observable, wires, par)
+            if self.check_job_status(self.job_id) != "DONE":
+                return "Job_not_done"
+            else:
+                shots = self.sample(observable, wires, par)
+                return np.mean(shots, axis=0)
         except:
             raise NotImplementedError()
-        #raise NotImplementedError()
 
     def sample(self, observable, wires, par):
         """
@@ -122,34 +172,56 @@ class MultiQuditDevice(Device):
         # if issubclass(observable_class, Observable):
 
         # submit the job
-        wires = wires if isinstance(wires, list) else [wires]
-        for position, name in enumerate(wires):
-            m_obj = ('measure', [name.labels[0]], [])
-            self.job_payload['experiment_0']['instructions'].append(m_obj)
+        if self.job_id == None:
+            wires = wires if isinstance(wires, list) else [wires]
+            for position, name in enumerate(wires):
+                m_obj = ("measure", [name.labels[0]], [])
+                self.job_payload["experiment_0"]["instructions"].append(m_obj)
 
-        url= self.url_prefix + "post_job/"
-        job_response = requests.post(url, data={'json':json.dumps(self.job_payload),
-                                                        'username': self.username,'password':self.password})
+            url = self.url_prefix + "post_job/"
+            job_response = requests.post(
+                url,
+                data={
+                    "json": json.dumps(self.job_payload),
+                    "username": self.username,
+                    "password": self.password,
+                },
+            )
 
+            self.job_id = (job_response.json())["job_id"]
+            if self.blocking == True:
+                self.wait_till_done(self.job_id)
+            else:
+                return self.job_id
 
-        job_id = (job_response.json())['job_id']
+        if self.blocking == True:
+            self.wait_till_done(self.job_id)
+        elif self.check_job_status(self.job_id) != "DONE":
+            return self.job_id
+
         # obtain the job result
-        result_payload = {'job_id': job_id}
-        url= self.url_prefix + "get_job_result/"
+        result_payload = {"job_id": self.job_id}
+        url = self.url_prefix + "get_job_result/"
 
-        result_response = requests.get(url, params={'json':json.dumps(result_payload),
-                                                    'username': self.username,'password':self.password})
+        result_response = requests.get(
+            url,
+            params={
+                "json": json.dumps(result_payload),
+                "username": self.username,
+                "password": self.password,
+            },
+        )
         results_dict = json.loads(result_response.text)
-        results = results_dict["results"][0]['data']['memory']
+        results = results_dict["results"][0]["data"]["memory"]
 
         num_obs = len(wires)
-        out     = np.zeros((self.shots,num_obs))
+        out = np.zeros((self.shots, num_obs))
         for i1 in np.arange(self.shots):
             temp = results[i1].split()
             for i2 in np.arange(num_obs):
-                out[i1,i2] = int(temp[i2])
+                out[i1, i2] = int(temp[i2])
         return out
-        #raise NotImplementedError()
 
     def reset(self):
+        self.job_id = None
         pass
