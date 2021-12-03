@@ -62,7 +62,7 @@ class rLx(SingleQuditOperation):
     def qudit_operator(cls, par):
         theta = par[0]
 
-        l_obj = ("rLx", [0], [theta % (2 * np.pi)])
+        l_obj = ("rlx", [0], [theta % (2 * np.pi)])
         return l_obj, False
 
 
@@ -79,7 +79,7 @@ class rLz(SingleQuditOperation):
     @classmethod
     def qudit_operator(cls, par):
         theta = par[0]
-        l_obj = ("rLz", [0], [theta % (2 * np.pi)])
+        l_obj = ("rlz", [0], [theta % (2 * np.pi)])
         return l_obj, False
 
 
@@ -95,7 +95,7 @@ class rLz2(SingleQuditOperation):
 
     @classmethod
     def qudit_operator(cls, par):
-        l_obj = ("rLz2", [0], par)
+        l_obj = ("rlz2", [0], par)
         return l_obj, False
 
 
