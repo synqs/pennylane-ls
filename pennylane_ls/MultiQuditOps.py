@@ -65,7 +65,7 @@ class rLx(MultiQuditOperation):
     def qudit_operator(cls, par, wires):
         theta = par[0]
 
-        l_obj = ("rLx", [wires[0]], [theta % (2 * np.pi)])
+        l_obj = ("rlx", [wires[0]], [theta % (2 * np.pi)])
         return l_obj, False
 
 
@@ -82,7 +82,7 @@ class rLz(MultiQuditOperation):
     @classmethod
     def qudit_operator(cls, par, wires):
         theta = par[0]
-        l_obj = ("rLz", [wires[0]], [theta % (2 * np.pi)])
+        l_obj = ("rlz", [wires[0]], [theta % (2 * np.pi)])
         return l_obj, False
 
 
@@ -99,7 +99,7 @@ class rLz2(MultiQuditOperation):
     @classmethod
     def qudit_operator(cls, par, wires):
         theta = par[0]
-        l_obj = ("rLz2", [wires[0]], [theta % (2 * np.pi)])
+        l_obj = ("rlz2", [wires[0]], [theta % (2 * np.pi)])
         return l_obj, False
 
 
@@ -131,7 +131,7 @@ class LxLy(MultiQuditOperation):
     @classmethod
     def qudit_operator(cls, par, wires):
         theta = par[0]
-        l_obj = ("LxLy", [wires[0], wires[1]], [theta % (2 * np.pi)])
+        l_obj = ("rlxly", [wires[0], wires[1]], [theta % (2 * np.pi)])
         return l_obj, False
 
 
@@ -145,7 +145,7 @@ class LzLz(MultiQuditOperation):
     @classmethod
     def qudit_operator(cls, par, wires):
         theta = par[0]
-        l_obj = ("LzLz", [wires[0], wires[1]], [theta % (2 * np.pi)])
+        l_obj = ("rlzlz", [wires[0], wires[1]], [theta % (2 * np.pi)])
         return l_obj, False
 
 
