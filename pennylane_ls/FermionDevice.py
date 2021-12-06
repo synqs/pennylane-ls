@@ -121,7 +121,8 @@ class FermionDevice(Device):
         if self._observable_map[observable] == PauliZ:
             shots = np.ones(shots.shape) - 2 * shots
         mean = np.mean(shots, axis=0)
-        return mean[wires.tolist()]
+        result = mean[wires.tolist()]
+        return result.item() if len(result) == 1 else result
 
     def var(self, observable=None, wires=None, par=None):
         """
@@ -134,7 +135,8 @@ class FermionDevice(Device):
         if self._observable_map[observable] == PauliZ:
             shots = np.ones(shots.shape) - 2 * shots
         var = np.var(shots, axis=0)
-        return var[wires.tolist()]
+        result = mean[wires.tolist()]
+        return result.item() if len(result) == 1 else result
 
     def check_job_status(self, job_id):
         status_payload = {"job_id": self.job_id}
@@ -152,13 +154,14 @@ class FermionDevice(Device):
 
     def wait_till_done(self, job_id):
         while True:
-            time.sleep(2)
+            time.sleep(0.1)
             job_status = self.check_job_status(job_id)
             if job_status == "DONE":
                 break
+            elif job_status == "INITIALIZING":
+                continue
             else:
-                pass
-                # print(job_status)
+                raise DeviceError(job_status)
         return
 
     def sample(self, observable, wires, par):
@@ -175,20 +178,17 @@ class FermionDevice(Device):
         if wires is not None:
             shots = shots[:, wires.tolist()]
 
-        # np.sort(np.unique(shots, axis=0, return_counts=True, dtype=[('pattern', ), ('probability', )]), order='pattern')
+        patterns, counts = np.unique(shots, axis=0, return_counts=True)
 
-        patterns, probabilities = np.unique(shots, axis=0, return_counts=True)
+        probabilities = np.zeros(2**len(wires)) 
+        denominator = counts.sum()
+        for pattern, count in zip(patterns, counts):
+            probability = count / denominator
+            probabilities[sum(2**idx for idx, d in enumerate(pattern[::-1]) if d == 1)] = probability
+            
+        patterns = [tuple([int(d) for d in bin(comp_state_index)[2:].zfill(len(wires))]) for comp_state_index in range(2**len(wires))]            
 
-        patterns_decimal_repr = np.packbits(patterns.astype("int32"), axis=1)
-        patterns_decimal_repr = patterns_decimal_repr.ravel()
-        sort_labels = np.argsort(patterns_decimal_repr, axis=0)
-
-        patterns = patterns[sort_labels]
-        probabilities = probabilities[sort_labels]
-
-        probabilities = probabilities / probabilities.sum()
-
-        return OrderedDict(zip(map(tuple, patterns), probabilities))
+        return OrderedDict(zip(patterns, probabilities))
 
     def pre_measure(self):
         # submit the job
@@ -231,7 +231,7 @@ class FermionDevice(Device):
         results = results_dict["results"][0]["data"]["memory"]
 
         num_obs = len(wires)
-        out = np.zeros((self.shots, num_obs))
+        out = np.zeros((self.shots, num_obs), dtype=int)
         for i1 in np.arange(self.shots):
             temp = results[i1].split()
             for i2 in np.arange(num_obs):
