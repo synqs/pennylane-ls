@@ -180,13 +180,18 @@ class FermionDevice(Device):
 
         patterns, counts = np.unique(shots, axis=0, return_counts=True)
 
-        probabilities = np.zeros(2**len(wires)) 
+        probabilities = np.zeros(2 ** len(wires))
         denominator = counts.sum()
         for pattern, count in zip(patterns, counts):
             probability = count / denominator
-            probabilities[sum(2**idx for idx, d in enumerate(pattern[::-1]) if d == 1)] = probability
-            
-        patterns = [tuple([int(d) for d in bin(comp_state_index)[2:].zfill(len(wires))]) for comp_state_index in range(2**len(wires))]            
+            probabilities[
+                sum(2 ** idx for idx, d in enumerate(pattern[::-1]) if d == 1)
+            ] = probability
+
+        patterns = [
+            tuple([int(d) for d in bin(comp_state_index)[2:].zfill(len(wires))])
+            for comp_state_index in range(2 ** len(wires))
+        ]
 
         return OrderedDict(zip(patterns, probabilities))
 
