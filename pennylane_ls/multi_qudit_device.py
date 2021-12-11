@@ -1,9 +1,14 @@
-# we always import NumPy directly
-import numpy as np
-import scipy
+"""
+A device that allows us to implement operation on multiple qudits.
+The backend is a remote simulator.
+"""
 
-from pennylane import Device
-from pennylane.operation import Observable
+import json
+
+import requests
+import numpy as np
+
+from .django_device import DjangoDevice
 
 # observables
 from .MultiQuditOps import Lz, Z
@@ -12,16 +17,10 @@ from .MultiQuditOps import Lz, Z
 from .MultiQuditOps import rLx, rLz, rLz2, LxLy, LzLz, load
 
 # classes
-from .MultiQuditOps import MultiQuditObservable, MultiQuditOperation
-
-# operations for remote devices
-
-import requests
-import json
-import time
+from .MultiQuditOps import MultiQuditOperation
 
 
-class MultiQuditDevice(Device):
+class MultiQuditDevice(DjangoDevice):
     ## Define operation map for the experiment
 
     name = "Multi Qudit Quantum Simulator plugin"
@@ -42,19 +41,11 @@ class MultiQuditDevice(Device):
         "load": load,
     }
 
-    @property
-    def operations(self):
-        return set(self._operation_map.keys())
-
-    @property
-    def observables(self):
-        return set(self._observable_map.keys())
-
     def __init__(
         self,
         wires=1,
         shots=1,
-        url=None,
+        url="http://qsimsim.synqs.org/multiqudit/",
         username=None,
         password=None,
         job_id=None,
@@ -63,15 +54,16 @@ class MultiQuditDevice(Device):
         """
         The initial part.
         """
-        super().__init__(wires=wires, shots=shots)
-        self.username = username
-        self.password = password
-        self.blocking = blocking
-        self.job_id = None
-        if url:
-            self.url_prefix = url
-        else:
-            self.url_prefix = "http://qsimsim.synqs.org/multiqudit/"
+        super().__init__(
+            url=url,
+            wires=wires,
+            shots=shots,
+            username=username,
+            password=password,
+            blocking=blocking,
+            job_id=job_id,
+        )
+        self.qdim = 2
 
     @classmethod
     def capabilities(cls):
@@ -96,34 +88,6 @@ class MultiQuditDevice(Device):
             },
         }
 
-    def check_job_status(self, job_id):
-        status_payload = {"job_id": self.job_id}
-        url = self.url_prefix + "get_job_status/"
-        status_response = requests.get(
-            url,
-            params={
-                "json": json.dumps(status_payload),
-                "username": self.username,
-                "password": self.password,
-            },
-        )
-        job_status = (status_response.json())["status"]
-        job_status_detail = (status_response.json())["detail"]
-        if job_status == "ERROR":
-            raise SyntaxError(job_status_detail)
-        return job_status
-
-    def wait_till_done(self, job_id):
-        while True:
-            time.sleep(2)
-            job_status = self.check_job_status(job_id)
-            if job_status == "DONE":
-                break
-            else:
-                pass
-                # print(job_status)
-        return
-
     def apply(self, operation, wires, par):
         """
         Apply the gates.
@@ -141,29 +105,18 @@ class MultiQuditDevice(Device):
         else:
             raise NotImplementedError()
 
-    # def expval(self, observable, wires, par):
-    #     """
-    #     Retrieve the requested observable expectation value.
-    #     """
-    #     try:
-    #         shots = self.sample(observable, wires, par)
-    #         return np.mean(shots, axis=0)
-    #     except:
-    #         raise NotImplementedError()
-
     def expval(self, observable, wires, par):
         """
         Retrieve the requested observable expectation value.
         """
 
         try:
-            if self.job_id == None:
+            if self.job_id is None:
                 self.sample(observable, wires, par)
-            if self.check_job_status(self.job_id) != "DONE":
+            if self.check_job_status() != "DONE":
                 return "Job_not_done"
-            else:
-                shots = self.sample(observable, wires, par)
-                return np.mean(shots, axis=0)
+            shots = self.sample(observable, wires, par)
+            return np.mean(shots, axis=0)
         except:
             raise NotImplementedError()
 
@@ -171,13 +124,11 @@ class MultiQuditDevice(Device):
         """
         Retrieve the requested observable expectation value.
         """
-        # observable_class = self._observable_map[observable]
-        # if issubclass(observable_class, Observable):
 
         # submit the job
-        if self.job_id == None:
+        if self.job_id is None:
             wires = wires if isinstance(wires, list) else [wires]
-            for position, name in enumerate(wires):
+            for _, name in enumerate(wires):
                 m_obj = ("measure", [name.labels[0]], [])
                 self.job_payload["experiment_0"]["instructions"].append(m_obj)
 
@@ -192,14 +143,14 @@ class MultiQuditDevice(Device):
             )
 
             self.job_id = (job_response.json())["job_id"]
-            if self.blocking == True:
-                self.wait_till_done(self.job_id)
+            if self.blocking:
+                self.wait_till_done()
             else:
                 return self.job_id
 
-        if self.blocking == True:
-            self.wait_till_done(self.job_id)
-        elif self.check_job_status(self.job_id) != "DONE":
+        if self.blocking:
+            self.wait_till_done()
+        elif self.check_job_status() != "DONE":
             return self.job_id
 
         # obtain the job result
@@ -227,4 +178,3 @@ class MultiQuditDevice(Device):
 
     def reset(self):
         self.job_id = None
-        pass
