@@ -62,8 +62,7 @@ class FermionDevice(DjangoDevice):
         """
         The initial part.
         """
-        if wires > 8:
-            raise ValueError()
+
         super().__init__(
             url=url,
             wires=wires,
@@ -73,6 +72,9 @@ class FermionDevice(DjangoDevice):
             blocking=blocking,
             job_id=job_id,
         )
+
+        if not self.num_wires <= 8:
+            raise ValueError("Number of wires may be at most 8")
         self._samples = None
 
     @classmethod
@@ -114,7 +116,8 @@ class FermionDevice(DjangoDevice):
         if self._observable_map[observable] == PauliZ:
             shots = np.ones(shots.shape) - 2 * shots
         mean = np.mean(shots, axis=0)
-        return mean[wires.tolist()]
+        result = mean[wires.tolist()]
+        return result.item() if len(result) == 1 else result
 
     def var(self, observable=None, wires=None, par=None):
         """
@@ -127,7 +130,8 @@ class FermionDevice(DjangoDevice):
         if self._observable_map[observable] == PauliZ:
             shots = np.ones(shots.shape) - 2 * shots
         var = np.var(shots, axis=0)
-        return var[wires.tolist()]
+        result = mean[wires.tolist()]
+        return result.item() if len(result) == 1 else result
 
     def sample(self, observable, wires, par):
         """
@@ -149,12 +153,20 @@ class FermionDevice(DjangoDevice):
         patterns_decimal_repr = patterns_decimal_repr.ravel()
         sort_labels = np.argsort(patterns_decimal_repr, axis=0)
 
-        patterns = patterns[sort_labels]
-        probabilities = probabilities[sort_labels]
+        probabilities = np.zeros(2 ** len(wires))
+        denominator = counts.sum()
+        for pattern, count in zip(patterns, counts):
+            probability = count / denominator
+            probabilities[
+                sum(2 ** idx for idx, d in enumerate(pattern[::-1]) if d == 1)
+            ] = probability
 
-        probabilities = probabilities / probabilities.sum()
+        patterns = [
+            tuple([int(d) for d in bin(comp_state_index)[2:].zfill(len(wires))])
+            for comp_state_index in range(2 ** len(wires))
+        ]
 
-        return OrderedDict(zip(map(tuple, patterns), probabilities))
+        return OrderedDict(zip(patterns, probabilities))
 
     def pre_measure(self):
         # submit the job
@@ -196,7 +208,7 @@ class FermionDevice(DjangoDevice):
         results = results_dict["results"][0]["data"]["memory"]
 
         num_obs = len(wires)
-        out = np.zeros((self.shots, num_obs))
+        out = np.zeros((self.shots, num_obs), dtype=int)
         for i1 in np.arange(self.shots):
             temp = results[i1].split()
             for i2 in np.arange(num_obs):
