@@ -1,9 +1,12 @@
-# we always import NumPy directly
-import numpy as np
-import scipy
+"""
+A device that allows us to implement operation on a single qudit. The backend is a remote simulator.
+"""
 
-from pennylane import Device
-from pennylane.operation import Observable
+import json
+import requests
+import numpy as np
+
+from .django_device import DjangoDevice
 
 # observables
 from .SingleQuditOps import Lz, Lz2, Z
@@ -15,12 +18,13 @@ from .SingleQuditOps import rLx, rLz, rLz2, load
 from .SingleQuditOps import SingleQuditObservable, SingleQuditOperation
 
 # operations for local devices
-import requests
-import json
-import time
 
 
-class SingleQuditDevice(Device):
+class SingleQuditDevice(DjangoDevice):
+    """
+    The single qudit device class, which is remotely calling the simulator.
+    """
+
     ## Define operation map for the experiment
     _operation_map = {"rLx": rLx, "rLz": rLz, "rLz2": rLz2, "load": load}
 
@@ -37,7 +41,7 @@ class SingleQuditDevice(Device):
         self,
         shots=1,
         username=None,
-        url=None,
+        url="http://qsimsim.synqs.org/singlequdit/",
         password=None,
         job_id=None,
         blocking=True,
@@ -45,23 +49,16 @@ class SingleQuditDevice(Device):
         """
         The initial part.
         """
-        super().__init__(wires=1, shots=shots)
-        self.username = username
-        self.password = password
-        self.blocking = blocking
-        self.job_id = None
-        # dimension of the qudit
+        super().__init__(
+            url=url,
+            wires=1,
+            shots=shots,
+            username=username,
+            password=password,
+            blocking=blocking,
+            job_id=job_id,
+        )
         self.qdim = 2
-        if url:
-            self.url_prefix = url
-        else:
-            self.url_prefix = "http://qsimsim.synqs.org/singlequdit/"
-
-    def pre_apply(self):
-        self.reset()
-        self.job_payload = {
-            "experiment_0": {"instructions": [], "num_wires": 1, "shots": self.shots},
-        }
 
     def apply(self, operation, wires, par):
         """
@@ -86,13 +83,12 @@ class SingleQuditDevice(Device):
         """
 
         try:
-            if self.job_id == None:
+            if self.job_id is None:
                 self.sample(observable, wires, par)
-            if self.check_job_status(self.job_id) != "DONE":
+            if self.check_job_status() != "DONE":
                 return "Job_not_done"
-            else:
-                shots = self.sample(observable, wires, par)
-                return shots.mean()
+            shots = self.sample(observable, wires, par)
+            return shots.mean()
         except:
             raise NotImplementedError()
 
@@ -102,40 +98,14 @@ class SingleQuditDevice(Device):
         """
 
         try:
-            if self.job_id == None:
+            if self.job_id is None:
                 self.sample(observable, wires, par)
-            if self.check_job_status(self.job_id) != "DONE":
+            if self.check_job_status() != "DONE":
                 return "Job_not_done"
-            else:
-                shots = self.sample(observable, wires, par)
-                return shots.var()
+            shots = self.sample(observable, wires, par)
+            return shots.var()
         except:
             raise NotImplementedError()
-
-    def check_job_status(self, job_id):
-        status_payload = {"job_id": self.job_id}
-        url = self.url_prefix + "get_job_status/"
-        status_response = requests.get(
-            url,
-            params={
-                "json": json.dumps(status_payload),
-                "username": self.username,
-                "password": self.password,
-            },
-        )
-        job_status = (status_response.json())["status"]
-        return job_status
-
-    def wait_till_done(self, job_id):
-        while True:
-            time.sleep(2)
-            job_status = self.check_job_status(job_id)
-            if job_status == "DONE":
-                break
-            else:
-                pass
-                # print(job_status)
-        return
 
     def sample(self, observable, wires, par):
         """
@@ -146,7 +116,7 @@ class SingleQuditDevice(Device):
         if issubclass(observable_class, SingleQuditObservable):
 
             # submit the job
-            if self.job_id == None:
+            if self.job_id is None:
                 m_obj = ("measure", [0], [])
                 url = self.url_prefix + "post_job/"
                 self.job_payload["experiment_0"]["instructions"].append(m_obj)
@@ -160,14 +130,14 @@ class SingleQuditDevice(Device):
                 )
 
                 self.job_id = (job_response.json())["job_id"]
-                if self.blocking == True:
-                    self.wait_till_done(self.job_id)
+                if self.blocking is True:
+                    self.wait_till_done()
                 else:
                     return self.job_id
 
-            if self.blocking == True:
-                self.wait_till_done(self.job_id)
-            elif self.check_job_status(self.job_id) != "DONE":
+            if self.blocking is True:
+                self.wait_till_done()
+            elif self.check_job_status() != "DONE":
                 return self.job_id
             # obtain the job result
             result_payload = {"job_id": self.job_id}
@@ -190,16 +160,7 @@ class SingleQuditDevice(Device):
             return shots
         raise NotImplementedError()
 
-    @property
-    def operations(self):
-        return set(self._operation_map.keys())
-
-    @property
-    def observables(self):
-        return set(self._observable_map.keys())
-
     def reset(self):
         self.qdim = 2
         self.job_id = None
         self.job_payload = None
-        pass

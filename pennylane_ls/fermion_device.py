@@ -1,11 +1,17 @@
-# we always import NumPy directly
-import numpy as np
-import scipy
-
-from pennylane import Device, DeviceError
-from pennylane.operation import Observable
-
+"""
+A device that allows us to implement operation ons a fermion tweezer experiments.
+The backend is a remote simulator.
+"""
+import json
 from collections import OrderedDict
+
+import numpy as np
+import requests
+
+from pennylane import DeviceError
+
+
+from .django_device import DjangoDevice
 
 # observables
 from .FermionOps import ParticleNumber
@@ -16,13 +22,8 @@ from .FermionOps import Load, HartreeFock, Hop, Inter, Phase, PauliZ, Identity
 # classes
 from .FermionOps import FermionObservable, FermionOperation
 
-# operations for local devices
-import requests
-import json
-import time
 
-
-class FermionDevice(Device):
+class FermionDevice(DjangoDevice):
     ## Define operation map for the experiment
     _operation_map = {
         "Load": Load,
@@ -52,29 +53,29 @@ class FermionDevice(Device):
         self,
         wires=8,
         shots=1,
+        url="http://qsimsim.synqs.org/fermions/",
         username=None,
         password=None,
-        url=None,
         job_id=None,
         blocking=True,
     ):
         """
         The initial part.
         """
-        super().__init__(wires=wires, shots=shots)
+
+        super().__init__(
+            url=url,
+            wires=wires,
+            shots=shots,
+            username=username,
+            password=password,
+            blocking=blocking,
+            job_id=job_id,
+        )
+
         if not self.num_wires <= 8:
             raise ValueError("Number of wires may be at most 8")
-
-        self.username = username
-        self.password = password
         self._samples = None
-        self.blocking = blocking
-        self.job_id = None
-
-        if url:
-            self.url_prefix = url
-        else:
-            self.url_prefix = "http://qsimsim.synqs.org/fermions/"
 
     @classmethod
     def capabilities(cls):
@@ -88,12 +89,6 @@ class FermionDevice(Device):
         )
 
         return capabilities
-
-    def pre_apply(self):
-        self.reset()
-        self.job_payload = {
-            "experiment_0": {"instructions": [], "num_wires": 1, "shots": self.shots},
-        }
 
     def apply(self, operation, wires, par):
         """
@@ -138,32 +133,6 @@ class FermionDevice(Device):
         result = mean[wires.tolist()]
         return result.item() if len(result) == 1 else result
 
-    def check_job_status(self, job_id):
-        status_payload = {"job_id": self.job_id}
-        url = self.url_prefix + "get_job_status/"
-        status_response = requests.get(
-            url,
-            params={
-                "json": json.dumps(status_payload),
-                "username": self.username,
-                "password": self.password,
-            },
-        )
-        job_status = (status_response.json())["status"]
-        return job_status
-
-    def wait_till_done(self, job_id):
-        while True:
-            time.sleep(0.1)
-            job_status = self.check_job_status(job_id)
-            if job_status == "DONE":
-                break
-            elif job_status == "INITIALIZING":
-                continue
-            else:
-                raise DeviceError(job_status)
-        return
-
     def sample(self, observable, wires, par):
         """
         Retrieve the requested observable expectation value.
@@ -178,7 +147,11 @@ class FermionDevice(Device):
         if wires is not None:
             shots = shots[:, wires.tolist()]
 
-        patterns, counts = np.unique(shots, axis=0, return_counts=True)
+        patterns, probabilities = np.unique(shots, axis=0, return_counts=True)
+
+        patterns_decimal_repr = np.packbits(patterns.astype("int32"), axis=1)
+        patterns_decimal_repr = patterns_decimal_repr.ravel()
+        sort_labels = np.argsort(patterns_decimal_repr, axis=0)
 
         probabilities = np.zeros(2 ** len(wires))
         denominator = counts.sum()
@@ -211,10 +184,9 @@ class FermionDevice(Device):
             },
         )
 
-        # job_id = (job_response.json())["job_id"]
         self.job_id = (job_response.json())["job_id"]
-        if self.blocking == True:
-            self.wait_till_done(self.job_id)
+        if self.blocking is True:
+            self.wait_till_done()
         else:
             return self.job_id
 
@@ -242,14 +214,6 @@ class FermionDevice(Device):
             for i2 in np.arange(num_obs):
                 out[i1, i2] = int(temp[i2])
         self._samples = out
-
-    @property
-    def operations(self):
-        return set(self._operation_map.keys())
-
-    @property
-    def observables(self):
-        return set(self._observable_map.keys())
 
     def reset(self):
         self._samples = None
