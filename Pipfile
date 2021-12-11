@@ -16,6 +16,7 @@ pandas = "*"
 jupyter-book = "*"
 ghp-import = "*"
 twine = "*"
+pylint = "*"
 
 [dev-packages]
 
