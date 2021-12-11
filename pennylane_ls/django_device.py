@@ -50,6 +50,9 @@ class DjangoDevice(Device):
             },
         )
         job_status = (status_response.json())["status"]
+        job_status_detail = (status_response.json())["detail"]
+        if job_status == "ERROR":
+            raise SyntaxError(job_status_detail)
         return job_status
 
     def wait_till_done(self):
