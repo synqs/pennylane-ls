@@ -24,6 +24,11 @@ from .FermionOps import FermionObservable, FermionOperation
 
 
 class FermionDevice(DjangoDevice):
+    """
+    The device that allows us to implement operation on a fermion tweezer experiments.
+    The backend is a remote simulator.
+    """
+
     ## Define operation map for the experiment
     _operation_map = {
         "Load": Load,
@@ -49,6 +54,7 @@ class FermionDevice(DjangoDevice):
         "Identity": Identity,
     }
 
+    # pylint: disable=R0913
     def __init__(
         self,
         wires=8,
@@ -130,12 +136,12 @@ class FermionDevice(DjangoDevice):
         if self._observable_map[observable] == PauliZ:
             shots = np.ones(shots.shape) - 2 * shots
         var = np.var(shots, axis=0)
-        result = mean[wires.tolist()]
+        result = var[wires.tolist()]
         return result.item() if len(result) == 1 else result
 
     def sample(self, observable, wires, par):
         """
-        Retrieve the requested observable expectation value.
+        Retrieve the requested observable sample.
         """
         observable_class = self._observable_map[observable]
         if issubclass(observable_class, FermionObservable):
@@ -143,15 +149,15 @@ class FermionDevice(DjangoDevice):
         raise NotImplementedError()
 
     def probability(self, wires=None):
+        """
+        Generates the probibility distribution for all observed outcomes.
+        """
+        # pylint: disable=R1728
         shots = self._samples
         if wires is not None:
             shots = shots[:, wires.tolist()]
 
-        patterns, probabilities = np.unique(shots, axis=0, return_counts=True)
-
-        patterns_decimal_repr = np.packbits(patterns.astype("int32"), axis=1)
-        patterns_decimal_repr = patterns_decimal_repr.ravel()
-        sort_labels = np.argsort(patterns_decimal_repr, axis=0)
+        patterns, counts = np.unique(shots, axis=0, return_counts=True)
 
         probabilities = np.zeros(2 ** len(wires))
         denominator = counts.sum()
@@ -168,8 +174,12 @@ class FermionDevice(DjangoDevice):
 
         return OrderedDict(zip(patterns, probabilities))
 
+    # pylint: disable=R1710
     def pre_measure(self):
-        # submit the job
+        """
+        Apply the operations that are necessary to submit the job.
+        """
+
         wires = self.wires
         for wire in wires:
             m_obj = ("measure", [wire], [])
@@ -185,6 +195,7 @@ class FermionDevice(DjangoDevice):
         )
 
         self.job_id = (job_response.json())["job_id"]
+
         if self.blocking is True:
             self.wait_till_done()
         else:
@@ -209,10 +220,10 @@ class FermionDevice(DjangoDevice):
 
         num_obs = len(wires)
         out = np.zeros((self.shots, num_obs), dtype=int)
-        for i1 in np.arange(self.shots):
-            temp = results[i1].split()
-            for i2 in np.arange(num_obs):
-                out[i1, i2] = int(temp[i2])
+        for ind_1 in np.arange(self.shots):
+            temp = results[ind_1].split()
+            for ind_2 in np.arange(num_obs):
+                out[ind_1, ind_2] = int(temp[ind_2])
         self._samples = out
 
     def reset(self):
