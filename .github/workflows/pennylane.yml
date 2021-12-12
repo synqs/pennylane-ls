@@ -19,6 +19,9 @@ jobs:
         pip install pipenv
         pipenv install
         pipenv install -e .
+    - name: Run pylint
+      run: |
+        pipenv run pylint pennylane_ls/fermion_device.py pennylane_ls/django_device.py
     - name: Run Tests
       run: |
         pipenv run pytest

@@ -13,7 +13,10 @@ class DjangoDevice(Device):
     """
     The base class for all devices that call to an external server.
     """
+    _operation_map = {}
+    _observable_map = {}
 
+    # pylint: disable=R0913
     def __init__(
         self,
         url: str,
