@@ -1,9 +1,43 @@
-name: Pytest
+name: Pennylane CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  build:
+  tests:
+    name: tests-python${{ matrix.python-version }}-${{ matrix.os }}
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.8, 3.9]
+        os: ["ubuntu-latest", "macOS-latest", "windows-latest"]
+    steps:
+      - name: Print Concurrency Group
+        env:
+          CONCURRENCY_GROUP: ${{ github.repository }}-${{ github.ref }}-${{ github.head_ref }}
+        run: |
+          echo -e "\033[31;1;4mConcurrency Group\033[0m"
+          echo -e "$CONCURRENCY_GROUP\n"
+        shell: bash
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pipenv
+          pipenv install
+          pipenv install -e .
+      - name: Run Tests
+        run: |
+          pipenv run pytest
+  lint:
 
     runs-on: ubuntu-latest
 
@@ -22,6 +56,6 @@ jobs:
     - name: Run pylint
       run: |
         pipenv run pylint pennylane_ls/fermion_device.py pennylane_ls/django_device.py
-    - name: Run Tests
+    - name: Run black
       run: |
-        pipenv run pytest
+        pipenv run black --check .
