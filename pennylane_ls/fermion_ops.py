@@ -87,7 +87,7 @@ class HartreeFock(FermionOperation):
     @classmethod
     def fermion_operator(cls, wires, par):
         nalpha, nbeta = par
-        l_obj = list()
+        l_obj = []
         for idx, wire in enumerate(wires):
             if idx % 2 == 0 and idx // 2 < nalpha:
                 l_obj.append(Load.fermion_operator(Wires(wire), None))
