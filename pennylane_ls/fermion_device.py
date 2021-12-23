@@ -59,7 +59,7 @@ class FermionDevice(DjangoDevice):
         self,
         wires=8,
         shots=1,
-        url="http://qsimsim.synqs.org/fermions/",
+        url="http://qsimsim.synqs.org/api/fermions/",
         username=None,
         password=None,
         job_id=None,

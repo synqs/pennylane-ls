@@ -45,7 +45,7 @@ class MultiQuditDevice(DjangoDevice):
         self,
         wires=1,
         shots=1,
-        url="http://qsimsim.synqs.org/multiqudit/",
+        url="http://qsimsim.synqs.org/api/multiqudit/",
         username=None,
         password=None,
         job_id=None,

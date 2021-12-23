@@ -41,7 +41,7 @@ class SingleQuditDevice(DjangoDevice):
         self,
         shots=1,
         username=None,
-        url="http://qsimsim.synqs.org/singlequdit/",
+        url="http://qsimsim.synqs.org/api/singlequdit/",
         password=None,
         job_id=None,
         blocking=True,
