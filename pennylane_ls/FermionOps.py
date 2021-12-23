@@ -116,7 +116,7 @@ class Hop(FermionOperation):
     @classmethod
     def fermion_operator(cls, wires, par):
         theta = par[0]
-        l_obj = ("hop", wires.tolist(), [theta / 2 % (2 * np.pi)])
+        l_obj = ("fhop", wires.tolist(), [theta / 2 % (2 * np.pi)])
         return l_obj
 
 
@@ -154,7 +154,7 @@ class Inter(FermionOperation):
     @classmethod
     def fermion_operator(cls, wires, par):
         theta = par[0]
-        l_obj = ("int", wires.tolist(), [theta % (2 * np.pi)])
+        l_obj = ("fint", wires.tolist(), [theta % (2 * np.pi)])
         return l_obj
 
 
@@ -193,7 +193,7 @@ class Phase(FermionOperation):
     @classmethod
     def fermion_operator(cls, wires, par):
         theta = par[0]
-        l_obj = ("phase", wires.tolist(), [theta % (2 * np.pi)])
+        l_obj = ("fphase", wires.tolist(), [theta % (2 * np.pi)])
         return l_obj
 
 
