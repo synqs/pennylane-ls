@@ -14,13 +14,13 @@ from pennylane import DeviceError
 from .django_device import DjangoDevice
 
 # observables
-from .FermionOps import ParticleNumber
+from .fermion_ops import ParticleNumber
 
 # operations
-from .FermionOps import Load, HartreeFock, Hop, Inter, Phase, PauliZ, Identity
+from .fermion_ops import Load, HartreeFock, Hop, Inter, Phase, PauliZ, Identity
 
-# classes
-from .FermionOps import FermionObservable, FermionOperation
+# observations
+from .fermion_ops import FermionObservable, FermionOperation
 
 
 class FermionDevice(DjangoDevice):

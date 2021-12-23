@@ -1,5 +1,9 @@
-import abc
+"""
+Define the operations that can be applied on a fermionic device.
+"""
 
+import abc
+from typing import List, Tuple
 from pennylane.wires import Wires
 from pennylane.operation import Operation, AnyWires, AllWires
 from pennylane.operation import Observable
@@ -7,22 +11,31 @@ import numpy as np
 
 
 class FermionOperation(Operation):
+    """
+    A base class for all the fermionic operation that will later inherit from it.
+    """
+
     @classmethod
     @abc.abstractmethod
-    def fermion_operator(cls, wires, par):
+    def fermion_operator(cls, wires: List[int], par: List[int]) -> Tuple:
         """the function that transforms the received samples into the appropiate
         operation
 
         Args:
+            wires: onto which wire should the gates be applied
             par: parameter for the gate
         """
         raise NotImplementedError()
 
 
 class FermionObservable(Observable):
+    """
+    A base class for all the fermionic observables that will later inherit from it.
+    """
+
     @classmethod
     @abc.abstractmethod
-    def fermion_operator(cls, samples):
+    def fermion_operator(cls, samples: np.ndarray):
         """the function that transforms the received samples into the appropiate
         observable
 
@@ -84,6 +97,7 @@ class HartreeFock(FermionOperation):
 
 
 class Hop(FermionOperation):
+    # pylint: disable=C0301
     r"""The hop operation
 
     One fermionic particle moves from one wire to another wire. The gate implements the transformation:

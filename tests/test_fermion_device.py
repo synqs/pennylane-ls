@@ -1,7 +1,7 @@
 import unittest
 
 import pennylane as qml
-from pennylane_ls import *
+from pennylane_ls import fermion_ops
 import numpy as np
 
 
@@ -71,10 +71,10 @@ class TestFermionDevice(unittest.TestCase):
             theta ... angle of the hopping
             """
             # load atoms
-            FermionOps.Load(wires=0)
-            FermionOps.Load(wires=1)
+            fermion_ops.Load(wires=0)
+            fermion_ops.Load(wires=1)
 
-            obs = FermionOps.ParticleNumber([0, 1, 2, 3])
+            obs = fermion_ops.ParticleNumber([0, 1, 2, 3])
             return qml.expval(obs)
 
         res = simple_loading()
@@ -93,10 +93,10 @@ class TestFermionDevice(unittest.TestCase):
             theta ... angle of the hopping
             """
             # load atoms
-            FermionOps.Load(wires=0)
-            FermionOps.Load(wires=1)
-            FermionOps.Hop(np.pi, wires=[0, 1, 2, 3])
-            obs = FermionOps.ParticleNumber([0, 1, 2, 3])
+            fermion_ops.Load(wires=0)
+            fermion_ops.Load(wires=1)
+            fermion_ops.Hop(np.pi, wires=[0, 1, 2, 3])
+            obs = fermion_ops.ParticleNumber([0, 1, 2, 3])
             return qml.expval(obs)
 
         res = simple_hopping()
@@ -115,10 +115,10 @@ class TestFermionDevice(unittest.TestCase):
             theta ... angle of the hopping
             """
             # load atoms
-            FermionOps.Load(wires=0)
-            FermionOps.Load(wires=1)
-            FermionOps.Hop(np.pi, wires=[0, 1, 2, 3])
-            obs = FermionOps.ParticleNumber([0, 1, 2, 3])
+            fermion_ops.Load(wires=0)
+            fermion_ops.Load(wires=1)
+            fermion_ops.Hop(np.pi, wires=[0, 1, 2, 3])
+            obs = fermion_ops.ParticleNumber([0, 1, 2, 3])
             return qml.probs(wires=[3])
 
         res = simple_hopping()
@@ -137,10 +137,10 @@ class TestFermionDevice(unittest.TestCase):
             theta ... angle of the hopping
             """
             # load atoms
-            FermionOps.Load(wires=0)
-            FermionOps.Load(wires=1)
-            FermionOps.Hop(np.pi, wires=[0, 1, 2, 3])
-            obs = FermionOps.ParticleNumber([0, 1, 2, 3])
+            fermion_ops.Load(wires=0)
+            fermion_ops.Load(wires=1)
+            fermion_ops.Hop(np.pi, wires=[0, 1, 2, 3])
+            obs = fermion_ops.ParticleNumber([0, 1, 2, 3])
             return qml.var(obs)
 
         res = simple_hopping()
