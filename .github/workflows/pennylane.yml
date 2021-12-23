@@ -31,12 +31,11 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pipenv
-          pipenv install
-          pipenv install -e .
+          pip install -r requirements.txt
+          pip install -e .
       - name: Run Tests
         run: |
-          pipenv run pytest
+          pytest
   lint:
 
     runs-on: ubuntu-latest
@@ -50,12 +49,10 @@ jobs:
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pipenv
-        pipenv install
-        pipenv install -e .
+        pip install -r requirements.txt
     - name: Run pylint
       run: |
-        pipenv run pylint pennylane_ls/fermion_device.py pennylane_ls/django_device.py
+        pylint pennylane_ls/fermion_device.py pennylane_ls/django_device.py pennylane_ls/fermion_ops.py
     - name: Run black
       run: |
-        pipenv run black --check .
+        black --check .
