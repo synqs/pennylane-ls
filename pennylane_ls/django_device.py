@@ -75,7 +75,12 @@ class DjangoDevice(Device):
         """
         self.reset()
         self.job_payload = {
-            "experiment_0": {"instructions": [], "num_wires": 1, "shots": self.shots},
+            "experiment_0": {
+                "instructions": [],
+                "num_wires": 1,
+                "shots": self.shots,
+                "wire_order": "interleaved",
+            },
         }
 
     @property
