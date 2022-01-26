@@ -52,7 +52,7 @@ jobs:
         pip install -r requirements.txt
     - name: Run pylint
       run: |
-        pylint pennylane_ls/fermion_device.py pennylane_ls/django_device.py pennylane_ls/fermion_ops.py
+        pylint pennylane_ls
     - name: Run black
       run: |
         black --check .

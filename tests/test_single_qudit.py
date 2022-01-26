@@ -19,7 +19,7 @@ class TestSingleQuditDevice(unittest.TestCase):
 
     def test_creation(self):
         testDevice = qml.device("synqs.sqs")
-        self.assertEqual(testDevice.operations, {"load", "rLx", "rLz", "rLz2"})
+        self.assertEqual(testDevice.operations, {"Load", "RLX", "RLZ", "RLZ2"})
 
     def test_creation_with_user(self):
         """
@@ -32,7 +32,7 @@ class TestSingleQuditDevice(unittest.TestCase):
             password=self.password,
             blocking=True,
         )
-        self.assertEqual(testDevice.operations, {"load", "rLx", "rLz", "rLz2"})
+        self.assertEqual(testDevice.operations, {"Load", "RLX", "RLZ", "RLZ2"})
 
     def test_load_gate(self):
         """
@@ -41,9 +41,9 @@ class TestSingleQuditDevice(unittest.TestCase):
 
         @qml.qnode(self.testDevice)
         def quantum_circuit():
-            load(50, wires=0)
-            rLx(np.pi, wires=0)
-            return qml.expval(SingleQuditOps.Z(0))
+            single_qudit_ops.Load(50, wires=0)
+            single_qudit_ops.RLX(np.pi, wires=0)
+            return qml.expval(single_qudit_ops.ZObs(0))
 
         res = quantum_circuit()
         self.assertEqual(int(res), 50)
@@ -55,9 +55,9 @@ class TestSingleQuditDevice(unittest.TestCase):
 
         @qml.qnode(self.testDevice)
         def quantum_circuit():
-            load(50, wires=0)
-            rLx(np.pi, wires=0)
-            return qml.expval(SingleQuditOps.Z(0))
+            single_qudit_ops.Load(50, wires=0)
+            single_qudit_ops.RLX(np.pi, wires=0)
+            return qml.expval(single_qudit_ops.ZObs(0))
 
         res = quantum_circuit()
         self.assertEqual(int(res), 50)

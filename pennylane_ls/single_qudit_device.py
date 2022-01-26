@@ -9,13 +9,13 @@ import numpy as np
 from .django_device import DjangoDevice
 
 # observables
-from .SingleQuditOps import Lz, Lz2, Z
+from .single_qudit_ops import LZ, LZ2, ZObs
 
 # operations
-from .SingleQuditOps import rLx, rLz, rLz2, load
+from .single_qudit_ops import RLX, RLZ, RLZ2, Load
 
 # classes
-from .SingleQuditOps import SingleQuditObservable, SingleQuditOperation
+from .single_qudit_ops import SingleQuditObservable, SingleQuditOperation
 
 # operations for local devices
 
@@ -26,7 +26,7 @@ class SingleQuditDevice(DjangoDevice):
     """
 
     ## Define operation map for the experiment
-    _operation_map = {"rLx": rLx, "rLz": rLz, "rLz2": rLz2, "load": load}
+    _operation_map = {"RLX": RLX, "RLZ": RLZ, "RLZ2": RLZ2, "Load": Load}
 
     name = "Single Qudit Quantum Simulator Simulator plugin"
     pennylane_requires = ">=0.16.0"
@@ -35,7 +35,7 @@ class SingleQuditDevice(DjangoDevice):
 
     short_name = "synqs.sqs"
 
-    _observable_map = {"Lz": Lz, "Z": Z, "Lz2": Lz2}
+    _observable_map = {"LZ": LZ, "ZObs": ZObs, "LZ2": LZ2}
 
     def __init__(
         self,
@@ -89,8 +89,8 @@ class SingleQuditDevice(DjangoDevice):
                 return "Job_not_done"
             shots = self.sample(observable, wires, par)
             return shots.mean()
-        except:
-            raise NotImplementedError()
+        except ValueError as exc:
+            raise NotImplementedError() from exc
 
     def var(self, observable, wires, par):
         """
@@ -104,8 +104,8 @@ class SingleQuditDevice(DjangoDevice):
                 return "Job_not_done"
             shots = self.sample(observable, wires, par)
             return shots.var()
-        except:
-            raise NotImplementedError()
+        except ValueError as exc:
+            raise NotImplementedError() from exc
 
     def sample(self, observable, wires, par):
         """

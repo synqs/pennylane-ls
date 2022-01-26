@@ -11,16 +11,20 @@ import numpy as np
 from .django_device import DjangoDevice
 
 # observables
-from .MultiQuditOps import Lz, Z
+from .multi_qudit_ops import LZ, ZObs
 
 # operations
-from .MultiQuditOps import rLx, rLz, rLz2, LxLy, LzLz, load
+from .multi_qudit_ops import RLX, RLZ, RLZ2, RLXLY, RLZLZ, Load
 
 # classes
-from .MultiQuditOps import MultiQuditOperation
+from .multi_qudit_ops import MultiQuditOperation
 
 
 class MultiQuditDevice(DjangoDevice):
+    """
+    The multi qudit device class, which is remotely calling the simulator.
+    """
+
     ## Define operation map for the experiment
 
     name = "Multi Qudit Quantum Simulator plugin"
@@ -30,15 +34,15 @@ class MultiQuditDevice(DjangoDevice):
 
     short_name = "synqs.mqs"
 
-    _observable_map = {"Lz": Lz, "Z": Z}
+    _observable_map = {"LZ": LZ, "ZObs": ZObs}
 
     _operation_map = {
-        "rLx": rLx,
-        "rLz": rLz,
-        "rLz2": rLz2,
-        "LxLy": LxLy,
-        "LzLz": LzLz,
-        "load": load,
+        "RLX": RLX,
+        "RLZ": RLZ,
+        "RLZ2": RLZ2,
+        "RLXLY": RLXLY,
+        "RLZLZ": RLZLZ,
+        "Load": Load,
     }
 
     def __init__(
@@ -117,8 +121,8 @@ class MultiQuditDevice(DjangoDevice):
                 return "Job_not_done"
             shots = self.sample(observable, wires, par)
             return np.mean(shots, axis=0)
-        except:
-            raise NotImplementedError()
+        except ValueError as exc:
+            raise NotImplementedError() from exc
 
     def sample(self, observable, wires, par):
         """

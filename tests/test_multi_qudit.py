@@ -23,7 +23,7 @@ class TestMultiQuditDevice(unittest.TestCase):
         """
         testDevice = qml.device("synqs.mqs")
         self.assertEqual(
-            testDevice.operations, {"LxLy", "LzLz", "load", "rLx", "rLz", "rLz2"}
+            testDevice.operations, {"RLXLY", "RLZLZ", "Load", "RLX", "RLZ", "RLZ2"}
         )
 
     def test_rX_gate(self):
@@ -33,9 +33,9 @@ class TestMultiQuditDevice(unittest.TestCase):
 
         @qml.qnode(self.testDevice)
         def quantum_circuit():
-            load(50, wires=0)
-            rLx(np.pi, wires=0)
-            return qml.expval(SingleQuditOps.Z(0))
+            multi_qudit_ops.Load(50, wires=0)
+            multi_qudit_ops.RLX(np.pi, wires=0)
+            return qml.expval(multi_qudit_ops.ZObs(0))
 
         res = quantum_circuit()
         self.assertEqual(int(res), 50)
