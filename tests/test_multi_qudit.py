@@ -1,15 +1,22 @@
+"""
+Tests for the multi qudit device.
+"""
 import unittest
+import numpy as np
 
 import pennylane as qml
-from pennylane_ls import *
-import numpy as np
+from pennylane_ls import multi_qudit_ops
 
 
 class TestMultiQuditDevice(unittest.TestCase):
+    """
+    The test case for the multi qudit device.
+    """
+
     def setUp(self):
         self.username = "synqs_test"
         self.password = "Cm2TXfRmXennMQ5"
-        self.testDevice = qml.device(
+        self.test_device = qml.device(
             "synqs.mqs",
             shots=50,
             username=self.username,
@@ -21,9 +28,9 @@ class TestMultiQuditDevice(unittest.TestCase):
         """
         Test the creation of the Device
         """
-        testDevice = qml.device("synqs.mqs")
+        test_device = qml.device("synqs.mqs")
         self.assertEqual(
-            testDevice.operations, {"RLXLY", "RLZLZ", "Load", "RLX", "RLZ", "RLZ2"}
+            test_device.operations, {"RLXLY", "RLZLZ", "Load", "RLX", "RLZ", "RLZ2"}
         )
 
     def test_rX_gate(self):
@@ -31,7 +38,7 @@ class TestMultiQuditDevice(unittest.TestCase):
         Test the rX gate
         """
 
-        @qml.qnode(self.testDevice)
+        @qml.qnode(self.test_device)
         def quantum_circuit():
             multi_qudit_ops.Load(50, wires=0)
             multi_qudit_ops.RLX(np.pi, wires=0)

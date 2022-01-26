@@ -1,15 +1,23 @@
+"""
+Tests for the single qudit device.
+"""
+
 import unittest
+import numpy as np
 
 import pennylane as qml
-from pennylane_ls import *
-import numpy as np
+from pennylane_ls import single_qudit_ops
 
 
 class TestSingleQuditDevice(unittest.TestCase):
+    """
+    The test case for the single qudit device.
+    """
+
     def setUp(self):
         self.username = "synqs_test"
         self.password = "Cm2TXfRmXennMQ5"
-        self.testDevice = qml.device(
+        self.test_device = qml.device(
             "synqs.sqs",
             shots=50,
             username=self.username,
@@ -18,28 +26,31 @@ class TestSingleQuditDevice(unittest.TestCase):
         )
 
     def test_creation(self):
-        testDevice = qml.device("synqs.sqs")
-        self.assertEqual(testDevice.operations, {"Load", "RLX", "RLZ", "RLZ2"})
+        """
+        Make sure that we can create the device.
+        """
+        test_device = qml.device("synqs.sqs")
+        self.assertEqual(test_device.operations, {"Load", "RLX", "RLZ", "RLZ2"})
 
     def test_creation_with_user(self):
         """
         Test creation with username
         """
-        testDevice = qml.device(
+        test_device = qml.device(
             "synqs.sqs",
             shots=50,
             username=self.username,
             password=self.password,
             blocking=True,
         )
-        self.assertEqual(testDevice.operations, {"Load", "RLX", "RLZ", "RLZ2"})
+        self.assertEqual(test_device.operations, {"Load", "RLX", "RLZ", "RLZ2"})
 
     def test_load_gate(self):
         """
         Test the load gate
         """
 
-        @qml.qnode(self.testDevice)
+        @qml.qnode(self.test_device)
         def quantum_circuit():
             single_qudit_ops.Load(50, wires=0)
             single_qudit_ops.RLX(np.pi, wires=0)
@@ -53,7 +64,7 @@ class TestSingleQuditDevice(unittest.TestCase):
         Test the rX gate
         """
 
-        @qml.qnode(self.testDevice)
+        @qml.qnode(self.test_device)
         def quantum_circuit():
             single_qudit_ops.Load(50, wires=0)
             single_qudit_ops.RLX(np.pi, wires=0)
