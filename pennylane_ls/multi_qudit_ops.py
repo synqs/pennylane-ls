@@ -1,3 +1,8 @@
+"""
+Define the operations that can be applied on a multi_qudit device.
+"""
+
+from typing import List, Tuple
 import abc
 
 from pennylane.operation import Operation
@@ -6,35 +11,43 @@ import numpy as np
 
 
 class MultiQuditOperation(Operation):
+    """
+    A base class for all the single qudit operation that will later inherit from it.
+    """
+
     @classmethod
     @abc.abstractmethod
-    def qudit_operator(cls, par, wires):
+    def qudit_operator(cls, par: List[float], wires: List[int]) -> Tuple:
         """the function that transforms the received samples into the appropiate
         operation
 
         Args:
             par: parameter for the gate
+            wires: The wires onto which we should apply the gates.
         """
         raise NotImplementedError()
 
 
 class MultiQuditObservable(Observable):
+    """
+    A base class for all the multi qudit observables that will later inherit from it.
+    """
+
     @classmethod
     @abc.abstractmethod
-    def qudit_operator(cls, samples, qdim):
+    def qudit_operator(cls, samples: List[int], qdim: List[int]):
         """the function that transforms the received samples into the appropiate
         observable
 
         Args:
             samples: a numpy array of samples
+            qdim: the dimension of the qudit we are working with
         """
         raise NotImplementedError()
 
 
 ## Single qudit gates
-
-
-class load(MultiQuditOperation):
+class Load(MultiQuditOperation):
     """The load operation"""
 
     num_params = 1
@@ -51,8 +64,8 @@ class load(MultiQuditOperation):
         return l_obj, qdim
 
 
-class rLx(MultiQuditOperation):
-    """The rLx operation"""
+class RLX(MultiQuditOperation):
+    """The RLX operation"""
 
     num_params = 1
     num_wires = 1
@@ -69,8 +82,8 @@ class rLx(MultiQuditOperation):
         return l_obj, False
 
 
-class rLz(MultiQuditOperation):
-    """The rLz operation"""
+class RLZ(MultiQuditOperation):
+    """The RLZ operation"""
 
     num_params = 1
     num_wires = 1
@@ -86,8 +99,8 @@ class rLz(MultiQuditOperation):
         return l_obj, False
 
 
-class rLz2(MultiQuditOperation):
-    """The rLz operation"""
+class RLZ2(MultiQuditOperation):
+    """The RLZ2 operation"""
 
     num_params = 1
     num_wires = 1
@@ -103,7 +116,7 @@ class rLz2(MultiQuditOperation):
         return l_obj, False
 
 
-class Id(MultiQuditOperation):
+class ID(MultiQuditOperation):
     """Identity gate"""
 
     num_params = 1
@@ -121,7 +134,7 @@ class Id(MultiQuditOperation):
 ## Two qudit gates
 
 
-class LxLy(MultiQuditOperation):
+class RLXLY(MultiQuditOperation):
     """LxLy or FlipFlop gate"""
 
     num_params = 1
@@ -135,7 +148,7 @@ class LxLy(MultiQuditOperation):
         return l_obj, False
 
 
-class LzLz(MultiQuditOperation):
+class RLZLZ(MultiQuditOperation):
     """LzLz or generalized Ising gate"""
 
     num_params = 1
@@ -150,9 +163,7 @@ class LzLz(MultiQuditOperation):
 
 
 ## Observables
-
-
-class Z(MultiQuditObservable):
+class ZObs(MultiQuditObservable):
     """Number of atoms operator"""
 
     num_params = 0
@@ -164,7 +175,7 @@ class Z(MultiQuditObservable):
         return samples
 
 
-class Lz(MultiQuditObservable):
+class LZ(MultiQuditObservable):
     """Lz observable"""
 
     num_params = 0

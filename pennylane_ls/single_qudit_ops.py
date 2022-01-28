@@ -1,3 +1,8 @@
+"""
+Define the operations that can be applied on a single_qudit device.
+"""
+
+from typing import List, Tuple
 import abc
 
 from pennylane.operation import Operation
@@ -6,9 +11,13 @@ import numpy as np
 
 
 class SingleQuditOperation(Operation):
+    """
+    A base class for all the single qudit operation that will later inherit from it.
+    """
+
     @classmethod
     @abc.abstractmethod
-    def qudit_operator(cls, par):
+    def qudit_operator(cls, par: List[float]) -> Tuple:
         """the function that transforms the received samples into the appropiate
         operation
 
@@ -19,19 +28,24 @@ class SingleQuditOperation(Operation):
 
 
 class SingleQuditObservable(Observable):
+    """
+    A base class for all the single qudit observables that will later inherit from it.
+    """
+
     @classmethod
     @abc.abstractmethod
-    def qudit_operator(cls, samples, qdim):
+    def qudit_operator(cls, samples: np.ndarray, qdim: List[int]):
         """the function that transforms the received samples into the appropiate
         observable
 
         Args:
             samples: a numpy array of samples
+            qdim: the dimension of the qudit
         """
         raise NotImplementedError()
 
 
-class load(SingleQuditOperation):
+class Load(SingleQuditOperation):
     """The load operation"""
 
     num_params = 1
@@ -48,8 +62,8 @@ class load(SingleQuditOperation):
         return l_obj, qdim
 
 
-class rLx(SingleQuditOperation):
-    """The rLx operation"""
+class RLX(SingleQuditOperation):
+    """The RLX operation"""
 
     num_params = 1
     num_wires = 1
@@ -66,7 +80,7 @@ class rLx(SingleQuditOperation):
         return l_obj, False
 
 
-class rLz(SingleQuditOperation):
+class RLZ(SingleQuditOperation):
     """The rLz operation"""
 
     num_params = 1
@@ -83,7 +97,7 @@ class rLz(SingleQuditOperation):
         return l_obj, False
 
 
-class rLz2(SingleQuditOperation):
+class RLZ2(SingleQuditOperation):
     """The rLz operation"""
 
     num_params = 1
@@ -99,7 +113,7 @@ class rLz2(SingleQuditOperation):
         return l_obj, False
 
 
-class Id(SingleQuditOperation):
+class ID(SingleQuditOperation):
     """Custom gate"""
 
     num_params = 1
@@ -114,7 +128,7 @@ class Id(SingleQuditOperation):
         pass
 
 
-class Z(SingleQuditObservable):
+class ZObs(SingleQuditObservable):
     """Custom observable"""
 
     num_params = 0
@@ -126,7 +140,7 @@ class Z(SingleQuditObservable):
         return samples
 
 
-class Lz(SingleQuditObservable):
+class LZ(SingleQuditObservable):
     """Custom observable"""
 
     num_params = 0
@@ -138,7 +152,7 @@ class Lz(SingleQuditObservable):
         return samples - qdim / 2
 
 
-class Lz2(SingleQuditObservable):
+class LZ2(SingleQuditObservable):
     """Custom observable"""
 
     num_params = 0
@@ -147,5 +161,5 @@ class Lz2(SingleQuditObservable):
 
     @classmethod
     def qudit_operator(cls, samples, qdim):
-        Lz = samples - qdim / 2
-        return Lz ** 2
+        lz = samples - qdim / 2
+        return lz ** 2

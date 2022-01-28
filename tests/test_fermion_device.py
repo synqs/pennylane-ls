@@ -1,15 +1,22 @@
+"""
+Tests for the femrion device.
+"""
 import unittest
-
-import pennylane as qml
-from pennylane_ls import fermion_ops
 import numpy as np
+import pennylane as qml
+
+from pennylane_ls import fermion_ops
 
 
 class TestFermionDevice(unittest.TestCase):
+    """
+    The test case for the fermion device.
+    """
+
     def setUp(self):
         self.username = "synqs_test"
         self.password = "Cm2TXfRmXennMQ5"
-        self.testDevice = qml.device(
+        self.test_device = qml.device(
             "synqs.fs",
             shots=50,
             username=self.username,
@@ -18,9 +25,12 @@ class TestFermionDevice(unittest.TestCase):
         )
 
     def test_creation(self):
-        testDevice = qml.device("synqs.fs")
+        """
+        Test that it is possible to create the device.
+        """
+        test_device = qml.device("synqs.fs")
         self.assertEqual(
-            testDevice.operations,
+            test_device.operations,
             {
                 "ChemicalPotential",
                 "HartreeFock",
@@ -37,7 +47,7 @@ class TestFermionDevice(unittest.TestCase):
         """
         Test creation with username
         """
-        testDevice = qml.device(
+        test_device = qml.device(
             "synqs.fs",
             shots=50,
             username=self.username,
@@ -45,7 +55,7 @@ class TestFermionDevice(unittest.TestCase):
             blocking=False,
         )
         self.assertEqual(
-            testDevice.operations,
+            test_device.operations,
             {
                 "ChemicalPotential",
                 "HartreeFock",
@@ -63,7 +73,7 @@ class TestFermionDevice(unittest.TestCase):
         Test the load gate
         """
 
-        @qml.qnode(self.testDevice)
+        @qml.qnode(self.test_device)
         def simple_loading():
             """
             The circuit that simulates the experiments.
@@ -85,7 +95,7 @@ class TestFermionDevice(unittest.TestCase):
         Test the hopping gate
         """
 
-        @qml.qnode(self.testDevice)
+        @qml.qnode(self.test_device)
         def simple_hopping():
             """
             The circuit that simulates the experiments.
@@ -107,7 +117,7 @@ class TestFermionDevice(unittest.TestCase):
         Test the probs gate
         """
 
-        @qml.qnode(self.testDevice)
+        @qml.qnode(self.test_device)
         def simple_hopping():
             """
             The circuit that simulates the experiments.
@@ -118,7 +128,7 @@ class TestFermionDevice(unittest.TestCase):
             fermion_ops.Load(wires=0)
             fermion_ops.Load(wires=1)
             fermion_ops.Hop(np.pi, wires=[0, 1, 2, 3])
-            obs = fermion_ops.ParticleNumber([0, 1, 2, 3])
+            fermion_ops.ParticleNumber([0, 1, 2, 3])
             return qml.probs(wires=[3])
 
         res = simple_hopping()
@@ -129,7 +139,7 @@ class TestFermionDevice(unittest.TestCase):
         Test that the variance is properly defined.
         """
 
-        @qml.qnode(self.testDevice)
+        @qml.qnode(self.test_device)
         def simple_hopping():
             """
             The circuit that simulates the experiments.
